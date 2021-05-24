@@ -8,18 +8,18 @@
 int on = HIGH;
 int off = LOW;
 int spinner[] = {'\\','|','/'};    // Spinner Array
+int spinnerArrayIndex = 0;         // Index value of current spinner array 
 int fanSpeed = 0;                  // Initial manual fanspeed
 int eeAddress = 0;                 // Adress to start saving to EEprom
-char spinnerSegment;
+char spinnerSegment;               // define the segments
 const byte fanRelay = 3;           // realy pin
-int i = 0;
 int fanMin = 0;
 int fanMax = 255;
 int tempMin = 0;
 int tempMax = 30;
 int autoFan;
 int manualFan;
-int currentTemp = 10;
+int currentTemp = 10;               // Current manually set temperature
 
 int manualFanSpeed = 0;
 int manMin = 0;
@@ -88,14 +88,14 @@ void readRotaryEncoder()
 {
   value += encoder->getValue();
 
-  if (value / 4 > last) {
-    last = value / 4;
+  if (value / 2 > last) {
+    last = value / 2;
     down = true;
     if (currentTime - previousTime >= 50) {
       currentTime = previousTime;
     }
-  } else   if (value / 4 < last) {
-    last = value / 4;
+  } else   if (value / 2 < last) {
+    last = value / 2;
     up = true;
     if (currentTime - previousTime >= 50) {
       currentTime = previousTime;
@@ -107,27 +107,28 @@ void timerIsr() {
   encoder->service();
 }
 
-// Kick the dog if the reset is activated
-void Reset() {
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void Reset() {                  // Kick the watchdog if the reset is activated
   if (ButReset) {
     ButReset = false;
     delay(2000);
   }
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Visual representation of spinning fan ~~~~~~~~~~~~~~~~~~~~~~~
 void fanSpinner(){
       if (currentTime - previousTime >= 70) {
         previousTime = currentTime;
-        if(i <= 2){
-           spinnerSegment = spinner[i];
+        if(spinnerArrayIndex <= 2){
+           spinnerSegment = spinner[spinnerArrayIndex];
            Serial.println(spinnerSegment);
-            i++;
+            spinnerArrayIndex++;
          }
          else{
             spinnerSegment = '-';
             Serial.println(spinnerSegment);
-            i = 0;
+            spinnerArrayIndex = 0;
           }
     }
   }
