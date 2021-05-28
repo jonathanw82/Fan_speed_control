@@ -32,35 +32,35 @@ void encoderControl()
       case ClickEncoder::Clicked:
         middle = true;
         break;
-        case ClickEncoder::Held:                  // Setup button held time in ClickEncoder.cpp
+      case ClickEncoder::Held:                  // Setup button held time in ClickEncoder.cpp
         button = true;
         break;
     }
   }
 
-//~~~~~~~~~~~~~~~~~ Manual Control only avalable in Manual mode ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~ Manual Control only avalable in Manual mode ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  if(currentMode == 0 && menuEnter == 0){         // currentMode 0 = manual mode
-    if(up && page == 1){
+  if (currentMode == 0 && menuEnter == 0) {       // currentMode 0 = manual mode
+    if (up && page == 1) {
       up = false;
-      manualFanSpeed -=10;
+      manualFanSpeed -= 10;
       EEPROM.put(0, manualFanSpeed);
-      }
-    if(down && page == 1){
+    }
+    if (down && page == 1) {
       down = false;
-      manualFanSpeed +=10;
+      manualFanSpeed += 10;
       EEPROM.put(0, manualFanSpeed);
-      }
-     if (manualFanSpeed > 100) {
+    }
+    if (manualFanSpeed > 100) {
       manualFanSpeed = 100;
     }
-     else if (manualFanSpeed < 0) {
+    else if (manualFanSpeed < 0) {
       manualFanSpeed = 0;
-      }
     }
- //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Rotation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  }
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Rotation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if (up && page == 1 && menuEnter == 1 ) {
-      up = false;
+    up = false;
     if (menuitem == 1)
     {
       menuitem == 2;
@@ -69,49 +69,96 @@ void encoderControl()
     {
       menuitem == 3;
     }
-   
+    if (menuitem == 3)
+    {
+      menuitem == 4;
+    }
+    if (menuitem == 4)
+    {
+      menuitem == 5;
+    }
+
     lastMenuItem = menuitem;
     menuitem--;
     if (menuitem <= 0)
     {
       menuitem = 1;
     }
-  } else if (up && menuitem == 3 && enter == 1 && page == 2 ) {
+  }
+  if (up && menuitem == 3 && enter == 1 && page == 2 ) {
     up = false;
     currentMode--;
     EEPROM.put(24, currentMode);
   }
+  if (up && menuitem == 4 && enter == 1 && page == 2 ) {
+    up = false;
+    tempMax --;
+    EEPROM.put(8, tempMax);
+  }
+  if (up && menuitem == 5 && enter == 1 && page == 2 ) {
+    up = false;
+    humMax -=5;
+    EEPROM.put(16, humMax);
+  }
 
-
+  //~~~~~~~~~~~~~~~~~~~~~~ Down ~~~~~~~~~~~~~~~~~~~~~~~
   if (down && page == 1 && menuEnter == 1) //We have turned the Rotary Encoder Clockwise
   {
-
     down = false;
-    if (down && menuitem ==2 && lastMenuItem == 1){
+    if (down && menuitem == 2 && lastMenuItem == 1) {
       menuitem++;
     }
 
     if (down && menuitem == 3 && lastMenuItem == 2) {
       menuitem++;
     }
-  
+
+    if (down && menuitem == 4 && lastMenuItem == 3) {
+      menuitem++;
+    }
+
+     if (down && menuitem == 5 && lastMenuItem == 4) {
+      menuitem++;
+    }
     lastMenuItem = menuitem;
     menuitem++;
 
-    if (menuitem >= 4)
+    if (menuitem >= 6)
     {
-      menuitem =4;
+      menuitem = 6;
     }
   }
-  else if (down && menuitem == 3 && enter == 1 && page == 2 ) {
-     down = false;
-     currentMode++;
-     EEPROM.put(24, currentMode);
+  if (down && menuitem == 3 && enter == 1 && page == 2 ) {
+    down = false;
+    currentMode++;
+    EEPROM.put(24, currentMode);
   }
-   if (currentMode >= 2) {
-      currentMode = 2;
-    }
-   else if(currentMode <= 0) {
+  if (currentMode >= 2) {
+    currentMode = 2;
+  }
+  else if (currentMode <= 0) {
     currentMode = 0;
-    }
+  }
+   if (down && menuitem == 4 && enter == 1 && page == 2 ) {
+    down = false;
+    tempMax ++;
+    EEPROM.put(8, tempMax);
+  }
+  if (tempMax >= 30) {
+    tempMax = 30;
+  }
+  else if (tempMax < 0) {
+    tempMax = 0;
+  }
+    if (down && menuitem == 5 && enter == 1 && page == 2 ) {
+    down = false;
+    humMax +=5;
+    EEPROM.put(16, humMax);
+  }
+  if (humMax >= 100) {
+    humMax = 100;
+  }
+  else if (humMax < 20) {
+    humMax = 20;
+  }
 }

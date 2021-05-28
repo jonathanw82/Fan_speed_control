@@ -12,12 +12,12 @@ int off = LOW;
 int eeAddress = 0;               // Address to start saving to EEprom
 const byte PWMoutput = 3;        // realy pin
 
-float fanMin = 0;
-float fanMax = 255;
-float tempMin = 0;
-float tempMax = 0;
-float humMin = 0;
-float humMax = 0;
+int fanMin = 0;
+int fanMax = 255;
+int tempMin = 23;
+int tempMax = 0;
+int humMin = 50;
+int humMax = 0;
 byte manMin = 0;
 byte manMax = 100;
 float fanInVolts = 0;
@@ -25,6 +25,9 @@ int fanPercentage = 0;
 float fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menue can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
+
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -111,11 +114,11 @@ void fanControl() {
     controlFanSpeed();
   }
   if (currentMode == 1) {
-    fanSpeed = map(temp, tempMin, tempMax, fanMin, fanMax);         // Fan speed Auto Temp control
+    fanSpeed = map(temp, tempMin, tempMax, fanMin, fanMax); // Fan speed Auto Temp control
     controlFanSpeed();
   }
   if (currentMode == 2) {
-    fanSpeed = map(hum, humMin, humMax, fanMin, fanMax);            // Fan speed Auto Humid control
+    fanSpeed = map(hum, humMin, humMax, fanMin, fanMax);        // Fan speed Auto Humid control
     controlFanSpeed();
   }
 }
@@ -123,7 +126,8 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-  fanPercentage = map(fanInVolts + 0.01, 0, 5, 0, 100);   // fan speed in %
+//  fanPercentage = map(fanInVolts + 0.01, 0, 5, 0, 100);   // fan speed in %
+  fanPercentage = map(fanSpeed, 0, 255, 0, 100);   // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 

@@ -124,8 +124,42 @@ void updatedisplay() {
           lcd.print(F("Auto Hum         "));
             }
         }
-
-        if (menuitem == 4 && page == 1 && menuEnter == 1)
+         if ( menuitem == 4 && page == 1 && menuEnter == 1)
+        {
+          lcd.setCursor(0, 0);
+          lcd.print(F("Set MaxTemp     "));
+          lcd.setCursor(0, 1);
+          lcd.print(F("Click to Enter  "));
+        }
+        if (menuitem == 4 && page == 2 && menuEnter == 1) {
+          lcd.setCursor(0, 0);
+          lcd.print(F("MaxTemp Fan 100%"));
+          lcd.setCursor(0, 1);
+          lcd.print(F("C= "));
+          lcd.print(tempMax);
+          lcd.print(F("          "));
+        }
+         if ( menuitem == 5 && page == 1 && menuEnter == 1)
+        {
+          lcd.setCursor(0, 0);
+          lcd.print(F("Set MaxHum      "));
+          lcd.setCursor(0, 1);
+          lcd.print(F("Click to Enter  "));
+        }
+        if (menuitem == 5 && page == 2 && menuEnter == 1) {
+          lcd.setCursor(0, 0);
+          lcd.print(F("MaxHum  Fan 100%"));
+          lcd.setCursor(0, 1);
+          lcd.print(F("H= "));
+          lcd.print(humMax);
+          lcd.print(F("%"));
+          if(humMax < 100){
+            lcd.setCursor(6, 1);
+            lcd.print("          ");
+            }
+        }
+       
+        if (menuitem == 6 && page == 1 && menuEnter == 1)
         {
           lcd.setCursor(0, 0);
           lcd.print(F("   Menu Exit    "));
