@@ -6,8 +6,7 @@
 #include <ClickEncoder.h>       // Rotery Encoder Lib
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
-
-int softwareVersion = "      V1.00     ";             
+           
 int on = HIGH;
 int off = LOW;
 int spinner[] = {'\\','|','/'};    // Spinner Array
@@ -72,7 +71,7 @@ unsigned long previousTime = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lcd Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the LCD I2C address
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the LCD I2C address
 // set the LCD address to 0x3F or 0x27 depending what display using for a 16 chars 2 line display
 // Set the pins on the I2C chip used for LCD connections:
 
@@ -537,21 +536,6 @@ void sensors(){
     Serial.println(value);
     Serial.print(" Menu Item =");
     Serial.println(menuitem);
-}
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Start Screen ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-void startUpScreen(){
-  lcd.setCursor(0, 0);
-  lcd.print(F("   LettUsGrow   "));
-  lcd.setCursor(0, 1);
-  lcd.print(F(" Extractor fan  "));
-  delay(1000);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(F("Software Version"));
-  lcd.setCursor(0, 1);
-  lcd.print(softwareVersion); 
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Visual representation of spinning fan ~~~~~~~~~~~~~~~~~~~~~~~
