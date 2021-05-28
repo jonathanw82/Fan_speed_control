@@ -101,7 +101,7 @@ void updatedisplay() {
           lcd.setCursor(0, 0);
           lcd.print(F("Setup           "));
           lcd.setCursor(0, 1);
-          lcd.print(F("Use UP & Down   "));
+          lcd.print(F("Use Up & Down   "));
         }
         if ( menuitem == 3 && page == 1 && menuEnter == 1)
         {
@@ -127,16 +127,16 @@ void updatedisplay() {
          if ( menuitem == 4 && page == 1 && menuEnter == 1)
         {
           lcd.setCursor(0, 0);
-          lcd.print(F("Set MaxTemp     "));
+          lcd.print(F("Set MinTemp     "));
           lcd.setCursor(0, 1);
           lcd.print(F("Click to Enter  "));
         }
         if (menuitem == 4 && page == 2 && menuEnter == 1) {
           lcd.setCursor(0, 0);
-          lcd.print(F("MaxTemp Fan 100%"));
+          lcd.print(F("MinTemp Fan 100%"));
           lcd.setCursor(0, 1);
           lcd.print(F("C= "));
-          lcd.print(tempMax);
+          lcd.print(tempMin);
           lcd.print(F("          "));
         }
          if ( menuitem == 5 && page == 1 && menuEnter == 1)
@@ -158,8 +158,28 @@ void updatedisplay() {
             lcd.print("          ");
             }
         }
+         if ( menuitem == 6 && page == 1 && menuEnter == 1)
+        {
+          lcd.setCursor(0, 0);
+          lcd.print(F("Set MaxFan PWM  "));
+          lcd.setCursor(0, 1);
+          lcd.print(F("Click to Enter  "));
+        }
+        if (menuitem == 6 && page == 2 && menuEnter == 1) {
+          lcd.setCursor(0, 0);
+          lcd.print(F("Fan PWM Max     "));
+          lcd.setCursor(0, 1);
+          lcd.print(F("PWM Max ="));
+          lcd.print(fanMax);
+          lcd.print("    ");
+          if(fanMax < 100){
+            lcd.setCursor(11, 1);
+            lcd.print("     ");
+            }
+        }
+  
        
-        if (menuitem == 6 && page == 1 && menuEnter == 1)
+        if (menuitem == 7 && page == 1 && menuEnter == 1)
         {
           lcd.setCursor(0, 0);
           lcd.print(F("   Menu Exit    "));

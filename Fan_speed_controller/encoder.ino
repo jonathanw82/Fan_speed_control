@@ -35,6 +35,9 @@ void encoderControl()
       case ClickEncoder::Held:                  // Setup button held time in ClickEncoder.cpp
         button = true;
         break;
+      case ClickEncoder::DoubleClicked:
+        standByButton = true;
+       break;
     }
   }
 
@@ -77,6 +80,10 @@ void encoderControl()
     {
       menuitem == 5;
     }
+     if (menuitem == 5)
+    {
+      menuitem == 6;
+    }
 
     lastMenuItem = menuitem;
     menuitem--;
@@ -92,13 +99,18 @@ void encoderControl()
   }
   if (up && menuitem == 4 && enter == 1 && page == 2 ) {
     up = false;
-    tempMax --;
-    EEPROM.put(8, tempMax);
+    tempMin --;
+    EEPROM.put(8, tempMin);
   }
   if (up && menuitem == 5 && enter == 1 && page == 2 ) {
     up = false;
     humMax -=5;
     EEPROM.put(16, humMax);
+  }
+   if (up && menuitem == 6 && enter == 1 && page == 2 ) {
+    up = false;
+    fanMax -=5;
+    EEPROM.put(32, fanMax);
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~ Down ~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,12 +132,15 @@ void encoderControl()
      if (down && menuitem == 5 && lastMenuItem == 4) {
       menuitem++;
     }
+     if (down && menuitem == 6 && lastMenuItem == 5) {
+      menuitem++;
+    }
     lastMenuItem = menuitem;
     menuitem++;
 
-    if (menuitem >= 6)
+    if (menuitem >= 7)
     {
-      menuitem = 6;
+      menuitem = 7;
     }
   }
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
@@ -141,14 +156,14 @@ void encoderControl()
   }
    if (down && menuitem == 4 && enter == 1 && page == 2 ) {
     down = false;
-    tempMax ++;
-    EEPROM.put(8, tempMax);
+    tempMin ++;
+    EEPROM.put(8, tempMin);
   }
-  if (tempMax >= 30) {
-    tempMax = 30;
+  if (tempMin >= 30) {
+    tempMin = 30;
   }
-  else if (tempMax < 0) {
-    tempMax = 0;
+  else if (tempMin < 0) {
+    tempMin = 0;
   }
     if (down && menuitem == 5 && enter == 1 && page == 2 ) {
     down = false;
@@ -160,5 +175,16 @@ void encoderControl()
   }
   else if (humMax < 20) {
     humMax = 20;
+  }
+    if (down && menuitem == 6 && enter == 1 && page == 2 ) {
+    down = false;
+    fanMax +=5;
+    EEPROM.put(32, fanMax);
+  }
+  if (fanMax >= 255) {
+    fanMax = 255;
+  }
+  else if (fanMax < 0) {
+    humMax = 0;
   }
 }
