@@ -165,9 +165,10 @@ void manualReset() {                  // Kick the watchdog if the reset is activ
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shutdown/Standby ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void standBy() {
-  if (standByButton && shutDown == 0 || shutDown == 0 && acFail == 0) {
+  if (standByButton && shutDown == 0 || shutDown == 1 && acFail == 1) {
     standByButton = false;
     lcd.noBacklight();
+    digitalWrite(ledR, On); 
     PWMoutput = off;
     shutDown = 1;
     EEPROM.put(40, shutDown);
