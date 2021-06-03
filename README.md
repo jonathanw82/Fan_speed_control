@@ -33,7 +33,7 @@ Fan speed controller for Avon Valley farm preparation room air extraction system
 
 ## Construction:
 * 3D printed Bezel
-<img src="" alt="topof image" width="45%"/><img src="" alt="led image" width="45%"/> </div>
+<img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/pics/img1.jpg" alt="topof image" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/pics/img2.jpg" alt="led image" width="45%"/> </div>
 
 
 ## Setup program options:
