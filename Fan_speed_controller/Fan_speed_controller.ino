@@ -1,10 +1,11 @@
+
+#include <LiquidCrystal_I2C.h>
 #include <DHT.h>                // Temp Humidity Lib
 #include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
 #include <Wire.h>               // I2c enable Lib
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
-#include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
 
 int On = HIGH;
@@ -18,6 +19,8 @@ int tempMin = 0;
 int tempMax = 30;
 int humMin = 50;
 int humMax = 0;
+
+
 byte manMin = 0;
 byte manMax = 100;
 float fanInVolts = 0;
@@ -28,6 +31,7 @@ int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
 int acFail = 0;                 // This is set to 1 when the controller is put in standby, it holds control in standby incase of ac power falure
 const byte ledR = 10;
+
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,9 +187,8 @@ void standBy() {
   }
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void writeToEEprom() {
   EEPROM.put(48, acFail);
   EEPROM.put(40, shutDown);
-}
+  }
