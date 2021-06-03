@@ -33,10 +33,10 @@ void encoderControl()
         middle = true;
         break;
       case ClickEncoder::Held:                  // Setup button held time in ClickEncoder.cpp
-        button = true;
+        standByButton = true;
         break;
       case ClickEncoder::DoubleClicked:
-        standByButton = true;
+        button = true;
        break;
     }
   }

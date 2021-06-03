@@ -9,8 +9,8 @@
 
 int On = HIGH;
 int Off = LOW;
-int eeAddress = 0;               // Address to start saving to EEprom
-const byte PWMoutput = 3;        // realy pin
+int eeAddress = 0;              // Address to start saving to EEprom
+const byte PWMoutput = 3;       // relay pin
 
 int fanMin = 0;
 int fanMax = 255;
@@ -26,11 +26,9 @@ float fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menue can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
-int ledG = 9;
+int acFail = 0;
 int ledR = 10;
-int ledB = 11;
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Contimue with shutdown and fading led ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -68,7 +66,7 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 // set the LCD address to 0x3F or 0x27 depending what display using for a 16 chars 2 line display
 // Set the pins on the I2C chip used for LCD connections:
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Status Led Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Status Led Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int ledFadePeriod = 2000;
 long LEDtime;
 int ledVal = 0;
@@ -84,17 +82,15 @@ void setup() {
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
-  EEPROM.get(8, tempMin);
-  EEPROM.get(16, humMax);
-  EEPROM.get(24, currentMode);
-  EEPROM.get(32, fanMax);
-
-  pinMode(ledG, OUTPUT);
-  digitalWrite(ledG, Off);
-  pinMode(ledR, OUTPUT);
-  digitalWrite(ledR, Off);
-  pinMode(ledB, OUTPUT);
-  digitalWrite(ledB, Off);
+  EEPROM.get(8, tempMin);                   // Get inital min temp
+  EEPROM.get(16, humMax);                   // Get inital hum max
+  EEPROM.get(24, currentMode);              // Get inital mode (1 = Manual)(2 = Temp control)(3 = Hum control)
+  EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max 
+  EEPROM.get(40, shutDown);                 // Get the Shutdown Status incase or pwer falure
+  EEPROM.get(48, acFail);                   // Get the acFail to stop system starting up if in standby and AC power cycles
+  
+  pinMode(ledR, OUTPUT);                    // Control standby light
+  digitalWrite(ledR, Off);                  // truen the led initially off
 
   sensors();                                // Setup and collect initial temp and humidity
   startUpScreen();                          // Initising screen
@@ -109,11 +105,13 @@ void setup() {
   last = encoder->getValue();
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
-  fanControl();                    // Adjust PWM output to fans controller
+  if(shutDown = 0){
+    fanControl();                  // Adjust PWM output to fans controller
+  }
   readRotaryEncoder();             // Check status of rotery encoder
   encoderControl();                // set and check what the encoder button status are
   buttonPressed();                 // Is button pressed
@@ -122,7 +120,7 @@ void loop() {
   sensors();                       // Read Temp and Humidity sensors
   updatedisplay();                 // Lcd screen transitions
   deBug();                         // enable Debug function
-  standBy();
+  standBy();                       // Set stand by mode
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -144,7 +142,8 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-  fanPercentage = map(fanSpeed, 0, 255, 0, 100);   // fan speed in %
+  fanPercentage = map(fanSpeed, 0, 255, 0, 100);          // fan speed in %
+  // fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);          // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
@@ -163,20 +162,24 @@ void manualReset() {                  // Kick the watchdog if the reset is activ
   }
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shutdown/Standby ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void standBy() {
-  if (standByButton && shutDown == 0) {
+  if (standByButton && shutDown == 0 || shutDown == 0 && acFail == 0) {
     standByButton = false;
     lcd.noBacklight();
+    PWMoutput = off;
     shutDown = 1;
-    ledRedFade();
+    EEPROM.put(40, shutDown);
+    acFail = 1;
+    EEPROM.put(48, acFail);
   }
   else if (standByButton && shutDown == 1) {
     standByButton = false;
+    shutDown = 0;
+    EEPROM.put(40, shutDown);
+    acFail = 0;
+    EEPROM.put(48, acFail);
     delay(1100);
   }
-}
-
-void ledRedFade() {
-  ledVal = 128 + 127 * cos(2 * PI / ledFadePeriod * LEDtime);
-  analogWrite(ledR, ledVal);           // sets the value (range from 0 to 255)
 }
