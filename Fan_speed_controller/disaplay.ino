@@ -5,19 +5,19 @@ void updatedisplay() {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~ Display Manual Data ~~~~~~~~~~~~~~~~~~~~~~~~
     if (currentMode == 0) {               // currentMode == 0 Manual mode
       lcd.setCursor(0, 0);
-      lcd.print("  Mode Manual   ");
+      lcd.print(F("  Mode Manual   "));
       lcd.setCursor(0, 1);
-      lcd.print(" Fan Speed ");
+      lcd.print(F(" Fan Speed "));
       lcd.setCursor(12, 1);
       lcd.print(fanPercentage);
-      lcd.print("%");
+      lcd.print(F("%"));
       if (fanPercentage <= 0) {
         lcd.setCursor(14, 1);
-        lcd.print("   ");
+        lcd.print(F("   "));
       }
       else if (fanPercentage < 100) {
         lcd.setCursor(15, 1);
-        lcd.print("   ");
+        lcd.print(F("   "));
       }
     }
     //~~~~~~~~~~~~~~~~~~~~~~ Display Auto Temp control Data ~~~~~~~~~~~~~~~~~~~
@@ -26,19 +26,19 @@ void updatedisplay() {
       {
         previousTime = currentTime;
         lcd.setCursor(0, 0);
-        lcd.print("Mode: Auto Temp ");
+        lcd.print(F("Mode: Auto Temp "));
         lcd.setCursor(0, 1);
-        lcd.print(" Fan Speed ");
+        lcd.print(F(" Fan Speed "));
         lcd.setCursor(12, 1);
         lcd.print(fanPercentage);
-        lcd.print("%");
+        lcd.print(F("%"));
         if (fanPercentage <= 0) {
           lcd.setCursor(14, 1);
-          lcd.print("   ");
+          lcd.print(F("   "));
         }
         else if (fanPercentage < 100) {
           lcd.setCursor(15, 1);
-          lcd.print("   ");
+          lcd.print(F("   "));
         }
         marker = marker + 1;
       }
@@ -46,11 +46,11 @@ void updatedisplay() {
       {
         previousTime = currentTime;
         lcd.setCursor(0, 0);
-        lcd.print("Air Temp        ");;
+        lcd.print(F("Air Temp        "));
         lcd.setCursor(0, 1);
-        lcd.print("C=");
+        lcd.print(F("C="));
         lcd.print(temp);
-        lcd.print("         ");
+        lcd.print(F("         "));
         marker = marker + 1;
       }
       if (marker > 1) {
@@ -63,15 +63,15 @@ void updatedisplay() {
         {
           previousTime = currentTime;
           lcd.setCursor(0, 0);
-          lcd.print("Mode: Auto Humd ");
+          lcd.print(F("Mode: Auto Humd "));
           lcd.setCursor(0, 1);
-          lcd.print(" Fan Speed ");
+          lcd.print(F(" Fan Speed "));
           lcd.setCursor(12, 1);
           lcd.print(fanPercentage);
-          lcd.print("%");
+          lcd.print(F("%"));
           if (fanPercentage <= 0) {
             lcd.setCursor(14, 1);
-            lcd.print("   ");
+            lcd.print(F("   "));
           }
           else if (fanPercentage < 100) {
             lcd.setCursor(15, 1);

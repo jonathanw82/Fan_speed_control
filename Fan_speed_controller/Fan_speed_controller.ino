@@ -84,7 +84,7 @@ void setup() {
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
   EEPROM.get(8, tempMin);                   // Get inital min temp
   EEPROM.get(16, humMax);                   // Get inital hum max
-  EEPROM.get(24, currentMode);              // Get inital mode (1 = Manual)(2 = Temp control)(3 = Hum control)
+  EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max 
   EEPROM.get(40, shutDown);                 // Get the Shutdown Status incase or pwer falure
   EEPROM.get(48, acFail);                   // Get the acFail to stop system starting up if in standby and AC power cycles
