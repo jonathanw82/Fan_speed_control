@@ -1,20 +1,20 @@
+
+#include <LiquidCrystal_I2C.h>
 #include <DHT.h>                // Temp Humidity Lib
 #include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
 #include <Wire.h>               // I2c enable Lib
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
-#include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
-
-int softwareVersion = "      V1.00     ";             
+            
 int on = HIGH;
 int off = LOW;
 int spinner[] = {'\\','|','/'};    // Spinner Array
 int spinnerArrayIndex = 0;         // Index value of current spinner array 
 char spinnerSegment;               // define the segments
 int eeAddress = 0;                 // Address to start saving to EEprom  
-const byte PWMoutput = 3;           // realy pin
+const byte PWMoutput = 3;          // realy pin
 
 float fanMin = 0;
 float fanMax = 255;
@@ -30,7 +30,7 @@ float fanPercentage = 0;
 float fanSpeed = 0;
 
 int currentMode;                  // depending on the currentMode the voltage and % menue can use this get correct data
-byte autoFan = 0;             // initial fan control methods
+byte autoFan = 0;                 // initial fan control methods
 byte manualFan = 0;
 byte tempControl = 0;     
 byte humControl = 0;
@@ -551,7 +551,7 @@ void startUpScreen(){
   lcd.setCursor(0, 0);
   lcd.print(F("Software Version"));
   lcd.setCursor(0, 1);
-  lcd.print(softwareVersion); 
+  lcd.print("      V1.00     "); 
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Visual representation of spinning fan ~~~~~~~~~~~~~~~~~~~~~~~
