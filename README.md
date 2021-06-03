@@ -1,5 +1,5 @@
 <h1 align="center">
-   <img src="https://github.com/jonathanw82/Coffee/blob/master/images/repoimage.jpg" alt="Project Image"/>
+   <img src="" alt="Project Image"/>
  </h1>
  
 ## Overview:
