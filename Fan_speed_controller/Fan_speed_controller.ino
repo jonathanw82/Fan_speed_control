@@ -1,11 +1,10 @@
-
-#include <LiquidCrystal_I2C.h>
 #include <DHT.h>                // Temp Humidity Lib
 #include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
 #include <Wire.h>               // I2c enable Lib
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
+#include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
 
 int On = HIGH;
@@ -19,8 +18,6 @@ int tempMin = 0;
 int tempMax = 30;
 int humMin = 50;
 int humMax = 0;
-
-
 byte manMin = 0;
 byte manMax = 100;
 float fanInVolts = 0;
@@ -33,8 +30,7 @@ int acFail = 0;                 // This is set to 1 when the controller is put i
 const byte ledR = 10;
 
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
 int page = 1;
 int lastMenuItem = 1;
@@ -146,15 +142,15 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-  fanPercentage = map(fanSpeed, 0, 255, 0, 100);          // fan speed in %
-  // fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);          // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  fanPercentage = map(fanSpeed, 0, 255, 0, 100);          // fan speed in %
+  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);    // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Temp Humid Sensors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void sensors() {
-  hum = dht.readHumidity();                                // Get current Humidity
-  temp = dht.readTemperature();                            // Get current Temperature
+  hum = dht.readHumidity();                               // Get current Humidity
+  temp = dht.readTemperature();                           // Get current Temperature
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -188,7 +184,14 @@ void standBy() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* This function adds the variables to EEprom, using this method only allows data to be written to memory 
+   if it has changed else it get ignored*/
 void writeToEEprom() {
-  EEPROM.put(48, acFail);
+  EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
+  EEPROM.put(8, tempMin);
+  EEPROM.put(16, humMax);
+  EEPROM.put(24, currentMode);
+  EEPROM.put(32, fanMax);
   EEPROM.put(40, shutDown);
-  }
+  EEPROM.put(48, acFail);
+}

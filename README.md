@@ -1,19 +1,18 @@
+
+# Fan_Speed_Control
 <h1 align="center">
    <img src="" alt="Project Image"/>
  </h1>
  
+ 
 ## Overview:
 Fan speed controller for Avon Valley farm preparation room air extraction system, with incorporated menu system to allow the user to select modes from automatic and manual.
 
-
-## The users goals of this system are:
+## The users goals of this controller are:
 * An easy to navigate menu.
 * Low power consumption.
 * Manual and Automaic operation.
 * Automated monitoring of temperature and humidity and regulate fan speed accordingly.
-
-
-
 
 ## Features:
 * Rotery encoder for navigation.
@@ -24,41 +23,47 @@ Fan speed controller for Avon Valley farm preparation room air extraction system
   
 ## Parts:
 * Arduino Uno [Here](https://en.wikipedia.org/wiki/Arduino_Uno)
-* Electroman EM-262 power controller din mount. [Here](https://electromen.com/en/products/item/power-controllers/230vac/EM-262)
+* Crydom 25 A Solid State Relay, Phase Angle, Panel Mount. [Here](https://uk.rs-online.com/web/p/solid-state-relays/1450603/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Relays_Index-_-Solid+State+Relays%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1193841357972&s_kwcid=AL!7457!3!504930549032!b!!g!!&gclid=Cj0KCQjw--GFBhDeARIsACH_kda--qfwiYqq5zjuV3pZ5H8Jwh-oOMkSBz1KMY0g-ov1plc-TYbbI9QaAs4UEALw_wcB&gclsrc=aw.ds)
+* Solid State Relay Heat Sink Din mount [Here](https://uk.rs-online.com/web/p/solid-state-relay-heatsinks/7034564/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_Relays_Solid+State+Relay+Heatsinks_Phrase-_-Sensata+/+Crydom+-+7034564+-+HS301DR-_-hs301dr&matchtype=p&kwd-23861736400&s_kwcid=AL!7457!3!512563304828!p!!g!!hs301dr&gclid=Cj0KCQjw--GFBhDeARIsACH_kdZ8FfeA81j-OvZjZMheyz4FUox76YKj330JyLfjab7-JEgpXslKqpEaAsJ0EALw_wcB&gclsrc=aw.ds)
 * LCD 16x2 I2C Screen blue [Here]() add link
 * 3D printed screen bezel [Here](https://www.thingiverse.com/thing:2771280)
 * Rotary Encoder Module KY-040 With Top Clickable Switch [Here]() add link
-* HDR-15-5 240vac-5vdc 2.4 Watt power supply din mount [Here](https://uk.rs-online.com/web/p/din-rail-power-supplies/1457859/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Power_Supplies_%26_Transformers_Index-_-DIN+Rail+Power+Supplies%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1192354378221&s_kwcid=AL!7457!3!504930364250!b!!g!!&gclid=Cj0KCQjwhr2FBhDbARIsACjwLo1bym7kQZVe62agwAHKhaSh1FhwOt1YvDgi1FkQ_Wzu-pva8UGaCTAaAnaPEALw_wcB&gclsrc=aw.ds)
+* HDR-15-12 240vac-12vdc 1.25A power supply din mount [Here](https://uk.rs-online.com/web/p/din-rail-power-supplies/1457860/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_DIN%20Rail%20Power%20Supplies_Mean%20Well_Exact-_-Mean%20Well%20-%20DIN%20Rail%20Power%20Supplies%20-%201457860%20-%205-_-hdr%2015%2012&gclid=Cj0KCQjw--GFBhDeARIsACH_kdbE-MJgkjSO6FHoLwMOmvp2tnu0kLxm3cejjB0S-6lC3Tamvx2wPN0aArpeEALw_wcB&gclsrc=aw.ds&grossPrice=Y&kwd-372001364330&matchtype=e&s_kwcid=AL!7457!3!442026574461!e!!g!!hdr%2015%2012)
 * DHT22 Temperature Humidity sensor [Here](https://learn.adafruit.com/dht)
 
-### Setup program options:
+## Construction:
+* 3D printed Bezel
+<img src="" alt="topof image" width="45%"/><img src="" alt="led image" width="45%"/> </div>
+
+
+## Setup program options:
 On pressing the rotary encoder centre button
 * Setup Menu.
 * Modes Auto/Manual.
-* Max Target Temperature.
+* Min Target Temperature.
 * Max Target Humidity.
-* Software Version info.
+* Max Fan PWM (255 = Max).
 * Menu Exit.
 
 
-### Setup program flow:
+## Setup program flow:
 
 
 ## General Operation
 
 
-### Decals
+## Decals
 
 
-### Credits:
+## Credits:
 The 3D printed LCD bezel, 
 TheDreamMaster https://www.thingiverse.com/thing:2771280
 
 
 
-##### Media:
+## Media:
 
 
 All other images are my own.
 
-[Back_to_top](#Coffee)
+[Back_to_top](#Fan_Speed_Control)
