@@ -10,7 +10,7 @@
 int On = HIGH;
 int Off = LOW;
 int eeAddress = 0;              // Address to start saving to EEprom
-const byte PWMoutput = 3;       // relay pin
+const byte PWMoutput = 3;       // PWM output pin to fan control realy
 
 int fanMin = 0;
 int fanMax = 255;
@@ -26,8 +26,8 @@ float fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menue can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
-int acFail = 0;
-int ledR = 10;
+int acFail = 0;                 // This is set to 1 when the controller is put in standby, it holds control in standby incase of ac power falure
+const byte ledR = 10;
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,10 +85,10 @@ void setup() {
   EEPROM.get(8, tempMin);                   // Get inital min temp
   EEPROM.get(16, humMax);                   // Get inital hum max
   EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
-  EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max 
+  EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
   EEPROM.get(40, shutDown);                 // Get the Shutdown Status incase or pwer falure
-  EEPROM.get(48, acFail);                   // Get the acFail to stop system starting up if in standby and AC power cycles
-  
+  EEPROM.get(48, acFail);                   // Get the acFail to stop system starting up if in standby and AC power drops in/out
+
   pinMode(ledR, OUTPUT);                    // Control standby light
   digitalWrite(ledR, Off);                  // truen the led initially off
 
@@ -109,7 +109,7 @@ void setup() {
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
-  if(shutDown = 0){
+  if (shutDown = 0) {
     fanControl();                  // Adjust PWM output to fans controller
   }
   readRotaryEncoder();             // Check status of rotery encoder
@@ -168,19 +168,24 @@ void standBy() {
   if (standByButton && shutDown == 0 || shutDown == 1 && acFail == 1) {
     standByButton = false;
     lcd.noBacklight();
-    digitalWrite(ledR, On); 
-    PWMoutput = off;
+    digitalWrite(ledR, On);
+    digitalWrite(PWMoutput, Off);
     shutDown = 1;
-    EEPROM.put(40, shutDown);
     acFail = 1;
-    EEPROM.put(48, acFail);
+    writeToEEprom();
   }
   else if (standByButton && shutDown == 1) {
     standByButton = false;
     shutDown = 0;
-    EEPROM.put(40, shutDown);
     acFail = 0;
-    EEPROM.put(48, acFail);
+    writeToEEprom();
     delay(1100);
   }
+}
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void writeToEEprom() {
+  EEPROM.put(48, acFail);
+  EEPROM.put(40, shutDown);
 }

@@ -76,7 +76,7 @@ void buttonPressed() {
 //      menuitem = 1;
 //      lcd.clear();
 //      value = 0;
-        delay(2000);
+        delay(1100);
     }
   }
 }
