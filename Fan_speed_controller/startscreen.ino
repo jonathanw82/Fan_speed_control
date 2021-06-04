@@ -7,9 +7,9 @@ void startUpScreen(){
   lcd.print(F(" AvonVally Farm "));
   delay(1500);
   lcd.setCursor(0, 0);
-  lcd.print(F("   Preperation   "));
+  lcd.print(F("  Preperation   "));
   lcd.setCursor(0, 1);
-  lcd.print(F("  Extractor fan  "));
+  lcd.print(F(" Extractor fan  "));
   delay(2000);
   lcd.clear();
   lcd.setCursor(0, 0);

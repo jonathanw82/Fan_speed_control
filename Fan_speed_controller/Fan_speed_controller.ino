@@ -78,7 +78,7 @@ void setup() {
   lcd.backlight();                          // Turns backlight LCD on
   dht.begin();                              // temp humid sensor
 
-  pinMode(standBySwitch, INPUT);     // sets the switch to an input
+  pinMode(standBySwitch, INPUT);            // sets the switch to an input
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
@@ -109,19 +109,17 @@ void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
   if (shutDown == 0){
-    fanControl();                    // Adjust PWM output to fans controller
-    readRotaryEncoder();             // Check status of rotery encoder
-    encoderControl();                // set and check what the encoder button status are
-    buttonPressed();                 // Is button pressed
-    timerIsr();                      // timerIsr for rotery encoder
-  
-    sensors();                       // Read Temp and Humidity sensors
-    updatedisplay();                 // Lcd screen transitions
-    deBug();                         // enable Debug function
+    fanControl();                  // Adjust PWM output to fans controller
+    readRotaryEncoder();           // Check status of rotery encoder
+    encoderControl();              // set and check what the encoder button status are
+    buttonPressed();               // Is button pressed
+    timerIsr();                    // timerIsr for rotery encoder
+    sensors();                     // Read Temp and Humidity sensors
+    updatedisplay();               // Lcd screen transitions
+    deBug();                       // enable Debug function
   }
   manualReset();                   // If button is held down reset
   standBy();                       // Set stand by mode
-  
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +154,7 @@ void sensors() {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void manualReset() {                  // Kick the watchdog if the reset is activated
+void manualReset() {                  // Kick the watchdog if the reset is held down to activated
   if (button) {
     button = false;
     delay(2000);
@@ -182,11 +180,12 @@ void standBy() {
        digitalWrite(ledR, On);
        digitalWrite(PWMoutput, Off);
        shutDown = 1;
+       Wire.flush();
        lcd.flush();
        }
      else{
         Serial.println("StandBy OFF");
-        delay(2000);
+        delay(1500);
         }
      }
     }
