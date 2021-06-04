@@ -29,11 +29,8 @@ int shutDown = 0;
 const byte ledR = 10;
 int standBySwitch = 7;
 int standByValue = 0;
-
-int buttonState;             // the current reading from the input pin
-int lastButtonState = LOW;   // the previous reading from the input pin
-unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
+int buttonState;               // the current reading from the standby input pin
+int lastButtonState = LOW;     // the previous reading from the standby input pin
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,6 +60,8 @@ float temp;                  //Stores temperature value
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Millis declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 unsigned long currentTime;
 unsigned long previousTime = 0;
+unsigned long lastDebounceTime = 0;  // the last time the standby pin was toggled
+unsigned long debounceDelay = 50;    // the debounce time for standby pin
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lcd Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
