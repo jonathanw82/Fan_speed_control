@@ -26,7 +26,6 @@ float fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menue can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
-//int acFail = 0;                 // This is set to 1 when the controller is put in standby, it holds control in standby incase of ac power falure
 const byte ledR = 10;
 int standBySwitch = 7;
 int standByValue = 0;
@@ -58,7 +57,6 @@ int marker = 0;
 #define DHTPIN 6             // what pin we're connected to
 #define DHTTYPE DHT22        // DHT 22  (AM2302)
 DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
-// int chk;
 float hum;                   //Stores humidity value
 float temp;                  //Stores temperature value
 
@@ -81,7 +79,6 @@ void setup() {
   dht.begin();                              // temp humid sensor
 
   pinMode(standBySwitch, INPUT);     // sets the switch to an input
-//  digitalWrite(standBySwitch, Off);         // Set switch status low
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
@@ -89,7 +86,6 @@ void setup() {
   EEPROM.get(16, humMax);                   // Get inital hum max
   EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
-//  EEPROM.get(40, shutDown);                 // Get the Shutdown Status incase or pwer falure
 
   pinMode(ledR, OUTPUT);                    // Control standby light
   digitalWrite(ledR, Off);                  // truen the led initially off
@@ -118,11 +114,12 @@ void loop() {
     encoderControl();                // set and check what the encoder button status are
     buttonPressed();                 // Is button pressed
     timerIsr();                      // timerIsr for rotery encoder
-    manualReset();                   // If button is held down reset
+  
     sensors();                       // Read Temp and Humidity sensors
     updatedisplay();                 // Lcd screen transitions
     deBug();                         // enable Debug function
   }
+  manualReset();                   // If button is held down reset
   standBy();                       // Set stand by mode
   
 }
@@ -147,7 +144,7 @@ void fanControl() {
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
 //  fanPercentage = map(fanSpeed, 0, 255, 0, 100);          // fan speed in %
-  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);    // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);       // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
@@ -200,7 +197,6 @@ void standBy() {
 /* This function adds the variables to EEprom, using this method only allows data to be written to memory 
    if it has changed else it get ignored*/
 void writeToEEprom() {
-  Serial.print("Wrtiting to EEprom");
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
   EEPROM.put(8, tempMin);
   EEPROM.put(16, humMax);
