@@ -9,13 +9,13 @@ void updatedisplay() {
       lcd.setCursor(0, 1);
       lcd.print(F(" Fan Speed "));
       lcd.setCursor(12, 1);
-      lcd.print(fanPercentage);
+      lcd.print(manualFanSpeed);
       lcd.print(F("%"));
-      if (fanPercentage <= 0) {
+      if (manualFanSpeed < 10) {
         lcd.setCursor(14, 1);
         lcd.print(F("   "));
       }
-      else if (fanPercentage < 100) {
+      else if (manualFanSpeed < 100) {
         lcd.setCursor(15, 1);
         lcd.print(F("   "));
       }
@@ -69,7 +69,7 @@ void updatedisplay() {
           lcd.setCursor(12, 1);
           lcd.print(fanPercentage);
           lcd.print(F("%"));
-          if (fanPercentage <= 0) {
+          if (fanPercentage <= 10) {
             lcd.setCursor(14, 1);
             lcd.print(F("   "));
           }

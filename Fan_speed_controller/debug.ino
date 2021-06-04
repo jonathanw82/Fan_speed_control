@@ -18,17 +18,22 @@ void deBug() {
 //  Serial.print(" currentMode =");
 //  Serial.println(currentMode);
 //  Serial.println(manualFanSpeed);
-  Serial.print("fan % = ");
-  Serial.println(fanPercentage);
-  Serial.print("Speed = ");
-  Serial.println(fanSpeed);
-  Serial.print("tempMax = ");
-  Serial.println(tempMax);
-  Serial.print("Current Temp = ");
-  Serial.println(temp);
-
+//  Serial.print("fan % = ");
+//  Serial.println(fanPercentage);
+//  Serial.print("Speed = ");
+//  Serial.println(fanSpeed);
+//  Serial.print("tempMax = ");
+//  Serial.println(tempMax);
+//  Serial.print("Current Temp = ");
+//  Serial.println(temp);
+//  int sb = digitalRead(standBySwitch);
+//  Serial.print("SBSWITCH = ");
+//  Serial.println(sb);
+//  Serial.println(fanInVolts);
  // Serial.println(target);
 //  Serial.println(fanMax);
-  Serial.print("Volts = ");
-  Serial.println(fanInVolts);
+//  Serial.print("Volts = ");
+//  Serial.println(fanInVolts);
+//  Serial.print("shutDown = ");
+//  Serial.println(shutDown);
 }

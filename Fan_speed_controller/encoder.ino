@@ -3,14 +3,14 @@ void readRotaryEncoder()
 {
   value += encoder->getValue();
 
-  if (value / 2 > last) {
-    last = value / 2;
+  if (value / 3 > last) {
+    last = value / 3;
     down = true;
     if (currentTime - previousTime >= 50) {
       currentTime = previousTime;
     }
-  } else   if (value / 2 < last) {
-    last = value / 2;
+  } else   if (value / 3 < last) {
+    last = value / 3;
     up = true;
     if (currentTime - previousTime >= 50) {
       currentTime = previousTime;
@@ -33,11 +33,8 @@ void encoderControl()
         middle = true;
         break;
       case ClickEncoder::Held:                  // Setup button held time in ClickEncoder.cpp
-        standByButton = true;
-        break;
-      case ClickEncoder::DoubleClicked:
         button = true;
-       break;
+        break;
     }
   }
 
@@ -46,13 +43,15 @@ void encoderControl()
   if (currentMode == 0 && menuEnter == 0) {       // currentMode 0 = manual mode
     if (up && page == 1) {
       up = false;
-      manualFanSpeed -= 10;
-      EEPROM.put(0, manualFanSpeed);
+      manualFanSpeed -= 5;
+      //EEPROM.put(0, manualFanSpeed);
+      writeToEEprom();
     }
     if (down && page == 1) {
       down = false;
-      manualFanSpeed += 10;
-      EEPROM.put(0, manualFanSpeed);
+      manualFanSpeed += 5;
+      //EEPROM.put(0, manualFanSpeed);
+      writeToEEprom();
     }
     if (manualFanSpeed > 100) {
       manualFanSpeed = 100;
@@ -95,22 +94,26 @@ void encoderControl()
   if (up && menuitem == 3 && enter == 1 && page == 2 ) {
     up = false;
     currentMode--;
-    EEPROM.put(24, currentMode);
+   // EEPROM.put(24, currentMode);
+   writeToEEprom();
   }
   if (up && menuitem == 4 && enter == 1 && page == 2 ) {
     up = false;
     tempMin --;
-    EEPROM.put(8, tempMin);
+   // EEPROM.put(8, tempMin);
+    writeToEEprom();
   }
   if (up && menuitem == 5 && enter == 1 && page == 2 ) {
     up = false;
     humMax -=5;
-    EEPROM.put(16, humMax);
+   // EEPROM.put(16, humMax);
+   writeToEEprom();
   }
    if (up && menuitem == 6 && enter == 1 && page == 2 ) {
     up = false;
     fanMax -=5;
-    EEPROM.put(32, fanMax);
+    //EEPROM.put(32, fanMax);
+    writeToEEprom();
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~ Down ~~~~~~~~~~~~~~~~~~~~~~~
@@ -146,7 +149,8 @@ void encoderControl()
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
     down = false;
     currentMode++;
-    EEPROM.put(24, currentMode);
+    //EEPROM.put(24, currentMode);
+    writeToEEprom();
   }
   if (currentMode >= 2) {
     currentMode = 2;
@@ -157,7 +161,8 @@ void encoderControl()
    if (down && menuitem == 4 && enter == 1 && page == 2 ) {
     down = false;
     tempMin ++;
-    EEPROM.put(8, tempMin);
+    //EEPROM.put(8, tempMin);
+    writeToEEprom();
   }
   if (tempMin >= 30) {
     tempMin = 30;
@@ -168,7 +173,8 @@ void encoderControl()
     if (down && menuitem == 5 && enter == 1 && page == 2 ) {
     down = false;
     humMax +=5;
-    EEPROM.put(16, humMax);
+    //EEPROM.put(16, humMax);
+    writeToEEprom();
   }
   if (humMax >= 100) {
     humMax = 100;
@@ -179,7 +185,8 @@ void encoderControl()
     if (down && menuitem == 6 && enter == 1 && page == 2 ) {
     down = false;
     fanMax +=5;
-    EEPROM.put(32, fanMax);
+   // EEPROM.put(32, fanMax);
+   writeToEEprom();
   }
   if (fanMax >= 255) {
     fanMax = 255;

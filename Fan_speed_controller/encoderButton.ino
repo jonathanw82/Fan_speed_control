@@ -70,13 +70,13 @@ void buttonPressed() {
     else if (page == 1 && menuitem == 7 && menuEnter == 1)
     {
       middle = false;
-//      page = 1;
-//      enter = 0;
-//      menuEnter = 0;
-//      menuitem = 1;
-//      lcd.clear();
-//      value = 0;
-        delay(1100);
+      page = 1;
+      enter = 0;
+      menuEnter = 0;
+      menuitem = 1;
+      lcd.clear();
+      value = 0;
+      delay(1100);
     }
   }
 }
