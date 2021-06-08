@@ -6,7 +6,7 @@
  
  
 ## Overview:
-Fan speed controller for Avon Valley farm preparation room air extraction system, with incorporated menu system to allow the user to select modes from automatic and manual.
+Fan speed controller for AvonValley farm preparation space air extraction system, with incorporated menu system to allow the user to select modes from automatic and manual.
 
 ## The users goals of this controller are:
 * An easy to navigate menu.
@@ -30,6 +30,8 @@ Fan speed controller for Avon Valley farm preparation room air extraction system
 * Rotary Encoder Module KY-040 With Top Clickable Switch [Here]() add link
 * HDR-15-12 240vac-12vdc 1.25A power supply din mount [Here](https://uk.rs-online.com/web/p/din-rail-power-supplies/1457860/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_DIN%20Rail%20Power%20Supplies_Mean%20Well_Exact-_-Mean%20Well%20-%20DIN%20Rail%20Power%20Supplies%20-%201457860%20-%205-_-hdr%2015%2012&gclid=Cj0KCQjw--GFBhDeARIsACH_kdbE-MJgkjSO6FHoLwMOmvp2tnu0kLxm3cejjB0S-6lC3Tamvx2wPN0aArpeEALw_wcB&gclsrc=aw.ds&grossPrice=Y&kwd-372001364330&matchtype=e&s_kwcid=AL!7457!3!442026574461!e!!g!!hdr%2015%2012)
 * DHT22 Temperature Humidity sensor [Here](https://learn.adafruit.com/dht)
+* Plastic box for Arduino and LCD display [Here](https://uk.rs-online.com/web/p/general-purpose-enclosures/4984025/)
+* White rocker switch [Here](https://uk.rs-online.com/web/p/rocker-switches/5332970/)
 
 ## Construction:
 * 3D printed Bezel
@@ -44,6 +46,8 @@ On pressing the rotary encoder centre button
 * Min Target Temperature.
 * Max Target Humidity.
 * Max Fan PWM (255 = Max).
+_________________________________________________
+Possible add debug scrolling screens.
 * Menu Exit.
 
 

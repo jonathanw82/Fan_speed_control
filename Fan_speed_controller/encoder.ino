@@ -83,6 +83,10 @@ void encoderControl()
     {
       menuitem == 6;
     }
+     if (menuitem == 6)
+    {
+      menuitem == 7;
+    }
 
     lastMenuItem = menuitem;
     menuitem--;
@@ -138,12 +142,15 @@ void encoderControl()
      if (down && menuitem == 6 && lastMenuItem == 5) {
       menuitem++;
     }
+     if (down && menuitem == 7 && lastMenuItem == 6) {
+      menuitem++;
+    }
     lastMenuItem = menuitem;
     menuitem++;
 
-    if (menuitem >= 7)
+    if (menuitem >= 8)
     {
-      menuitem = 7;
+      menuitem = 8;
     }
   }
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
