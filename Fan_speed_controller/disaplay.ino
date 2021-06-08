@@ -177,14 +177,33 @@ void updatedisplay() {
       lcd.print("     ");
     }
   }
-  if ( menuitem == 7 && page == 1 && menuEnter == 1)
+    if ( menuitem == 7 && page == 1 && menuEnter == 1)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print(F("Set fanMin      "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Click to Enter  "));
+  }
+  if (menuitem == 7 && page == 2 && menuEnter == 1) {
+    lcd.setCursor(0, 0);
+    lcd.print(F("Fan Min         "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Fan Min ="));
+    lcd.print(fanMin);
+    lcd.print("    ");
+    if (fanMin < 100) {
+      lcd.setCursor(11, 1);
+      lcd.print("     ");
+    }
+  }
+  if ( menuitem == 8 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Diagnostic      "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
-  if (menuitem == 7 && page == 2 && menuEnter == 1) {
+  if (menuitem == 8 && page == 2 && menuEnter == 1) {
     if (currentTime - previousTime >= 1000 && marker == 0)
     {
       previousTime = currentTime;
@@ -209,7 +228,7 @@ void updatedisplay() {
       lcd.setCursor(0, 0);
       lcd.print(F("Fan Speed in %: "));
       lcd.setCursor(0, 1);
-      lcd.print(F("Speed  "))
+      lcd.print(F("Speed  "));
       lcd.print(fanPercentage);
       lcd.print(F("%"));
       if (fanPercentage <= 10) {
@@ -301,7 +320,7 @@ void updatedisplay() {
         marker = 0;
       }
   }
-  if (menuitem == 8 && page == 1 && menuEnter == 1)
+  if (menuitem == 9 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("   Menu Exit    "));
