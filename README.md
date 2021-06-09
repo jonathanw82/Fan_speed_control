@@ -6,9 +6,9 @@
  
  
 ## Overview:
-Fan speed controller for AvonValley farm preparation space air extraction system, with incorporated menu allowing the user to select modes from automatic and manual.
+Fan speed controller for AvonValley farm preparation space air extraction, with incorporated menu allowing the user to select modes from automatic and manual.
 
-The current controller offers little to no options for control other than 0-100%, the fan is also very noisy, this controller offers a solution to reduce the noise and give the user more control. 
+The current controller offers little to no options for control other than 0-100%, the fan is also very noisy, this controller offers a possible solution to reduce the noise and give the user more control. 
 
 ## The users goals of this controller are:
 * An easy to navigate menu.
@@ -75,7 +75,7 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 * Wiring Schematic
 
 
-<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/>
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/></div>
 
 
 * 3D printed Bezel
