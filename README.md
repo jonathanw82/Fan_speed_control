@@ -72,6 +72,12 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 * [drawio](https://www.diagrams.net/)
 
 ## Construction:
+* Wiring Schematic
+
+
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/>
+
+
 * 3D printed Bezel
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img1.jpg" alt="3D print" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img2.jpg" alt="3D print" width="43%"/></div>
