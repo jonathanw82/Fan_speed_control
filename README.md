@@ -33,7 +33,7 @@ The current controller offers little to no options for control other than 0-100%
 ### Note:
 
 All settings are accessed by pressing the rotary encoder button to enter the settings menu, then rotating the button until the desired menu option is displayed, to enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset either option can be used, but it is better to scroll to the exit option.
-
+#
 
 * Auto Temperature Settings:
 Auto Temp has a couple of settings that can be changed to get the desired effect from the controller.
