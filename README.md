@@ -41,14 +41,22 @@ Fan speed controller for AvonValley farm preparation space air extraction system
 
 ## Setup program options:
 On pressing the rotary encoder centre button
-* Setup Menu.
-* Modes Auto/Manual.
-* Min Target Temperature.
-* Max Target Humidity.
-* Max Fan PWM (255 = Max).
-_________________________________________________
-Possible add debug scrolling screens.
-* Menu Exit.
+
+| Setup Menu.                | Options        |
+| :----------------          | :-------       |
+| Modes Auto/Manual.         | Manual, Auto Temp, Auto Hum |
+| Min Target Temperature.    | 0-30C          |
+| Max Target Temperature.    | 0-30C          |
+| Min Target Humidity.       | 0-100%         |
+| Max Target Humidity.       | 0-100%         |
+| Max PWM                    | 0-255          |
+| Min PWM                    | 0-255          |
+| Diagnostic                 | Display Scroll |
+| Menu Exit.                 |                |
+
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="45%"/></div>
+
+#
 
 
 ## Setup program flow:
