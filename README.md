@@ -6,7 +6,9 @@
  
  
 ## Overview:
-Fan speed controller for AvonValley farm preparation space air extraction system, with incorporated menu system to allow the user to select modes from automatic and manual.
+Fan speed controller for AvonValley farm preparation space air extraction system, with incorporated menu allowing the user to select modes from automatic and manual.
+
+The current controller offers little to no options for control other than 0-100%, the fan is also very noisy, this controller offers a solution to reduce the noise and give the user more control. 
 
 ## The users goals of this controller are:
 * An easy to navigate menu.
@@ -20,7 +22,38 @@ Fan speed controller for AvonValley farm preparation space air extraction system
 * Auto mode to allow automated control of fan speed relative to rises in room temperature or humidity, with user-programmable target parameters.
 * Manual mode to allow the user to set a fan speed as desired.
 
-  
+## General Operation & Setup
+* Manual Mode: This mode offers adjustment vis the rotary encoder to increase or decrease the fan speed form 0-100%
+
+* Auto Temp Mode: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
+
+* Auto Hum Mode: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
+#
+
+### Note:
+
+All settings are accessed by pressing the rotary encoder button to enter the settings menu, then rotating the button until the desired menu option is displayed, to enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset either option can be used, but it is better to scroll to the exit option.
+
+
+* Auto Temperature Settings:
+Auto Temp has a couple of settings that can be changed to get the desired effect from the controller.
+The 2 settings minimum temp and maximum temp, (EG) setting the minimum temp to 20 and the max to 30 the fan will be running @0% at 20 and 100% at 30.
+Temp Min can be set between 10-30C.
+
+* Auto Humidity Settings:
+Auto Hum has a couple of settings that can be changed to get the desired effect from the controller.
+The 2 settings minimum Hum and maximum Hum, (EG) setting the minimum Hum to 20% and the max to 100% the fan will be running @0% at 20 and 100% at 100%.
+Hum Min can be set between 20%-100%.
+
+* PWM Settings:
+It is recommended these settings are left as standard PWM Min = 0 and PWM Max = 255, in certain circumstances the PWM Min can be increased if the fan motor is having trouble getting started.
+Or the PWM Max can be decreased if 100% is too loud or the fan is far too powerful.
+
+* Diagnostics:
+This option will display debug information, Current Mode, Fan Speed %, PWM Pin Voltage, PWM Current Value, Min Temp, MaxTemp, Min Hum, Max Hum, PWM Min, PWM Max, Software Version.
+
+
+
 ## Parts:
 * Arduino Uno [Here](https://en.wikipedia.org/wiki/Arduino_Uno)
 * Crydom 25 A Solid State Relay, Phase Angle, Panel Mount. [Here](https://uk.rs-online.com/web/p/solid-state-relays/1450603/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Relays_Index-_-Solid+State+Relays%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1193841357972&s_kwcid=AL!7457!3!504930549032!b!!g!!&gclid=Cj0KCQjw--GFBhDeARIsACH_kda--qfwiYqq5zjuV3pZ5H8Jwh-oOMkSBz1KMY0g-ov1plc-TYbbI9QaAs4UEALw_wcB&gclsrc=aw.ds)
@@ -33,6 +66,11 @@ Fan speed controller for AvonValley farm preparation space air extraction system
 * Plastic box for Arduino and LCD display [Here](https://uk.rs-online.com/web/p/general-purpose-enclosures/4984025/)
 * White rocker switch [Here](https://uk.rs-online.com/web/p/rocker-switches/5332970/)
 
+## Technology Used:
+* [Arduino Ide](https://www.arduino.cc/en/software)
+* [VsCode](https://code.visualstudio.com/)
+* [drawio](https://www.diagrams.net/)
+
 ## Construction:
 * 3D printed Bezel
 
@@ -42,27 +80,25 @@ Fan speed controller for AvonValley farm preparation space air extraction system
 ## Setup program options:
 On pressing the rotary encoder centre button
 
-| Setup Menu.                | Options        |
-| :----------------          | :-------       |
+| Setup Menu.                | Options                     |
+| :----------------          | :-------                    |
 | Modes Auto/Manual.         | Manual, Auto Temp, Auto Hum |
-| Min Target Temperature.    | 0-30C          |
-| Max Target Temperature.    | 0-30C          |
-| Min Target Humidity.       | 0-100%         |
-| Max Target Humidity.       | 0-100%         |
-| Max PWM                    | 0-255          |
-| Min PWM                    | 0-255          |
-| Diagnostic                 | Display Scroll |
-| Menu Exit.                 |                |
+| Min Target Temperature.    | +/- 0-30C                   |
+| Max Target Temperature.    | +/- 0-30C                   |
+| Min Target Humidity.       | +/- 0-100%                  |
+| Max Target Humidity.       | +/- 0-100%                  |
+| Max PWM                    | +/- 0-255                   |
+| Min PWM                    | +/- 0-255                   |
+| Diagnostic                 | Scrolling Display of all Saved Data |
+| Menu Exit.                 |                             |
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="100%"/></div>
 
 #
 
 
-## Setup program flow:
 
 
-## General Operation
 
 
 ## Decals

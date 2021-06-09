@@ -139,8 +139,8 @@ void updatedisplay() {
     lcd.print(tempMin);
     lcd.print(F("          "));
   }
-  
-   if ( menuitem == 5 && page == 1 && menuEnter == 1)
+
+  if ( menuitem == 5 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Set MaxTemp     "));
@@ -155,8 +155,8 @@ void updatedisplay() {
     lcd.print(tempMax);
     lcd.print(F("          "));
   }
-  
-    if ( menuitem == 6 && page == 1 && menuEnter == 1)
+
+  if ( menuitem == 6 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Set MinHum      "));
@@ -175,7 +175,7 @@ void updatedisplay() {
       lcd.print(F("          "));
     }
   }
-  
+
   if ( menuitem == 7 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
@@ -193,10 +193,10 @@ void updatedisplay() {
     if (humMax < 100) {
       lcd.setCursor(6, 1);
       lcd.print(F("          "));
-    }else{
-       lcd.setCursor(7, 1);
+    } else {
+      lcd.setCursor(7, 1);
       lcd.print(F("         "));
-      }
+    }
   }
   if ( menuitem == 8 && page == 1 && menuEnter == 1)
   {
@@ -262,8 +262,21 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-
     if (currentTime - previousTime >= 2000 && marker == 1)
+    {
+      previousTime = currentTime;
+      lcd.setCursor(0, 0);
+      lcd.print(F("Air Temp & Humid"));
+      lcd.setCursor(0, 1);
+      lcd.print(F("C="));
+      lcd.print(temp);
+      lcd.print(F("  H="));
+      lcd.print(hum);
+      lcd.print(F("%"));
+
+      marker = marker + 1;
+    }
+    if (currentTime - previousTime >= 2000 && marker == 2)
     {
       previousTime = currentTime;
       if (currentMode == 0) {
@@ -300,7 +313,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 2)
+    if (currentTime - previousTime >= 2000 && marker == 3)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -311,7 +324,7 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 3)
+    if (currentTime - previousTime >= 2000 && marker == 4)
     {
       previousTime = currentTime;
       int PWMnow = fanSpeed;
@@ -331,7 +344,7 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 4)
+    if (currentTime - previousTime >= 2000 && marker == 5)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -352,7 +365,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 5)
+    if (currentTime - previousTime >= 2000 && marker == 6)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -373,7 +386,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 6)
+    if (currentTime - previousTime >= 2000 && marker == 7)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -401,17 +414,17 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-     if (currentTime - previousTime >= 2000 && marker == 7)
+    if (currentTime - previousTime >= 2000 && marker == 8)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
       lcd.print(F("SoftWare Version"));
       lcd.setCursor(0, 1);
       lcd.print(SoftwareVersion);
-    
+
       marker = marker + 1;
     }
-    if (marker > 7) {
+    if (marker > 8) {
       marker = 0;
     }
   }
