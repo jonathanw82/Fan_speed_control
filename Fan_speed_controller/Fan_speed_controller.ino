@@ -85,6 +85,7 @@ void setup() {
   EEPROM.get(16, humMax);                   // Get inital hum max
   EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
+  EEPROM.get(40, fanMin);
 
   pinMode(ledR, OUTPUT);                    // Control standby light
   digitalWrite(ledR, Off);                  // truen the led initially off
@@ -140,8 +141,7 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-//  fanPercentage = map(fanSpeed, 0, 255, 0, 100);          // fan speed in %
-  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);       // fan speed in %               // Check this works~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);       // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
@@ -192,7 +192,7 @@ void standBy() {
 } 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/* This function adds the variables to EEprom, using this method only allows data to be written to memory 
+/* This function adds the variables to EEprom, using the (put) method only allows data to be written to memory 
    if it has changed else it get ignored*/
 void writeToEEprom() {
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
@@ -200,4 +200,6 @@ void writeToEEprom() {
   EEPROM.put(16, humMax);
   EEPROM.put(24, currentMode);
   EEPROM.put(32, fanMax);
+  EEPROM.put(40, fanMin);
+  
 }

@@ -79,8 +79,21 @@ void buttonPressed() {
       page = 1;
       enter = 0;
     }
+        if (page == 1 && menuitem == 8 && menuEnter == 1)
+    {
+      middle = false;
+      page = 2;
+      enter = 1;
+    }
 
-    else if (page == 1 && menuitem == 8 && menuEnter == 1)
+    else if (page == 2 && menuitem == 8 && enter == 1 && menuEnter == 1)
+    {
+      middle = false;
+      page = 1;
+      enter = 0;
+    }
+
+    else if (page == 1 && menuitem == 9 && menuEnter == 1)
     {
       middle = false;
       page = 1;
