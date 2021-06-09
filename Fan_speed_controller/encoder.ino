@@ -95,6 +95,14 @@ void encoderControl()
     {
       menuitem == 9;
     }
+    if (menuitem == 9)
+    {
+      menuitem == 10;
+    }
+    if (menuitem == 10)
+    {
+      menuitem == 11;
+    }
 
     lastMenuItem = menuitem;
     menuitem--;
@@ -115,15 +123,25 @@ void encoderControl()
   }
   if (up && menuitem == 5 && enter == 1 && page == 2 ) {
     up = false;
-    humMax -= 5;
+    tempMax --;
     writeToEEprom();
   }
   if (up && menuitem == 6 && enter == 1 && page == 2 ) {
     up = false;
-    fanMax -= 5;
+    humMin -= 5;
     writeToEEprom();
   }
   if (up && menuitem == 7 && enter == 1 && page == 2 ) {
+    up = false;
+    humMax -= 5;
+    writeToEEprom();
+  }
+  if (up && menuitem == 8 && enter == 1 && page == 2 ) {
+    up = false;
+    fanMax -= 5;
+    writeToEEprom();
+  }
+  if (up && menuitem == 9 && enter == 1 && page == 2 ) {
     up = false;
     fanMin --;
     writeToEEprom();
@@ -157,12 +175,18 @@ void encoderControl()
     if (down && menuitem == 8 && lastMenuItem == 7) {
       menuitem++;
     }
+    if (down && menuitem == 9 && lastMenuItem == 8) {
+      menuitem++;
+    }
+     if (down && menuitem == 10 && lastMenuItem == 9) {
+      menuitem++;
+    }
     lastMenuItem = menuitem;
     menuitem++;
 
-    if (menuitem >= 9)
+    if (menuitem >= 11)
     {
-      menuitem = 9;
+      menuitem = 11;
     }
   }
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
@@ -181,39 +205,79 @@ void encoderControl()
     tempMin ++;
     writeToEEprom();
   }
+  if(tempMin == tempMax){
+    tempMin = tempMax -5;
+    }
   if (tempMin >= 30) {
     tempMin = 30;
   }
-  else if (tempMin < 10) {
+  if (tempMin < 10) {
     tempMin = 10;
   }
   if (down && menuitem == 5 && enter == 1 && page == 2 ) {
     down = false;
+    tempMax ++;
+    writeToEEprom();
+  }
+  if (tempMax == tempMin){
+    tempMax = tempMin +5;
+    }
+  if (tempMax >= 30) {
+    tempMax = 30;
+  }
+  if (tempMax < 10) {
+    tempMax = 10;
+  }
+  if (down && menuitem == 6 && enter == 1 && page == 2 ) {
+    down = false;
+    humMin += 5;
+    writeToEEprom();
+  }
+   if(humMin == humMax){
+    humMin = humMax -5;
+    }
+  if (humMin >= 100) {
+    humMin = 100;
+  }
+  if (humMin < 20) {
+    humMin = 20;
+  }
+  if (down && menuitem == 7 && enter == 1 && page == 2 ) {
+    down = false;
     humMax += 5;
     writeToEEprom();
   }
+  if(humMax == humMin){
+    humMax = humMin +5;
+    }
   if (humMax >= 100) {
     humMax = 100;
   }
-  else if (humMax < 20) {
+  if (humMax < 20) {
     humMax = 20;
   }
-  if (down && menuitem == 6 && enter == 1 && page == 2 ) {
+  if (down && menuitem == 8 && enter == 1 && page == 2 ) {
     down = false;
     fanMax += 5;
     writeToEEprom();
   }
+  if(fanMax == fanMin){
+    fanMax = fanMin;
+    }
   if (fanMax >= 255) {
     fanMax = 255;
   }
   if (fanMax < 0) {
     humMax = 0;
   }
-  if (down && menuitem == 7 && enter == 1 && page == 2 ) {
+  if (down && menuitem == 9 && enter == 1 && page == 2 ) {
     down = false;
     fanMin ++;
     writeToEEprom();
   }
+   if(fanMin == fanMax){
+    fanMin = fanMax;
+    }
   if (fanMin >= 255) {
     fanMin = 255;
   }

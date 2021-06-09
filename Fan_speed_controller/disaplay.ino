@@ -139,7 +139,7 @@ void updatedisplay() {
     lcd.print(tempMin);
     lcd.print(F("          "));
   }
-  /*
+  
    if ( menuitem == 5 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
@@ -155,12 +155,11 @@ void updatedisplay() {
     lcd.print(tempMax);
     lcd.print(F("          "));
   }
-  */
-  /*
+  
     if ( menuitem == 6 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
-    lcd.print(F("Set MaxHum      "));
+    lcd.print(F("Set MinHum      "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
@@ -173,19 +172,18 @@ void updatedisplay() {
     lcd.print(F("%"));
     if (humMin < 100) {
       lcd.setCursor(6, 1);
-      lcd.print("          ");
+      lcd.print(F("          "));
     }
   }
   
-  */
-  if ( menuitem == 5 && page == 1 && menuEnter == 1)
+  if ( menuitem == 7 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Set MaxHum      "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
-  if (menuitem == 5 && page == 2 && menuEnter == 1) {
+  if (menuitem == 7 && page == 2 && menuEnter == 1) {
     lcd.setCursor(0, 0);
     lcd.print(F("MaxHum  Fan 100%"));
     lcd.setCursor(0, 1);
@@ -194,57 +192,60 @@ void updatedisplay() {
     lcd.print(F("%"));
     if (humMax < 100) {
       lcd.setCursor(6, 1);
-      lcd.print("          ");
-    }
+      lcd.print(F("          "));
+    }else{
+       lcd.setCursor(7, 1);
+      lcd.print(F("         "));
+      }
   }
-  if ( menuitem == 6 && page == 1 && menuEnter == 1)
+  if ( menuitem == 8 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
-    lcd.print(F("Set MaxFan PWM  "));
+    lcd.print(F("Set PWM Max     "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
-  if (menuitem == 6 && page == 2 && menuEnter == 1) {
+  if (menuitem == 8 && page == 2 && menuEnter == 1) {
     lcd.setCursor(0, 0);
     lcd.print(F("Fan PWM Max     "));
     lcd.setCursor(0, 1);
     lcd.print(F("PWM Max ="));
     lcd.print(fanMax);
-    lcd.print("    ");
+    lcd.print(F("      "));
     if (fanMax < 100) {
       lcd.setCursor(11, 1);
-      lcd.print("     ");
+      lcd.print(F("     "));
     }
   }
-  if ( menuitem == 7 && page == 1 && menuEnter == 1)
+  if ( menuitem == 9 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
-    lcd.print(F("Set fanMin      "));
+    lcd.print(F("Set PWM Min     "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
-  if (menuitem == 7 && page == 2 && menuEnter == 1) {
+  if (menuitem == 9 && page == 2 && menuEnter == 1) {
     lcd.setCursor(0, 0);
-    lcd.print(F("Fan Min         "));
+    lcd.print(F("Fan PWM Min     "));
     lcd.setCursor(0, 1);
-    lcd.print(F("Fan Min ="));
+    lcd.print(F("PWM Min ="));
     lcd.print(fanMin);
-    lcd.print("    ");
+    lcd.print("      ");
     if (fanMin < 100) {
       lcd.setCursor(11, 1);
-      lcd.print("     ");
+      lcd.print(F("     "));
     }
   }
   //~~~~~~~~~~~~~~~~~~~~~~~~~ Diagnostic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  if ( menuitem == 8 && page == 1 && menuEnter == 1)
+  if ( menuitem == 10 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Diagnostic      "));
     lcd.setCursor(0, 1);
     lcd.print(F("Click to Enter  "));
   }
-  if (menuitem == 8 && page == 2 && menuEnter == 1) {
-    if (currentTime - previousTime >= 1000 && marker == 0)
+  if (menuitem == 10 && page == 2 && menuEnter == 1) {
+    if (currentTime - previousTime >= 2000 && marker == 0)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -262,7 +263,7 @@ void updatedisplay() {
       marker = marker + 1;
     }
 
-    if (currentTime - previousTime >= 1000 && marker == 1)
+    if (currentTime - previousTime >= 2000 && marker == 1)
     {
       previousTime = currentTime;
       if (currentMode == 0) {
@@ -299,7 +300,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 1000 && marker == 2)
+    if (currentTime - previousTime >= 2000 && marker == 2)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -310,7 +311,7 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 1000 && marker == 3)
+    if (currentTime - previousTime >= 2000 && marker == 3)
     {
       previousTime = currentTime;
       int PWMnow = fanSpeed;
@@ -330,7 +331,7 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 1000 && marker == 4)
+    if (currentTime - previousTime >= 2000 && marker == 4)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -351,7 +352,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 1000 && marker == 5)
+    if (currentTime - previousTime >= 2000 && marker == 5)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -372,7 +373,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 1000 && marker == 6)
+    if (currentTime - previousTime >= 2000 && marker == 6)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -389,6 +390,7 @@ void updatedisplay() {
       lcd.setCursor(0, 1);
       lcd.print(F("PWM max = "));
       lcd.print(fanMax);
+      lcd.print(F("   "));
       if (fanMax < 100) {
         lcd.setCursor(13, 0);
         lcd.print(F("   "));
@@ -399,11 +401,21 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (marker > 6) {
+     if (currentTime - previousTime >= 2000 && marker == 7)
+    {
+      previousTime = currentTime;
+      lcd.setCursor(0, 0);
+      lcd.print(F("SoftWare Version"));
+      lcd.setCursor(0, 1);
+      lcd.print(SoftwareVersion);
+    
+      marker = marker + 1;
+    }
+    if (marker > 7) {
       marker = 0;
     }
   }
-  if (menuitem == 9 && page == 1 && menuEnter == 1)
+  if (menuitem == 11 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("   Menu Exit    "));

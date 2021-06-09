@@ -7,6 +7,7 @@
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
 
+String SoftwareVersion = "   Site-V1.00   ";               
 int On = HIGH;
 int Off = LOW;
 int eeAddress = 0;              // Address to start saving to EEprom
@@ -82,7 +83,9 @@ void setup() {
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
   EEPROM.get(8, tempMin);                   // Get inital min temp
+  EEPROM.get(12, tempMax);                  // Get inital max temp
   EEPROM.get(16, humMax);                   // Get inital hum max
+  EEPROM.get(20, humMin);                   // Get inital hum max
   EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
   EEPROM.get(40, fanMin);
@@ -197,9 +200,10 @@ void standBy() {
 void writeToEEprom() {
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
   EEPROM.put(8, tempMin);
+  EEPROM.put(12, tempMax);
   EEPROM.put(16, humMax);
+  EEPROM.put(20, humMin);
   EEPROM.put(24, currentMode);
   EEPROM.put(32, fanMax);
   EEPROM.put(40, fanMin);
-  
 }
