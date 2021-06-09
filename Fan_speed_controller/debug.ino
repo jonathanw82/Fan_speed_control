@@ -9,8 +9,8 @@ void deBug() {
 //  Serial.println(F( " %"));
 //  Serial.print(" Encoder Value =");
 //  Serial.println(value);
-//  Serial.print(" Menu Item =");
-//  Serial.println(menuitem);
+  Serial.print(" Menu Item =");
+  Serial.println(menuitem);
 //  Serial.print(" page =");
 //  Serial.println(page);
 //  Serial.print(" menuEnter =");

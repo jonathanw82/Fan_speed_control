@@ -106,25 +106,21 @@ void encoderControl()
   if (up && menuitem == 3 && enter == 1 && page == 2 ) {
     up = false;
     currentMode--;
-    // EEPROM.put(24, currentMode);
     writeToEEprom();
   }
   if (up && menuitem == 4 && enter == 1 && page == 2 ) {
     up = false;
     tempMin --;
-    // EEPROM.put(8, tempMin);
     writeToEEprom();
   }
   if (up && menuitem == 5 && enter == 1 && page == 2 ) {
     up = false;
     humMax -= 5;
-    // EEPROM.put(16, humMax);
     writeToEEprom();
   }
   if (up && menuitem == 6 && enter == 1 && page == 2 ) {
     up = false;
     fanMax -= 5;
-    //EEPROM.put(32, fanMax);
     writeToEEprom();
   }
   if (up && menuitem == 7 && enter == 1 && page == 2 ) {
@@ -172,7 +168,6 @@ void encoderControl()
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
     down = false;
     currentMode++;
-    //EEPROM.put(24, currentMode);
     writeToEEprom();
   }
   if (currentMode >= 2) {
@@ -184,19 +179,17 @@ void encoderControl()
   if (down && menuitem == 4 && enter == 1 && page == 2 ) {
     down = false;
     tempMin ++;
-    //EEPROM.put(8, tempMin);
     writeToEEprom();
   }
   if (tempMin >= 30) {
     tempMin = 30;
   }
-  else if (tempMin < 0) {
-    tempMin = 0;
+  else if (tempMin < 10) {
+    tempMin = 10;
   }
   if (down && menuitem == 5 && enter == 1 && page == 2 ) {
     down = false;
     humMax += 5;
-    //EEPROM.put(16, humMax);
     writeToEEprom();
   }
   if (humMax >= 100) {
@@ -208,13 +201,12 @@ void encoderControl()
   if (down && menuitem == 6 && enter == 1 && page == 2 ) {
     down = false;
     fanMax += 5;
-    // EEPROM.put(32, fanMax);
     writeToEEprom();
   }
   if (fanMax >= 255) {
     fanMax = 255;
   }
-  else if (fanMax < 0) {
+  if (fanMax < 0) {
     humMax = 0;
   }
   if (down && menuitem == 7 && enter == 1 && page == 2 ) {
@@ -225,7 +217,7 @@ void encoderControl()
   if (fanMin >= 255) {
     fanMin = 255;
   }
-  else if (fanMin < 0) {
+  if (fanMin < 0) {
     fanMin = 0;
   }
 }

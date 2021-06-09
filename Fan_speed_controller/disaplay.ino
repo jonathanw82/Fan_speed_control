@@ -133,12 +133,51 @@ void updatedisplay() {
   }
   if (menuitem == 4 && page == 2 && menuEnter == 1) {
     lcd.setCursor(0, 0);
-    lcd.print(F("MinTemp Fan 100%"));
+    lcd.print(F("MinTemp         "));
     lcd.setCursor(0, 1);
     lcd.print(F("C= "));
     lcd.print(tempMin);
     lcd.print(F("          "));
   }
+  /*
+   if ( menuitem == 5 && page == 1 && menuEnter == 1)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print(F("Set MaxTemp     "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Click to Enter  "));
+  }
+  if (menuitem == 5 && page == 2 && menuEnter == 1) {
+    lcd.setCursor(0, 0);
+    lcd.print(F("maxTemp         "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("C= "));
+    lcd.print(tempMax);
+    lcd.print(F("          "));
+  }
+  */
+  /*
+    if ( menuitem == 6 && page == 1 && menuEnter == 1)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print(F("Set MaxHum      "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Click to Enter  "));
+  }
+  if (menuitem == 6 && page == 2 && menuEnter == 1) {
+    lcd.setCursor(0, 0);
+    lcd.print(F("minHum          "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("H= "));
+    lcd.print(humMin);
+    lcd.print(F("%"));
+    if (humMin < 100) {
+      lcd.setCursor(6, 1);
+      lcd.print("          ");
+    }
+  }
+  
+  */
   if ( menuitem == 5 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
@@ -177,7 +216,7 @@ void updatedisplay() {
       lcd.print("     ");
     }
   }
-    if ( menuitem == 7 && page == 1 && menuEnter == 1)
+  if ( menuitem == 7 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
     lcd.print(F("Set fanMin      "));
@@ -196,6 +235,7 @@ void updatedisplay() {
       lcd.print("     ");
     }
   }
+  //~~~~~~~~~~~~~~~~~~~~~~~~~ Diagnostic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if ( menuitem == 8 && page == 1 && menuEnter == 1)
   {
     lcd.setCursor(0, 0);
@@ -208,7 +248,7 @@ void updatedisplay() {
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
-      lcd.print(F("Mode:           "));
+      lcd.print(F("Current Mode    "));
       lcd.setCursor(0, 1);
       if (currentMode == 0) {
         lcd.print(F("Manual Mode     "));
@@ -221,104 +261,147 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    
+
     if (currentTime - previousTime >= 1000 && marker == 1)
     {
       previousTime = currentTime;
-      lcd.setCursor(0, 0);
-      lcd.print(F("Fan Speed in %: "));
-      lcd.setCursor(0, 1);
-      lcd.print(F("Speed  "));
-      lcd.print(fanPercentage);
-      lcd.print(F("%"));
-      if (fanPercentage <= 10) {
-        lcd.setCursor(14, 1);
-        lcd.print(F("   "));
+      if (currentMode == 0) {
+        lcd.setCursor(0, 0);
+        lcd.print(F("Fan Speed in %  "));
+        lcd.setCursor(0, 1);
+        lcd.print(F("Speed  "));
+        lcd.print(manualFanSpeed);
+        lcd.print(F("%"));
+        if (manualFanSpeed < 100) {
+          lcd.setCursor(10, 1);
+          lcd.print(F("      "));
+        }
+        if (manualFanSpeed < 10) {
+          lcd.setCursor(9, 1);
+          lcd.print(F("       "));
+        }
       }
-      else if (fanPercentage < 100) {
-        lcd.setCursor(15, 1);
-        lcd.print(F("   "));
+      else {
+        lcd.setCursor(0, 0);
+        lcd.print(F("Fan Speed in %  "));
+        lcd.setCursor(0, 1);
+        lcd.print(F("Speed  "));
+        lcd.print(fanPercentage);
+        lcd.print(F("%"));
+        if (fanPercentage < 100) {
+          lcd.setCursor(10, 1);
+          lcd.print(F("      "));
+        }
+        if (fanPercentage < 10) {
+          lcd.setCursor(9, 1);
+          lcd.print(F("       "));
+        }
       }
       marker = marker + 1;
     }
-     if (currentTime - previousTime >= 1000 && marker == 2)
+    if (currentTime - previousTime >= 1000 && marker == 2)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
-      lcd.print(F("PWM Output Voltage:"));
+      lcd.print(F("PWM Voltage:    "));
       lcd.setCursor(0, 1);
+      lcd.print(F("V= "));
       lcd.print(fanInVolts);
-      lcd.print(F("V"));
-      if (fanInVolts <= 10) {
-        lcd.setCursor(4, 1);
-        lcd.print(F("            "));
-      }
+      lcd.print(F("        "));
       marker = marker + 1;
     }
-      if (currentTime - previousTime >= 1000 && marker == 3)
+    if (currentTime - previousTime >= 1000 && marker == 3)
+    {
+      previousTime = currentTime;
+      int PWMnow = fanSpeed;
+      lcd.setCursor(0, 0);
+      lcd.print(F("PWM Value       "));
+      lcd.setCursor(0, 1);
+      lcd.print(F("PWM= "));
+      lcd.print(PWMnow);
+      if (PWMnow < 100) {
+        lcd.setCursor(8, 1);
+        lcd.print(F("        "));
+      }
+      if (PWMnow < 10) {
+        lcd.setCursor(7, 0);
+        lcd.print(F("     "));
+      }
+      lcd.print(F("        "));
+      marker = marker + 1;
+    }
+    if (currentTime - previousTime >= 1000 && marker == 4)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
       lcd.print(F("Min Temp = "));
       lcd.print(tempMin);
       lcd.print(F("C"));
-      if (tempMin <= 10) {
+      if (tempMin < 10) {
         lcd.setCursor(15, 0);
         lcd.print(F(" "));
       }
       lcd.setCursor(0, 1);
-      lcd.print(F("Max Temp =  "));
+      lcd.print(F("Max Temp = "));
       lcd.print(tempMax);
       lcd.print(F("C"));
-       if (tempMax <= 10) {
+      if (tempMax < 10) {
         lcd.setCursor(15, 1);
         lcd.print(F(" "));
       }
       marker = marker + 1;
     }
-      if (currentTime - previousTime >= 1000 && marker == 4)
+    if (currentTime - previousTime >= 1000 && marker == 5)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
       lcd.print(F("Min Hum =  "));
-      lcd.print(tempMin);
-      lcd.print(F("C"));
-      if (tempMin <= 10) {
-        lcd.setCursor(15, 0);
-        lcd.print(F(" "));
+      lcd.print(humMin);
+      lcd.print(F("%"));
+      if (humMin < 10) {
+        lcd.setCursor(13, 0);
+        lcd.print(F("   "));
       }
       lcd.setCursor(0, 1);
-      lcd.print(F("Max Hum =   "));
-      lcd.print(tempMax);
-      lcd.print(F("C"));
-       if (tempMax <= 10) {
-        lcd.setCursor(15, 1);
-        lcd.print(F(" "));
+      lcd.print(F("Max Hum =  "));
+      lcd.print(humMax);
+      lcd.print(F("%"));
+      if (humMax < 10) {
+        lcd.setCursor(13, 1);
+        lcd.print(F("   "));
       }
       marker = marker + 1;
     }
-     if (currentTime - previousTime >= 1000 && marker == 5)
+    if (currentTime - previousTime >= 1000 && marker == 6)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
-      lcd.print(F("PWM min ="));
+      lcd.print(F("PWM min = "));
       lcd.print(fanMin);
-       if (fanMin <= 10) {
-        lcd.setCursor(12, 0);
-        lcd.print(F("    "));
+      if (fanMin < 100) {
+        lcd.setCursor(13, 0);
+        lcd.print(F("   "));
+      }
+      if (fanMin < 10) {
+        lcd.setCursor(11, 0);
+        lcd.print(F("     "));
       }
       lcd.setCursor(0, 1);
-      lcd.print(F("PWM max ="));
+      lcd.print(F("PWM max = "));
       lcd.print(fanMax);
-      if (fanMax <= 10) {
+      if (fanMax < 100) {
+        lcd.setCursor(13, 0);
+        lcd.print(F("   "));
+      }
+      if (fanMax < 10) {
         lcd.setCursor(12, 1);
         lcd.print(F("    "));
       }
       marker = marker + 1;
     }
-     if (marker > 5) {
-        marker = 0;
-      }
+    if (marker > 6) {
+      marker = 0;
+    }
   }
   if (menuitem == 9 && page == 1 && menuEnter == 1)
   {
