@@ -88,7 +88,7 @@ void setup() {
   EEPROM.get(20, humMin);                   // Get inital hum max
   EEPROM.get(24, currentMode);              // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
-  EEPROM.get(40, fanMin);
+  EEPROM.get(40, fanMin);                   // Get the fan min
 
   pinMode(ledR, OUTPUT);                    // Control standby light
   digitalWrite(ledR, Off);                  // truen the led initially off
@@ -141,20 +141,20 @@ void fanControl() {
   }
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
   fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);       // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Temp Humid Sensors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Temp Humid Sensors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void sensors() {
   hum = dht.readHumidity();                               // Get current Humidity
   temp = dht.readTemperature();                           // Get current Temperature
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void manualReset() {                  // Kick the watchdog if the reset is held down to activated
   if (button) {
@@ -195,8 +195,10 @@ void standBy() {
 } 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 /* This function adds the variables to EEprom, using the (put) method only allows data to be written to memory 
    if it has changed else it get ignored*/
+   
 void writeToEEprom() {
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
   EEPROM.put(8, tempMin);

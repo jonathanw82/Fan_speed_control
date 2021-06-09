@@ -103,7 +103,6 @@ void encoderControl()
     {
       menuitem == 11;
     }
-
     lastMenuItem = menuitem;
     menuitem--;
     if (menuitem <= 0)
@@ -154,15 +153,12 @@ void encoderControl()
     if (down && menuitem == 2 && lastMenuItem == 1) {
       menuitem++;
     }
-
     if (down && menuitem == 3 && lastMenuItem == 2) {
       menuitem++;
     }
-
     if (down && menuitem == 4 && lastMenuItem == 3) {
       menuitem++;
     }
-
     if (down && menuitem == 5 && lastMenuItem == 4) {
       menuitem++;
     }
@@ -178,12 +174,11 @@ void encoderControl()
     if (down && menuitem == 9 && lastMenuItem == 8) {
       menuitem++;
     }
-     if (down && menuitem == 10 && lastMenuItem == 9) {
+    if (down && menuitem == 10 && lastMenuItem == 9) {
       menuitem++;
     }
     lastMenuItem = menuitem;
     menuitem++;
-
     if (menuitem >= 11)
     {
       menuitem = 11;
@@ -205,9 +200,9 @@ void encoderControl()
     tempMin ++;
     writeToEEprom();
   }
-  if(tempMin == tempMax){
-    tempMin = tempMax -5;
-    }
+  if (tempMin == tempMax) {
+    tempMin = tempMax - 5;
+  }
   if (tempMin >= 30) {
     tempMin = 30;
   }
@@ -219,9 +214,9 @@ void encoderControl()
     tempMax ++;
     writeToEEprom();
   }
-  if (tempMax == tempMin){
-    tempMax = tempMin +5;
-    }
+  if (tempMax == tempMin) {
+    tempMax = tempMin + 5;
+  }
   if (tempMax >= 30) {
     tempMax = 30;
   }
@@ -233,9 +228,9 @@ void encoderControl()
     humMin += 5;
     writeToEEprom();
   }
-   if(humMin == humMax){
-    humMin = humMax -5;
-    }
+  if (humMin == humMax) {
+    humMin = humMax - 5;
+  }
   if (humMin >= 100) {
     humMin = 100;
   }
@@ -247,9 +242,9 @@ void encoderControl()
     humMax += 5;
     writeToEEprom();
   }
-  if(humMax == humMin){
-    humMax = humMin +5;
-    }
+  if (humMax == humMin) {
+    humMax = humMin + 5;
+  }
   if (humMax >= 100) {
     humMax = 100;
   }
@@ -261,9 +256,9 @@ void encoderControl()
     fanMax += 5;
     writeToEEprom();
   }
-  if(fanMax == fanMin){
+  if (fanMax == fanMin) {
     fanMax = fanMin;
-    }
+  }
   if (fanMax >= 255) {
     fanMax = 255;
   }
@@ -275,9 +270,9 @@ void encoderControl()
     fanMin ++;
     writeToEEprom();
   }
-   if(fanMin == fanMax){
+  if (fanMin == fanMax) {
     fanMin = fanMax;
-    }
+  }
   if (fanMin >= 255) {
     fanMin = 255;
   }
