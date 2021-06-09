@@ -54,7 +54,7 @@ On pressing the rotary encoder centre button
 | Diagnostic                 | Display Scroll |
 | Menu Exit.                 |                |
 
-<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="45%"/></div>
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="100%"/></div>
 
 #
 
