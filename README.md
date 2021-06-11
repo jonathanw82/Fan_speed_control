@@ -105,7 +105,7 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 
 ## Setup program options:
 On pressing the rotary encoder centre button
-
+<div aligne="center">
 | Setup Menu.                | Options                     |
 | :----------------          | :-------                    |
 | Modes Auto/Manual.         | Manual, Auto Temp, Auto Hum |
@@ -117,7 +117,7 @@ On pressing the rotary encoder centre button
 | Min PWM                    | +/- 0-255                   |
 | Diagnostic                 | Scrolling Display of all Saved Data |
 | Menu Exit.                 |                             |
-
+</div>
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="100%"/></div>
 
 #
