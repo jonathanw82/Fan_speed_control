@@ -22,7 +22,7 @@ void timerIsr() {
   encoder->service();
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Encoder Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Encoder Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void encoderControl()
 {
@@ -58,7 +58,7 @@ void encoderControl()
       manualFanSpeed = 0;
     }
   }
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Rotation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Rotation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if (up && page == 1 && menuEnter == 1 ) {
     up = false;
     if (menuitem == 1)
@@ -102,7 +102,7 @@ void encoderControl()
       menuitem == 11;
     }
     lastMenuItem = menuitem;
-    menuitem--;
+    menuitem++;
     if (menuitem <= 0)
     {
       menuitem = 1;
@@ -110,37 +110,37 @@ void encoderControl()
   }
   if (up && menuitem == 3 && enter == 1 && page == 2 ) {
     up = false;
-    currentMode--;
+    currentMode++;
     writeToEEprom();
   }
   if (up && menuitem == 4 && enter == 1 && page == 2 ) {
     up = false;
-    tempMin --;
+    tempMin ++;
     writeToEEprom();
   }
   if (up && menuitem == 5 && enter == 1 && page == 2 ) {
     up = false;
-    tempMax --;
+    tempMax ++;
     writeToEEprom();
   }
   if (up && menuitem == 6 && enter == 1 && page == 2 ) {
     up = false;
-    humMin -= 5;
+    humMin += 5;
     writeToEEprom();
   }
   if (up && menuitem == 7 && enter == 1 && page == 2 ) {
     up = false;
-    humMax -= 5;
+    humMax += 5;
     writeToEEprom();
   }
   if (up && menuitem == 8 && enter == 1 && page == 2 ) {
     up = false;
-    fanMax -= 5;
+    fanMax += 5;
     writeToEEprom();
   }
   if (up && menuitem == 9 && enter == 1 && page == 2 ) {
     up = false;
-    fanMin --;
+    fanMin ++;
     writeToEEprom();
   }
 
@@ -149,34 +149,34 @@ void encoderControl()
   {
     down = false;
     if (down && menuitem == 2 && lastMenuItem == 1) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 3 && lastMenuItem == 2) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 4 && lastMenuItem == 3) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 5 && lastMenuItem == 4) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 6 && lastMenuItem == 5) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 7 && lastMenuItem == 6) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 8 && lastMenuItem == 7) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 9 && lastMenuItem == 8) {
-      menuitem++;
+      menuitem--;
     }
     if (down && menuitem == 10 && lastMenuItem == 9) {
-      menuitem++;
+      menuitem--;
     }
     lastMenuItem = menuitem;
-    menuitem++;
+    menuitem--;
     if (menuitem >= 11)
     {
       menuitem = 11;
@@ -184,18 +184,18 @@ void encoderControl()
   }
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
     down = false;
-    currentMode++;
+    currentMode--;
     writeToEEprom();
   }
   if (currentMode >= 2) {
     currentMode = 2;
   }
-  else if (currentMode <= 0) {
+  if (currentMode <= 0) {
     currentMode = 0;
   }
   if (down && menuitem == 4 && enter == 1 && page == 2 ) {
     down = false;
-    tempMin ++;
+    tempMin --;
     writeToEEprom();
   }
   if (tempMin == tempMax) {
@@ -209,7 +209,7 @@ void encoderControl()
   }
   if (down && menuitem == 5 && enter == 1 && page == 2 ) {
     down = false;
-    tempMax ++;
+    tempMax --;
     writeToEEprom();
   }
   if (tempMax == tempMin) {
@@ -223,7 +223,7 @@ void encoderControl()
   }
   if (down && menuitem == 6 && enter == 1 && page == 2 ) {
     down = false;
-    humMin += 5;
+    humMin -= 5;
     writeToEEprom();
   }
   if (humMin == humMax) {
@@ -237,7 +237,7 @@ void encoderControl()
   }
   if (down && menuitem == 7 && enter == 1 && page == 2 ) {
     down = false;
-    humMax += 5;
+    humMax -= 5;
     writeToEEprom();
   }
   if (humMax == humMin) {
@@ -251,7 +251,7 @@ void encoderControl()
   }
   if (down && menuitem == 8 && enter == 1 && page == 2 ) {
     down = false;
-    fanMax += 5;
+    fanMax -= 5;
     writeToEEprom();
   }
   if (fanMax == fanMin) {
@@ -265,7 +265,7 @@ void encoderControl()
   }
   if (down && menuitem == 9 && enter == 1 && page == 2 ) {
     down = false;
-    fanMin ++;
+    fanMin --;
     writeToEEprom();
   }
   if (fanMin == fanMax) {
