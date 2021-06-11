@@ -43,14 +43,12 @@ void encoderControl()
   if (currentMode == 0 && menuEnter == 0) {       // currentMode 0 = manual mode
     if (up && page == 1) {
       up = false;
-      manualFanSpeed -= 5;
-      //EEPROM.put(0, manualFanSpeed);
+      manualFanSpeed += 5;
       writeToEEprom();
     }
     if (down && page == 1) {
       down = false;
-      manualFanSpeed += 5;
-      //EEPROM.put(0, manualFanSpeed);
+      manualFanSpeed -= 5;
       writeToEEprom();
     }
     if (manualFanSpeed > 100) {

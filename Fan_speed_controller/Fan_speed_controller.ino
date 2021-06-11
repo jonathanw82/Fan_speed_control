@@ -7,7 +7,7 @@
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
 #include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
 
-String SoftwareVersion = "   Site-V1.00   ";               
+String SoftwareVersion = "   Site-V1.00   ";
 int On = HIGH;
 int Off = LOW;
 int eeAddress = 0;              // Address to start saving to EEprom
@@ -24,15 +24,16 @@ byte manMax = 100;
 float fanInVolts = 0;
 int fanPercentage = 0;
 float fanSpeed = 0;
-int currentMode = 0;            // depending on the currentMode the voltage and % menue can use this get correct data
+int currentMode = 0;            // depending on the currentMode the voltage and % menu can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
 const byte ledR = 10;
-int standBySwitch = 7;
+const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
 
+int resetPin = 2;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -72,15 +73,22 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Set Up ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void setup() {
+  // ----- Initialise devices -------
   Serial.begin(9600);                       // initialise Serial monitor
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
   dht.begin();                              // temp humid sensor
+  sensors();                                // Collect initial temp and humidity
 
+  // ---- Setup I/O and set status ----
   pinMode(standBySwitch, INPUT);            // sets the switch to an input
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
+  pinMode(ledR, OUTPUT);                    // Control standby light
+  digitalWrite(ledR, Off);                  // truen the led initially off
+ 
+  // ---- Get saves data from memory --
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
   EEPROM.get(8, tempMin);                   // Get inital min temp
   EEPROM.get(12, tempMax);                  // Get inital max temp
@@ -90,14 +98,6 @@ void setup() {
   EEPROM.get(32, fanMax);                   // Get the fan max in PWM 255 is the total max
   EEPROM.get(40, fanMin);                   // Get the fan min
 
-  pinMode(ledR, OUTPUT);                    // Control standby light
-  digitalWrite(ledR, Off);                  // truen the led initially off
-
-  sensors();                                // Setup and collect initial temp and humidity
-  startUpScreen();                          // Initising screen
-
-  wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
-
   // ------ SetUp encoder ------
   encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotery encoder
   encoder->setAccelerationEnabled(false);   // disable encode acelleration
@@ -105,13 +105,18 @@ void setup() {
   Timer1.attachInterrupt(timerIsr);
   last = encoder->getValue();
 
+  // -- Display startup screens -
+  startUpScreen();                          // Initising screen
+
+  // ---- Enable the watchdog ---
+  wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
-  if (shutDown == 0){
+  if (shutDown == 0) {
     fanControl();                  // Adjust PWM output to fans controller
     readRotaryEncoder();           // Check status of rotery encoder
     encoderControl();              // set and check what the encoder button status are
@@ -132,11 +137,11 @@ void fanControl() {
     controlFanSpeed();
   }
   if (currentMode == 1) {
-    fanSpeed = map(temp, tempMin, tempMax, fanMin, fanMax); // Fan speed Auto Temp control
+    fanSpeed = map(temp, tempMin, tempMax, fanMin, fanMax);         // Fan speed Auto Temp control
     controlFanSpeed();
   }
   if (currentMode == 2) {
-    fanSpeed = map(hum, humMin, humMax, fanMin, fanMax);        // Fan speed Auto Humid control
+    fanSpeed = map(hum, humMin, humMax, fanMin, fanMax);            // Fan speed Auto Humid control
     controlFanSpeed();
   }
 }
@@ -144,7 +149,7 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-  fanPercentage = map(fanSpeed, 0, fanMax, 0, 100);       // fan speed in %
+  fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);       // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
@@ -165,42 +170,41 @@ void manualReset() {                  // Kick the watchdog if the reset is held 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shutdown/Standby ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void standBy() {  
-  
-  int reading = digitalRead(standBySwitch);
-  if(reading != lastButtonState){
+void standBy() {
+/* 
+  This function also uses button debounce to steady the standby button.
+*/
+  int standBySwitchValue = digitalRead(standBySwitch);
+  if (standBySwitchValue != lastButtonState) {
     lastDebounceTime = millis();
-    }
+  }
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    if (standBySwitchValue != buttonState) {
+      buttonState = standBySwitchValue;
 
-  if((millis() - lastDebounceTime) > debounceDelay){
-     if (reading != buttonState) {
-      buttonState = reading;
-     
-     if(buttonState == HIGH){
-       Serial.println("Stand By ON");
-       lcd.noBacklight();
-       digitalWrite(ledR, On);
-       digitalWrite(PWMoutput, Off);
-       shutDown = 1;
-       Wire.flush();
-       lcd.flush();
-       }
-     else{
-        Serial.println("StandBy OFF");
+      if (buttonState == HIGH) {
+        lcd.noBacklight();
+        digitalWrite(ledR, On);
+        digitalWrite(PWMoutput, Off);
+        shutDown = 1;
+        lcd.clear();
+        Wire.flush();
+      }
+      else {
         delay(1500);
-        }
-     }
+      }
     }
-     lastButtonState = reading;
-} 
+  }
+  lastButtonState = standBySwitchValue;
+}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/* This function adds the variables to EEprom, using the (put) method only allows data to be written to memory 
+/* This function adds the variables to EEprom, using the (put) method only allows data to be written to memory
    if it has changed else it get ignored*/
-   
+
 void writeToEEprom() {
-  EEPROM.put(0, manualFanSpeed);    // Write data to eeprom 
+  EEPROM.put(0, manualFanSpeed);    // Write data to eeprom
   EEPROM.put(8, tempMin);
   EEPROM.put(12, tempMax);
   EEPROM.put(16, humMax);
