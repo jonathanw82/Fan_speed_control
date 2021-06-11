@@ -21,18 +21,24 @@ The current controller offers little to no options for control other than 0-100%
 * Lcd display for real time data.
 * Auto mode to allow automated control of fan speed relative to rises in room temperature or humidity, with user-programmable target parameters.
 * Manual mode to allow the user to set a fan speed as desired.
+* Standby Switch
 
 ## General Operation & Setup
+* If the rocker switch is in the off position, red LED is on but the LCD display is not illuminated the controller is in standby, switching the rocker switch to the on position the red LED will go out the LCD will illuminate the controller will display startup screens and fan control will start from the previous mode that was selected.
+
+
+### Selectable Modes
 * Manual Mode: This mode offers adjustment vis the rotary encoder to increase or decrease the fan speed form 0-100%
 
 * Auto Temp Mode: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
 
 * Auto Hum Mode: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
+
 #
 
 ### Note:
 
-All settings are accessed by pressing the rotary encoder button to enter the settings menu, then rotating the button until the desired menu option is displayed, to enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset either option can be used, but it is better to scroll to the exit option.
+All settings are accessed by pressing the rotary encoder once, from here rotating the button clockwise/anti-clockwiseuntil to reach desired menu option, to enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset either option can be used, but it is better to scroll to the exit option.
 #
 
 * Auto Temperature Settings:
@@ -73,11 +79,11 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 
 ## Software:
 The Software is written in C++, compiled and uploaded to the micro controller by the Arduino Ide, most libraries used are Arduino standard, apart from the items listed in the additional section.
+
 ### Standard
 * EEPROM for writing to the controller memory
 * Wire for use of I2C bus
 * avr/wdt for use of the built in watchdog 
-
 
 ### Additional
 * DHT_sensor_library for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/DHT_sensor_library.zip)
@@ -88,7 +94,6 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 
 ## Construction:
 * Wiring Schematic
-
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/></div>
 
@@ -122,7 +127,9 @@ On pressing the rotary encoder centre button
 
 
 
-## Decals
+## Nice to have:
+* Bluetooth or Wifi connectivity.
+* Intergration with Ostara. 
 
 
 ## Credits:
@@ -134,6 +141,6 @@ TheDreamMaster https://www.thingiverse.com/thing:2771280
 ## Media:
 
 
-All other images are my own.
+All other images and or Diagrams are property of LettUs Grow.
 
 [Back_to_top](#Fan_Speed_Control)
