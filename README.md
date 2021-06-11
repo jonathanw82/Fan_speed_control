@@ -23,12 +23,12 @@ The current controller offers little to no options for control other than 0-100%
 * Manual mode to allow the user to set a fan speed as desired.
 * Standby Switch
 
-## General Operation & Setup
+## General Operation & Setup:
 * If the rocker switch is in the off position, red LED is on but the LCD display is not illuminated the controller is in standby, switching the rocker switch to the on position the red LED will go out the LCD will illuminate the controller will display startup screens and fan control will start from the previous mode that was selected.
 
 
-### Selectable Modes
-* Manual Mode: This mode offers adjustment vis the rotary encoder to increase or decrease the fan speed form 0-100%
+### Selectable Modes:
+* Manual Mode: This mode offers adjustment via the rotary encoder to increase or decrease the fan speed form 0-100%
 
 * Auto Temp Mode: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
 
@@ -60,13 +60,13 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 
 
 
-## Parts:
+## Parts Required:
 * Arduino Uno [Here](https://en.wikipedia.org/wiki/Arduino_Uno)
-* Crydom 25 A Solid State Relay, Phase Angle, Panel Mount. [Here](https://uk.rs-online.com/web/p/solid-state-relays/1450603/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Relays_Index-_-Solid+State+Relays%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1193841357972&s_kwcid=AL!7457!3!504930549032!b!!g!!&gclid=Cj0KCQjw--GFBhDeARIsACH_kda--qfwiYqq5zjuV3pZ5H8Jwh-oOMkSBz1KMY0g-ov1plc-TYbbI9QaAs4UEALw_wcB&gclsrc=aw.ds)
+* PMP2425W Crydom 25Amp configurable panel mount proportional control relay. [Here](https://uk.rs-online.com/web/p/solid-state-relays/1450603/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Relays_Index-_-Solid+State+Relays%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1193841357972&s_kwcid=AL!7457!3!504930549032!b!!g!!&gclid=Cj0KCQjw--GFBhDeARIsACH_kda--qfwiYqq5zjuV3pZ5H8Jwh-oOMkSBz1KMY0g-ov1plc-TYbbI9QaAs4UEALw_wcB&gclsrc=aw.ds)
 * Solid State Relay Heat Sink Din mount [Here](https://uk.rs-online.com/web/p/solid-state-relay-heatsinks/7034564/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_Relays_Solid+State+Relay+Heatsinks_Phrase-_-Sensata+/+Crydom+-+7034564+-+HS301DR-_-hs301dr&matchtype=p&kwd-23861736400&s_kwcid=AL!7457!3!512563304828!p!!g!!hs301dr&gclid=Cj0KCQjw--GFBhDeARIsACH_kdZ8FfeA81j-OvZjZMheyz4FUox76YKj330JyLfjab7-JEgpXslKqpEaAsJ0EALw_wcB&gclsrc=aw.ds)
 * LCD 16x2 I2C Screen blue [Here]() add link
 * 3D printed screen bezel [Here](https://www.thingiverse.com/thing:2771280)
-* Rotary Encoder Module KY-040 With Top Clickable Switch [Here]() add link
+* Rotary Encoder Module KY-040 With Clickable Switch [Here]() add link
 * HDR-15-12 240vac-12vdc 1.25A power supply din mount [Here](https://uk.rs-online.com/web/p/din-rail-power-supplies/1457860/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_DIN%20Rail%20Power%20Supplies_Mean%20Well_Exact-_-Mean%20Well%20-%20DIN%20Rail%20Power%20Supplies%20-%201457860%20-%205-_-hdr%2015%2012&gclid=Cj0KCQjw--GFBhDeARIsACH_kdbE-MJgkjSO6FHoLwMOmvp2tnu0kLxm3cejjB0S-6lC3Tamvx2wPN0aArpeEALw_wcB&gclsrc=aw.ds&grossPrice=Y&kwd-372001364330&matchtype=e&s_kwcid=AL!7457!3!442026574461!e!!g!!hdr%2015%2012)
 * DHT22 Temperature Humidity sensor [Here](https://learn.adafruit.com/dht)
 * Plastic box for Arduino and LCD display [Here](https://uk.rs-online.com/web/p/general-purpose-enclosures/4984025/)
@@ -102,6 +102,19 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img1.jpg" alt="3D print" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img2.jpg" alt="3D print" width="43%"/></div>
 
+## Power Consumption:
+Estimated Power Consumption as rated in docs, actual may vary.
+
+| Component            | Consumption       |
+| :----------------    | :-------          |
+| Arduino Uno          | @ 9v 150ma        |
+| Lcd i2c              | @ 5v 200ma        |
+| DH22 temp/hum sensor | @ 5v 1.5ma        |
+| KY-040 Rotary Encoder| @ 5v < 0.05       |
+| PMP2425W Relay       | @ 9v 30ma         |
+| Red LED              | @ 5v 30ma         |
+|                      |Total = 411.5ma    |
+#
 
 ## Setup program options:
 On pressing the rotary encoder centre button
