@@ -105,7 +105,7 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 
 ## Setup program options:
 On pressing the rotary encoder centre button
-<div aligne="center">
+<div align="center">
 | Setup Menu.                | Options                     |
 | :----------------          | :-------                    |
 | Modes Auto/Manual.         | Manual, Auto Temp, Auto Hum |
