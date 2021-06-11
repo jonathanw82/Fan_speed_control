@@ -10,21 +10,21 @@ Fan speed controller for AvonValley farm preparation space air extraction, with 
 
 The current controller offers little to no options for control other than 0-100%, the fan is also very noisy, this controller offers a possible solution to reduce the noise and give the user more control. 
 
-## The users goals of this controller are:
+## The user's goals of this controller are:
 * An easy to navigate menu.
 * Low power consumption.
-* Manual and Automaic operation.
-* Automated monitoring of temperature and humidity and regulate fan speed accordingly.
+* Manual and Automatic operation.
+* Automated monitoring of temperature and humidity to regulate fan speed accordingly.
 
 ## Features:
-* Rotery encoder for navigation.
+* Rotary encoder for navigation.
 * Lcd display for real time data.
 * Auto mode to allow automated control of fan speed relative to rises in room temperature or humidity, with user-programmable target parameters.
 * Manual mode to allow the user to set a fan speed as desired.
-* Standby Switch
+* Standby Switch.
 
 ## General Operation & Setup:
-* If the rocker switch is in the off position, red LED is on but the LCD display is not illuminated the controller is in standby, switching the rocker switch to the on position the red LED will go out the LCD will illuminate the controller will display startup screens and fan control will start from the previous mode that was selected.
+* If the rocker switch is in the off position, the red LED is on but the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the red LED will go out, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
 
 
 ### Selectable Modes:
@@ -38,7 +38,7 @@ The current controller offers little to no options for control other than 0-100%
 
 ### Note:
 
-All settings are accessed by pressing the rotary encoder once, from here rotating the button clockwise/anti-clockwiseuntil to reach desired menu option, to enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset either option can be used, but it is better to scroll to the exit option.
+All settings are accessed by pressing the rotary encoder once. From here rotate the button clockwise/anti-clockwise to reach desired menu option. To enter each menu press the button again, to exit a certain menu once agin press the button. To exit the settings menu either scroll to the exit menu option and press the button, or hold the button down to activate the manual reset. Either option can be used but it is better to scroll to the exit option.
 #
 
 * Auto Temperature Settings:
