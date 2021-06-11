@@ -74,17 +74,17 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 ## Software:
 The Software is written in C++, compiled and uploaded to the micro controller by the Arduino Ide, most libraries used are Arduino standard, apart from the items listed in the additional section.
 ### Standard
-* EEPROM for writing to the conteoller memory
+* EEPROM for writing to the controller memory
 * Wire for use of I2C bus
 * avr/wdt for use of the built in watchdog 
 
 
 ### Additional
-* DHT_sensor_library for temperature humidity sensor [Here]()
-* encoder-arduino for the Rotary encoder [Here]()
-* Liquidcrystal-IC2 for the LCD Display [Here]()
-* MapFloat-master to allow use of floating point integers with Map() functions [Here]()
-* TimerOne a timing library utalised by the Rotary encoder [Here]()
+* DHT_sensor_library for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/DHT_sensor_library.zip)
+* encoder-arduino for the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/encoder-arduino.zip)
+* Liquidcrystal-IC2 for the LCD Display [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/Liquidcrystal-IC2.zip)
+* MapFloat-master to allow use of floating point integers with Map() functions [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/MapFloat-master.zip)
+* TimerOne a timing library utalised by the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/TimerOne.zip)
 
 ## Construction:
 * Wiring Schematic

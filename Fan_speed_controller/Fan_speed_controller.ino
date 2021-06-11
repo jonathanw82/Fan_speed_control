@@ -117,12 +117,12 @@ void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
   if (shutDown == 0) {
+    sensors();                     // Read Temp and Humidity sensors
     fanControl();                  // Adjust PWM output to fans controller
     readRotaryEncoder();           // Check status of rotery encoder
     encoderControl();              // set and check what the encoder button status are
     buttonPressed();               // Is button pressed
     timerIsr();                    // timerIsr for rotery encoder
-    sensors();                     // Read Temp and Humidity sensors
     updatedisplay();               // Lcd screen transitions
     deBug();                       // enable Debug function
   }
@@ -149,7 +149,7 @@ void fanControl() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-  fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);       // fan speed in %
+  fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
