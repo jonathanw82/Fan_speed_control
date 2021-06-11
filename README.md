@@ -124,9 +124,6 @@ On pressing the rotary encoder centre button
 
 
 
-
-
-
 ## Nice to have:
 * Bluetooth or Wifi connectivity.
 * Intergration with Ostara. 
