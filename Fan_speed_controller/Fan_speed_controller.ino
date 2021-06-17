@@ -58,7 +58,7 @@ int marker = 0;
 //#define DHTPIN 6             // what pin we're connected to
 //#define DHTTYPE DHT22        // DHT 22  (AM2302)
 //DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
-DFRobot_SHT3x   sht3x;         // set the temp/hum sensor to I2C address to 0x45 
+DFRobot_SHT3x   sht3x;         // set the temp/hum sensor to I2C address to 0x45
 float temp;                    //Stores temperature value
 float hum;                     //Stores humidity value
 
@@ -83,7 +83,7 @@ void setup() {
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
   //  dht.begin();                              // temp humid sensor
-  sensorsSetup();
+  sensorsSetup();                           // Initialise the Temp Humid sensor and diaplay the serial number via Serial
   sensors();                                // Collect initial temp and humidity
 
   // ---- Setup I/O and set status ----
@@ -152,6 +152,7 @@ void fanControl() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
   fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
@@ -159,21 +160,26 @@ void controlFanSpeed() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Temp Humid Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-void sensors() {
-//  hum = dht.readHumidity();                               // Get current Humidity
-//  temp = dht.readTemperature();                           // Get current Temperature
- if (currentTime - previousTime >= sensorReadDelay)
-      {
-        previousTime = currentTime;
-        temp = sht3x.getTemperatureC();
-        hum = sht3x.getHumidityRH();
-      }
-}
 
+void sensors() {
+  //  hum = dht.readHumidity();                               // Get current Humidity
+  //  temp = dht.readTemperature();                           // Get current Temperature
+  if (currentTime - previousTime >= sensorReadDelay)
+  {
+    previousTime = currentTime;
+    temp = sht3x.getTemperatureC();
+    hum = sht3x.getHumidityRH();
+  }
+}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Setup the Temp Hum Sensor ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void sensorsSetup(){
+/*
+  This function checks if the temp/humid sensor has initialised if so print the serial number if not 
+  try to reset the sensor then send a warning via Serial port. 
+*/
+
+void sensorsSetup() {
   while (sht3x.begin() != 0) {
     Serial.println(F("Failed to Initialize the chip, please confirm the wire connection"));
     delay(1000);
@@ -183,7 +189,6 @@ void sensorsSetup(){
   if (!sht3x.softReset()) {
     Serial.println(F("Failed to Initialize the chip...."));
   }
-  Serial.println(F("------------------Read data in single measurement mode-----------------------"));
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,8 +232,10 @@ void standBy() {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/* This function adds the variables to EEprom, using the (put) method only allows data to be written to memory
-   if it has changed else it get ignored*/
+/*
+   This function adds the variables to EEprom, using the (put) method only allows data to be written to memory
+   if it has changed else it get ignored.
+*/
 
 void writeToEEprom() {
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom
