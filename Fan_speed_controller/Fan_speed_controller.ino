@@ -58,9 +58,10 @@ int marker = 0;
 //#define DHTPIN 6             // what pin we're connected to
 //#define DHTTYPE DHT22        // DHT 22  (AM2302)
 //DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
-DFRobot_SHT3x   sht3x;
-float hum;                   //Stores humidity value
-float temp;                  //Stores temperature value
+DFRobot_SHT3x   sht3x;         // set the temp/hum sensor to I2C address to 0x45 
+float temp;                    //Stores temperature value
+float hum;                     //Stores humidity value
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Millis declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 unsigned long currentTime;
@@ -150,18 +151,17 @@ void fanControl() {
   }
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Speed Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
   fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Temp Humid Sensors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Temp Humid Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void sensors() {
 //  hum = dht.readHumidity();                               // Get current Humidity
 //  temp = dht.readTemperature();                           // Get current Temperature
-
  if (currentTime - previousTime >= sensorReadDelay)
       {
         previousTime = currentTime;
@@ -170,18 +170,20 @@ void sensors() {
       }
 }
 
-void sensorsSetup() {
-  
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Setup the Temp Hum Sensor ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void sensorsSetup(){
   while (sht3x.begin() != 0) {
-    Serial.println("Failed to Initialize the chip, please confirm the wire connection");
+    Serial.println(F("Failed to Initialize the chip, please confirm the wire connection"));
     delay(1000);
   }
-  Serial.print("Chip serial number");
+  Serial.print(F("Chip serial number"));
   Serial.println(sht3x.readSerialNumber());
   if (!sht3x.softReset()) {
-    Serial.println("Failed to Initialize the chip....");
+    Serial.println(F("Failed to Initialize the chip...."));
   }
-  Serial.println("------------------Read adta in single measurement mode-----------------------");
+  Serial.println(F("------------------Read data in single measurement mode-----------------------"));
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
