@@ -26,6 +26,8 @@ void deBug() {
 //  Serial.println(tempMax);
 //  Serial.print("Current Temp = ");
 //  Serial.println(temp);
+    Serial.print("Current Hum = ");
+  Serial.println(hum);
 //  int sb = digitalRead(standBySwitch);
 //  Serial.print("SBSWITCH = ");
 //  Serial.println(sb);

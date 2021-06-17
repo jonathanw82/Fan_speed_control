@@ -1,4 +1,7 @@
-#include <DHT.h>                // Temp Humidity Lib
+//#include <DHT.h>
+//#include <DHT_U.h>
+
+#include <DFRobot_SHT3x.h>      // Temperature Humidity Sensor
 #include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
 #include <Wire.h>               // I2c enable Lib
@@ -32,8 +35,7 @@ const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
-
-int resetPin = 2;
+int sensorReadDelay = 1000;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -53,9 +55,10 @@ int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#define DHTPIN 6             // what pin we're connected to
-#define DHTTYPE DHT22        // DHT 22  (AM2302)
-DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
+//#define DHTPIN 6             // what pin we're connected to
+//#define DHTTYPE DHT22        // DHT 22  (AM2302)
+//DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
+DFRobot_SHT3x   sht3x;
 float hum;                   //Stores humidity value
 float temp;                  //Stores temperature value
 
@@ -78,7 +81,8 @@ void setup() {
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
-  dht.begin();                              // temp humid sensor
+  //  dht.begin();                              // temp humid sensor
+  sensorsSetup();
   sensors();                                // Collect initial temp and humidity
 
   // ---- Setup I/O and set status ----
@@ -87,7 +91,7 @@ void setup() {
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
   pinMode(ledR, OUTPUT);                    // Control standby light
   digitalWrite(ledR, Off);                  // truen the led initially off
- 
+
   // ---- Get saves data from memory --
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
   EEPROM.get(8, tempMin);                   // Get inital min temp
@@ -155,8 +159,29 @@ void controlFanSpeed() {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Temp Humid Sensors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void sensors() {
-  hum = dht.readHumidity();                               // Get current Humidity
-  temp = dht.readTemperature();                           // Get current Temperature
+//  hum = dht.readHumidity();                               // Get current Humidity
+//  temp = dht.readTemperature();                           // Get current Temperature
+
+ if (currentTime - previousTime >= sensorReadDelay)
+      {
+        previousTime = currentTime;
+        temp = sht3x.getTemperatureC();
+        hum = sht3x.getHumidityRH();
+      }
+}
+
+void sensorsSetup() {
+  
+  while (sht3x.begin() != 0) {
+    Serial.println("Failed to Initialize the chip, please confirm the wire connection");
+    delay(1000);
+  }
+  Serial.print("Chip serial number");
+  Serial.println(sht3x.readSerialNumber());
+  if (!sht3x.softReset()) {
+    Serial.println("Failed to Initialize the chip....");
+  }
+  Serial.println("------------------Read adta in single measurement mode-----------------------");
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -171,9 +196,9 @@ void manualReset() {                  // Kick the watchdog if the reset is held 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shutdown/Standby ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void standBy() {
-/* 
-  This function also uses button debounce to steady the standby button.
-*/
+  /*
+    This function also uses button debounce to steady the standby button.
+  */
   int standBySwitchValue = digitalRead(standBySwitch);
   if (standBySwitchValue != lastButtonState) {
     lastDebounceTime = millis();
