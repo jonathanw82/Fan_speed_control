@@ -23,11 +23,11 @@ void deBug() {
 //  Serial.print("tempMax = ");
 //  Serial.println(tempMax);
 //  Serial.print("Chip serial number");
-  Serial.println(sht3x.readSerialNumber());
-  Serial.print("Current Hum = ");
-  Serial.println(hum);
-  Serial.print("Current Temp = ");
-  Serial.println(temp);
+//  Serial.println(sht3x.readSerialNumber());
+//  Serial.print("Current Hum = ");
+//  Serial.println(hum);
+//  Serial.print("Current Temp = ");
+//  Serial.println(temp);
 //  int sb = digitalRead(standBySwitch);
 //  Serial.print("SBSWITCH = ");
 //  Serial.println(sb);

@@ -268,12 +268,8 @@ void updatedisplay() {
       lcd.setCursor(0, 0);
       lcd.print(F("T/H SensorStatus"));
       lcd.setCursor(0, 1);
-      if (sht3x.readSerialNumber()) {
-        lcd.print(F("Sensor Active   "));
-      }
-      else {
-        lcd.print(F("Sensor Faulty   "));
-      }
+      lcd.print(sht3x.readSerialNumber());
+      lcd.print(F("        "));
       marker = marker + 1;
     }
     if (currentTime - previousTime >= 2000 && marker == 2)
@@ -341,6 +337,9 @@ void updatedisplay() {
     {
       previousTime = currentTime;
       int PWMnow = fanSpeed;
+      if (PWMnow <= 0) {
+        PWMnow = 0;
+      }
       lcd.setCursor(0, 0);
       lcd.print(F("PWM Value       "));
       lcd.setCursor(0, 1);

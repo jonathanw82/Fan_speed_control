@@ -1,6 +1,3 @@
-//#include <DHT.h>
-//#include <DHT_U.h>
-
 #include <DFRobot_SHT3x.h>      // Temperature Humidity Sensor
 #include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
@@ -35,7 +32,6 @@ const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
-int sensorReadDelay = 1000;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -58,7 +54,7 @@ int marker = 0;
 //#define DHTPIN 6             // what pin we're connected to
 //#define DHTTYPE DHT22        // DHT 22  (AM2302)
 //DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
-DFRobot_SHT3x   sht3x;         // set the temp/hum sensor to I2C address to 0x45
+DFRobot_SHT3x sht3x(&Wire,/*address=*/0x44,/*RST=*/4); // set the temp/hum sensor to I2C address to 0x45
 float temp;                    //Stores temperature value
 float hum;                     //Stores humidity value
 
@@ -82,9 +78,10 @@ void setup() {
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
-  //  dht.begin();                              // temp humid sensor
-  sensorsSetup();                           // Initialise the Temp Humid sensor and diaplay the serial number via Serial
+  //  sensorsSetup();                           // Initialise the Temp Humid sensor and diaplay the serial number via Serial
+  sht3x.begin();
   sensors();                                // Collect initial temp and humidity
+
 
   // ---- Setup I/O and set status ----
   pinMode(standBySwitch, INPUT);            // sets the switch to an input
@@ -155,40 +152,40 @@ void fanControl() {
 
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
+   if (fanInVolts <= 0) {
+    fanInVolts = 0;
+  }
   fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
+  if (fanPercentage <= 0) {
+    fanPercentage = 0;
+  }
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Temp Humid Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void sensors() {
-  //  hum = dht.readHumidity();                               // Get current Humidity
-  //  temp = dht.readTemperature();                           // Get current Temperature
-  if (currentTime - previousTime >= sensorReadDelay)
-  {
-    previousTime = currentTime;
-    temp = sht3x.getTemperatureC();
-    hum = sht3x.getHumidityRH();
-  }
+  temp = sht3x.getTemperatureC();                       // Get current Temperature
+  hum = sht3x.getHumidityRH();                          // Get current Humidity
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Setup the Temp Hum Sensor ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /*
-  This function checks if the temp/humid sensor has initialised if so print the serial number if not 
-  try to reset the sensor then send a warning via Serial port. 
+  This function checks if the temp/humid sensor has initialised if so print the serial number if not
+  try to reset the sensor then send a warning via Serial port.
 */
 
 void sensorsSetup() {
-  while (sht3x.begin() != 0) {
-    Serial.println(F("Failed to Initialize the chip, please confirm the wire connection"));
-    delay(1000);
-  }
-  Serial.print(F("Chip serial number"));
-  Serial.println(sht3x.readSerialNumber());
-  if (!sht3x.softReset()) {
-    Serial.println(F("Failed to Initialize the chip...."));
-  }
+  //  while (sht3x.begin() != 0) {
+  //    Serial.println(F("Failed to Initialize the chip, please confirm the wire connection"));
+  //    delay(1000);
+  //  }
+  //  Serial.print(F("Chip serial number"));
+  //  Serial.println(sht3x.readSerialNumber());
+  //  if (!sht3x.softReset()) {
+  //    Serial.println(F("Failed to Initialize the chip...."));
+  //  }
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

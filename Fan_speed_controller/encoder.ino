@@ -103,9 +103,9 @@ void encoderControl()
     }
     lastMenuItem = menuitem;
     menuitem++;
-    if (menuitem <= 0)
+    if (menuitem >= 11)
     {
-      menuitem = 1;
+      menuitem = 11;
     }
   }
   if (up && menuitem == 3 && enter == 1 && page == 2 ) {
@@ -177,9 +177,9 @@ void encoderControl()
     }
     lastMenuItem = menuitem;
     menuitem--;
-    if (menuitem >= 11)
+    if (menuitem <= 0)
     {
-      menuitem = 11;
+      menuitem = 0;
     }
   }
   if (down && menuitem == 3 && enter == 1 && page == 2 ) {
