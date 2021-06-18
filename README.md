@@ -110,7 +110,7 @@ Estimated Power Consumption as rated in docs, actual may vary.
 | :----------------    | :-------          |
 | Arduino Uno          | @ 9v 150 ma        |
 | Lcd i2c              | @ 5v 200 ma        |
-| DH22 temp/hum sensor | @ 5v 1.5 ma        |
+| SHT31 temp/hum sensor | @ 5v < 1.5 ma     |
 | KY-040 Rotary Encoder| @ 5v < 0.05 ma     |
 | PMP2425W Relay       | @ 9v 30 ma         |
 | Red LED              | @ 5v 30 ma         |
