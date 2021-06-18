@@ -230,7 +230,7 @@ void updatedisplay() {
     lcd.setCursor(0, 1);
     lcd.print(F("PWM Min ="));
     lcd.print(fanMin);
-    lcd.print("      ");
+    lcd.print(F("      "));
     if (fanMin < 100) {
       lcd.setCursor(11, 1);
       lcd.print(F("     "));
@@ -266,6 +266,16 @@ void updatedisplay() {
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
+      lcd.print(F("T/H SensorStatus"));
+      lcd.setCursor(0, 1);
+      lcd.print(sht3x.readSerialNumber());
+      lcd.print(F("        "));
+      marker = marker + 1;
+    }
+    if (currentTime - previousTime >= 2000 && marker == 2)
+    {
+      previousTime = currentTime;
+      lcd.setCursor(0, 0);
       lcd.print(F("Air Temp & Humid"));
       lcd.setCursor(0, 1);
       lcd.print(F("C="));
@@ -273,10 +283,9 @@ void updatedisplay() {
       lcd.print(F("  H="));
       lcd.print(hum);
       lcd.print(F("%"));
-
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 2)
+    if (currentTime - previousTime >= 2000 && marker == 3)
     {
       previousTime = currentTime;
       if (currentMode == 0) {
@@ -313,7 +322,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 3)
+    if (currentTime - previousTime >= 2000 && marker == 4)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -324,10 +333,13 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 4)
+    if (currentTime - previousTime >= 2000 && marker == 5)
     {
       previousTime = currentTime;
       int PWMnow = fanSpeed;
+      if (PWMnow <= 0) {
+        PWMnow = 0;
+      }
       lcd.setCursor(0, 0);
       lcd.print(F("PWM Value       "));
       lcd.setCursor(0, 1);
@@ -344,7 +356,7 @@ void updatedisplay() {
       lcd.print(F("        "));
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 5)
+    if (currentTime - previousTime >= 2000 && marker == 6)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -365,7 +377,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 6)
+    if (currentTime - previousTime >= 2000 && marker == 7)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -386,7 +398,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 7)
+    if (currentTime - previousTime >= 2000 && marker == 8)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -414,7 +426,7 @@ void updatedisplay() {
       }
       marker = marker + 1;
     }
-    if (currentTime - previousTime >= 2000 && marker == 8)
+    if (currentTime - previousTime >= 2000 && marker == 9)
     {
       previousTime = currentTime;
       lcd.setCursor(0, 0);
@@ -424,7 +436,7 @@ void updatedisplay() {
 
       marker = marker + 1;
     }
-    if (marker > 8) {
+    if (marker > 9) {
       marker = 0;
     }
   }

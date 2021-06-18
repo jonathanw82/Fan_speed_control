@@ -4,7 +4,8 @@
    <img src="" alt="Project Image"/>
  </h1>
  
- 
+ Things to update
+ Update wiring diagram take out led and change encoder wiring add new temp sensor
 ## Overview:
 Fan speed controller for AvonValley farm preparation space air extraction, with incorporated menu allowing the user to select modes from automatic and manual.
 
@@ -68,7 +69,7 @@ This option will display debug information, Current Mode, Fan Speed %, PWM Pin V
 * 3D printed screen bezel [Here](https://www.thingiverse.com/thing:2771280)
 * Rotary Encoder Module KY-040 With Clickable Switch [Here]() add link
 * HDR-15-12 240vac-12vdc 1.25A power supply din mount [Here](https://uk.rs-online.com/web/p/din-rail-power-supplies/1457860/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_DIN%20Rail%20Power%20Supplies_Mean%20Well_Exact-_-Mean%20Well%20-%20DIN%20Rail%20Power%20Supplies%20-%201457860%20-%205-_-hdr%2015%2012&gclid=Cj0KCQjw--GFBhDeARIsACH_kdbE-MJgkjSO6FHoLwMOmvp2tnu0kLxm3cejjB0S-6lC3Tamvx2wPN0aArpeEALw_wcB&gclsrc=aw.ds&grossPrice=Y&kwd-372001364330&matchtype=e&s_kwcid=AL!7457!3!442026574461!e!!g!!hdr%2015%2012)
-* DHT22 Temperature Humidity sensor [Here](https://learn.adafruit.com/dht)
+* SHT31 Temperature Humidity sensor [Here](https://wiki.dfrobot.com/SHT31_Temperature_Humidity_Sensor_Weatherproof_SKU_SEN0385)
 * Plastic box for Arduino and LCD display [Here](https://uk.rs-online.com/web/p/general-purpose-enclosures/4984025/)
 * White rocker switch [Here](https://uk.rs-online.com/web/p/rocker-switches/5332970/)
 
@@ -86,7 +87,7 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 * avr/wdt for use of the built in watchdog 
 
 ### Additional
-* DHT_sensor_library for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/DHT_sensor_library.zip)
+* DFRobot_SHT3x-master for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/DFRobot_SHT3x-master.zip)
 * encoder-arduino for the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/encoder-arduino.zip)
 * Liquidcrystal-IC2 for the LCD Display [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/Liquidcrystal-IC2.zip)
 * MapFloat-master to allow use of floating point integers with Map() functions [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/MapFloat-master.zip)
@@ -140,6 +141,7 @@ On pressing the rotary encoder centre button
 ## Nice to have:
 * Bluetooth or Wifi connectivity.
 * Intergration with Ostara. 
+* Adding MQTT.
 
 
 ## Credits:
