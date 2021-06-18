@@ -27,7 +27,6 @@ float fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menu can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
-const byte ledR = 10;
 const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
@@ -51,9 +50,6 @@ int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//#define DHTPIN 6             // what pin we're connected to
-//#define DHTTYPE DHT22        // DHT 22  (AM2302)
-//DHT dht(DHTPIN, DHTTYPE);    // Initialize DHT sensor
 DFRobot_SHT3x sht3x(&Wire,/*address=*/0x44,/*RST=*/4); // set the temp/hum sensor to I2C address to 0x45
 float temp;                    //Stores temperature value
 float hum;                     //Stores humidity value
@@ -77,18 +73,14 @@ void setup() {
   Serial.begin(9600);                       // initialise Serial monitor
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
-  lcd.backlight();                          // Turns backlight LCD on
-  //  sensorsSetup();                           // Initialise the Temp Humid sensor and diaplay the serial number via Serial
-  sht3x.begin();
+  lcd.backlight();                          // Turns backlight LCD on                         
+  sht3x.begin();                            // Initialise the Temp Humid sensor and diaplay the serial number via Serial
   sensors();                                // Collect initial temp and humidity
-
 
   // ---- Setup I/O and set status ----
   pinMode(standBySwitch, INPUT);            // sets the switch to an input
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
-  pinMode(ledR, OUTPUT);                    // Control standby light
-  digitalWrite(ledR, Off);                  // truen the led initially off
 
   // ---- Get saves data from memory --
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
@@ -169,24 +161,6 @@ void sensors() {
   hum = sht3x.getHumidityRH();                          // Get current Humidity
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Setup the Temp Hum Sensor ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-/*
-  This function checks if the temp/humid sensor has initialised if so print the serial number if not
-  try to reset the sensor then send a warning via Serial port.
-*/
-
-void sensorsSetup() {
-  //  while (sht3x.begin() != 0) {
-  //    Serial.println(F("Failed to Initialize the chip, please confirm the wire connection"));
-  //    delay(1000);
-  //  }
-  //  Serial.print(F("Chip serial number"));
-  //  Serial.println(sht3x.readSerialNumber());
-  //  if (!sht3x.softReset()) {
-  //    Serial.println(F("Failed to Initialize the chip...."));
-  //  }
-}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -213,7 +187,6 @@ void standBy() {
 
       if (buttonState == HIGH) {
         lcd.noBacklight();
-        digitalWrite(ledR, On);
         digitalWrite(PWMoutput, Off);
         shutDown = 1;
         lcd.clear();
