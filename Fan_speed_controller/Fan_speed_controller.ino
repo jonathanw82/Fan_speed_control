@@ -5,7 +5,6 @@
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
-#include <MapFloat.h>           // Helpful implimetation of floating point ints in maps
 
 String SoftwareVersion = "   Site-V1.00   ";
 int On = HIGH;
@@ -107,6 +106,7 @@ void setup() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
@@ -125,6 +125,7 @@ void loop() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void fanControl() {
   if (currentMode == 0) {
     fanSpeed = map(manualFanSpeed, manMin, manMax, fanMin, fanMax); // Fan speed from manual control
@@ -160,7 +161,6 @@ void sensors() {
   temp = sht3x.getTemperatureC();                       // Get current Temperature
   hum = sht3x.getHumidityRH();                          // Get current Humidity
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -206,7 +206,6 @@ void standBy() {
    This function adds the variables to EEprom, using the (put) method only allows data to be written to memory
    if it has changed else it get ignored.
 */
-
 void writeToEEprom() {
   EEPROM.put(0, manualFanSpeed);    // Write data to eeprom
   EEPROM.put(8, tempMin);

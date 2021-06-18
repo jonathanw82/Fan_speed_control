@@ -1,8 +1,6 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DeBug ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void deBug() {
-//  fanSpeed = map(currentMode, tempMin, tempMax, fanMin, fanMax);   // Fan speed from temerature control
-//  fanInVolts = fanSpeed * (5.0 / 255);
-//  fanPercentage = mapFloat(fanInVolts + 0.01, 0.0, 5.0, 0.0, 100.0);   // fan speed in %
+
 //  Serial.print(fanInVolts);
 //  Serial.println(" volts");
 //  Serial.print(fanPercentage);
