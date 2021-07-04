@@ -268,7 +268,8 @@ void updatedisplay() {
       lcd.setCursor(0, 0);
       lcd.print(F("T/H SensorStatus"));
       lcd.setCursor(0, 1);
-      lcd.print(sht3x.readSerialNumber());
+      lcd.print(SHT31_Address + sht31.readStatus());
+      Serial.print(sht31.readStatus());
       lcd.print(F("        "));
       marker = marker + 1;
     }

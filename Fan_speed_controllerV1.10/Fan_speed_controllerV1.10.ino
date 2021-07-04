@@ -1,5 +1,5 @@
-#include <megaAVR_ISR_Timer.h>      // Timer Lib for rotary encoder
-#include <DFRobot_SHT3x.h>          // Temperature Humidity Sensor
+#include <megaAVR_ISR_Timer.h>      // Timer Lib for rotary encoder         
+#include <BB_Adafruit_SHT31.h>      // Temperature Humidity Sensor
 #include <EEPROM.h>                 // EEprom Lib
 #include <Wire.h>                   // I2c enable Lib
 #include <avr/wdt.h>                // Watchdog Lib
@@ -52,8 +52,8 @@ int last, value;
 int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
-
-DFRobot_SHT3x sht3x(&Wire,/*address=*/0x44,/*RST=*/4); // set the temp/hum sensor to I2C address to 0x45
+BB_Adafruit_SHT31 sht31 = BB_Adafruit_SHT31();
+int SHT31_Address = 0x44;      // Set to 0x45 for alternate i2c address
 float temp;                    //Stores temperature value
 float hum;                     //Stores humidity value
 
@@ -77,7 +77,7 @@ void setup() {
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on                         
-  sht3x.begin();                            // Initialise the Temp Humid sensor and diaplay the serial number via Serial
+  sht31.begin(SHT31_Address);                        // Initialise the Temp Humid sensor and diaplay the serial number via Serial
   sensors();                                // Collect initial temp and humidity
 
   // ---- Setup I/O and set status ----
@@ -98,9 +98,9 @@ void setup() {
   // ------ SetUp encoder ------
   encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotery encoder
   encoder->setAccelerationEnabled(false);   // disable encode acelleration
-  ITimer1.init();                  // timer iterupt for the rotery encoder
-  ITimer1.attachInterrupt(1000, timerIsr);
-  last = encoder->getValue();
+  ITimer1.init();                           // timer iterupt for the rotery encoder
+  ITimer1.attachInterrupt(1000, timerIsr);  // set the iterup fot timerIsr @ 1 millisecond
+  last = encoder->getValue();               // Get the current encoder value
 
   // -- Display startup screens -
   startUpScreen();                          // Initising screen
@@ -162,8 +162,8 @@ void controlFanSpeed() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Temp Humid Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void sensors() {
-  temp = sht3x.getTemperatureC();                       // Get current Temperature
-  hum = sht3x.getHumidityRH();                          // Get current Humidity
+  temp = sht31.readTemperature();                       // Get current Temperature
+  hum = sht31.readHumidity();                          // Get current Humidity
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
