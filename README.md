@@ -1,7 +1,7 @@
 
 # Fan_Speed_Control
 <h1 align="center">
-   <img src="" alt="Project Image"/>
+   <img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fanspeedcontrol.gif" alt="Project Image"/>
  </h1>
  
 
