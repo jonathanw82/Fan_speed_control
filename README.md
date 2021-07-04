@@ -4,8 +4,7 @@
    <img src="" alt="Project Image"/>
  </h1>
  
- Things to update
- Update wiring diagram take out led and change encoder wiring add new temp sensor
+
 ## Overview:
 Fan speed controller for AvonValley farm preparation space air extraction, with incorporated menu allowing the user to select modes from automatic and manual.
 
@@ -29,11 +28,11 @@ The current controller offers little to no options for control other than 0-100%
 
 
 ### Selectable Modes:
-* Manual Mode: This mode offers adjustment via the rotary encoder to increase or decrease the fan speed form 0-100%
+* Manual: This mode offers adjustment via the rotary encoder to increase or decrease the fan speed form 0-100%
 
-* Auto Temp Mode: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
+* Auto Temp: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
 
-* Auto Hum Mode: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
+* Auto Hum: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
 
 #
 
@@ -57,7 +56,7 @@ It is recommended these settings are left as standard PWM Min = 0 and PWM Max = 
 Or the PWM Max can be decreased if 100% is too loud or the fan is far too powerful.
 
 * Diagnostics:
-This option will display debug information, Current Mode, Fan Speed %, PWM Pin Voltage, PWM Current Value, Min Temp, MaxTemp, Min Hum, Max Hum, PWM Min, PWM Max, Software Version.
+This option will display debug information, Current Mode, T/H Sensor Serial Number, Fan Speed %, PWM Pin Voltage, PWM Current Value, Min Temp, MaxTemp, Min Hum, Max Hum, PWM Min, PWM Max, Software Version.
 
 
 
