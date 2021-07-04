@@ -25,7 +25,7 @@ The current controller offers little to no options for control other than 0-100%
 * Standby Switch.
 
 ## General Operation & Setup:
-* If the rocker switch is in the off position, the red LED is on but the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the red LED will go out, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
+* If the rocker switch is in the off position, the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
 
 
 ### Selectable Modes:
@@ -90,7 +90,7 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 * BB_Adafruit_SHT31 custom BitBang Library for temperature humidity sensor [Here]()
 * encoder-arduino for the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/encoder-arduino.zip)
 * Liquidcrystal-IC2 for the LCD Display [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/Liquidcrystal-IC2.zip)
-* megaAVR_TimerInterrupt-1.3.0 a timing library utalised by the Rotary encoder [Here]()
+* megaAVR_TimerInterrupt-1.3.0 a timing library utalised by the Rotary encoder for ATmega4809 architecture [Here]()
 * BitBang_I2C-2.1.3 
 
 
@@ -107,14 +107,14 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 ## Power Consumption:
 Estimated Power Consumption as rated in docs, actual may vary.
 
-| Component            | Consumption       |
-| :----------------    | :-------          |
-| Arduino Uno Wifi Rev2         | @ 9v 150 ma        |
-| Lcd i2c              | @ 5v 200 ma        |
-| SHT31 temp/hum sensor | @ 5v < 1.5 ma     |
-| KY-040 Rotary Encoder| @ 5v < 0.05 ma     |
-| PMP2425W Relay       | @ 9v 30 ma         |
-|                      |Total = 381.55 ma   |
+| Component              | Consumption        |
+| :----------------      | :-------           |
+| Arduino Uno Wifi Rev2  | @ 9v 150 ma        |
+| Lcd i2c                | @ 5v 200 ma        |
+| SHT31 temp/hum sensor  | @ 5v < 1.5 ma      |
+| KY-040 Rotary Encoder  | @ 5v < 0.05 ma     |
+| PMP2425W Relay         | @ 9v 30 ma         |
+|                        |Total = 381.55 ma   |
 #
 
 ## Setup program options:
@@ -127,10 +127,14 @@ On pressing the rotary encoder centre button
 | Max Target Temperature.    | +/- 0-30C                   |
 | Min Target Humidity.       | +/- 0-100%                  |
 | Max Target Humidity.       | +/- 0-100%                  |
-| Max PWM                    | +/- 0-255                   |
-| Min PWM                    | +/- 0-255                   |
+| Min PWM                    | +/- 0-255 steps of 5        |
+| Max PWM                    | +/- 0-255 steps of 5        |
 | Diagnostic                 | Scrolling Display of all Saved Data |
 | Menu Exit.                 |                             |
+
+### Note for setup
+When setting the Min and Max values if the the Min value exceeds the Max value it will become the whatever the current Max value is -5, the opsoite if Max is less than the Min value it will become whatever the Min value is +5.
+
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="100%"/></div>
 
