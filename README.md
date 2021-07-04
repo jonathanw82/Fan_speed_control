@@ -105,7 +105,7 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img1.jpg" alt="3D print" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img2.jpg" alt="3D print" width="43%"/></div>
 
 #
-<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelconstuction1.jpg" alt="bezel constuction" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelcon2.jpg" alt="bezel construction" width="43%"/></div>
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelconstuction1.jpg" alt="bezel constuction" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelcon2.jpg" alt="bezel construction" width="45%"/></div>
 
 ## Power Consumption:
 Estimated Power Consumption as rated in docs, actual may vary.
