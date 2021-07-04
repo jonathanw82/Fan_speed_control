@@ -87,11 +87,11 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 * avr/wdt for use of the built in watchdog 
 
 ### Additional
-* BB_Adafruit_SHT31 custom BitBang Library for temperature humidity sensor [Here]()
+* BB_Adafruit_SHT31 custom BitBang Library for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/BB_Adafruit_SHT31-master.zip)
 * encoder-arduino for the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/encoder-arduino.zip)
 * Liquidcrystal-IC2 for the LCD Display [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/Liquidcrystal-IC2.zip)
-* megaAVR_TimerInterrupt-1.3.0 a timing library utalised by the Rotary encoder for ATmega4809 architecture [Here]()
-* BitBang_I2C-2.1.3 
+* megaAVR_TimerInterrupt-1.3.0 a timing library utalised by the Rotary encoder for ATmega4809 architecture [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/megaAVR_TimerInterrupt-1.3.0.zip)
+* BitBang_I2C-2.1.3 for asigning new I2C GPIO pins [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/BitBang_I2C-2.1.3.zip)
 
 
 ## Construction:
