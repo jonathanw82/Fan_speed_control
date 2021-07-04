@@ -7,7 +7,7 @@ void updatedisplay() {
       lcd.setCursor(0, 0);
       lcd.print(F("  Mode Manual   "));
       lcd.setCursor(0, 1);
-      lcd.print(F(" Fan Speed "));
+      lcd.print(F(" Fan Speed  "));
       lcd.setCursor(12, 1);
       lcd.print(manualFanSpeed);
       lcd.print(F("%"));

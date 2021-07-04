@@ -127,7 +127,6 @@ void buttonPressed() {
       menuitem = 1;
       lcd.clear();
       value = 0;
-      delay(1200);
     }
   }
 }

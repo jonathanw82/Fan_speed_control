@@ -77,10 +77,15 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 void setup() {
   // ----- Initialise devices -------
   Serial.begin(9600);                       // initialise Serial monitor
-  setUpMqtt();                              // Setup The MQTT protacol
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
-  lcd.backlight();                          // Turns backlight LCD on                         
+  lcd.backlight();                          // Turns backlight LCD on
+                           
+  // -- Display startup screens -
+  startUpScreen();                          // Initising screen
+  setUpMqtt();                              // Setup The MQTT protacol
+  
+  // -- Initialise sensors -
   sht31.begin(SHT31_Address);               // Initialise the Temp Humid sensor at the adress 0x44
   sensors();                                // Collect initial temp and humidity
 
@@ -100,14 +105,11 @@ void setup() {
   EEPROM.get(40, fanMin);                   // Get the fan min
 
   // ------ SetUp encoder ------
-  encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotery encoder
-  encoder->setAccelerationEnabled(true);    // disable encode acelleration
-  ITimer1.init();                           // timer iterupt for the rotery encoder
-  ITimer1.attachInterrupt(1000, timerIsr);  // set the iterup fot timerIsr @ 1 millisecond
+  encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotary encoder
+  encoder->setAccelerationEnabled(true);    // enable encode acelleration
+  ITimer1.init();                           // timer interupt for the rotary encoder
+  ITimer1.attachInterrupt(1000, timerIsr);  // set the interup fot timerIsr @ 1 millisecond
   last = encoder->getValue();               // Get the current encoder value
-
-  // -- Display startup screens -
-  startUpScreen();                          // Initising screen
 
   // ---- Enable the watchdog ---
   wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
@@ -167,7 +169,7 @@ void controlFanSpeed() {
 
 void sensors() {
   temp = sht31.readTemperature();                       // Get current Temperature
-  hum = sht31.readHumidity();                          // Get current Humidity
+  hum = sht31.readHumidity();                           // Get current Humidity
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchdog overide ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
