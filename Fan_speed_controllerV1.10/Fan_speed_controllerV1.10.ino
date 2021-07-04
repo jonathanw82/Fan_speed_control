@@ -6,6 +6,7 @@
 #include <ClickEncoder.h>           // Rotery Encoder Lib
 #include <LiquidCrystal_I2C.h>      // Lcd Display Lib
 
+//~~~~~~~~~ Define Timers and timer Clock refquency before megaAVR_TimerInterrupt.h  ~~~~~~~~~
 #define USE_TIMER_1     true        // Setup using Timer1
 #define USING_16MHZ     true        // Set clock frequency for Timer1
 #include <megaAVR_TimerInterrupt.h> //Interupt Lib
@@ -53,9 +54,9 @@ int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
 BB_Adafruit_SHT31 sht31 = BB_Adafruit_SHT31();
-int SHT31_Address = 0x44;      // Set to 0x45 for alternate i2c address
-float temp;                    //Stores temperature value
-float hum;                     //Stores humidity value
+int SHT31_Address = 0x44;                       // Set to 0x45 for alternate i2c address
+float temp;                                     //Stores temperature value as a floating point integer
+float hum;                                      //Stores humidity value as a floating point integer
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Millis declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,7 +78,7 @@ void setup() {
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on                         
-  sht31.begin(SHT31_Address);                        // Initialise the Temp Humid sensor and diaplay the serial number via Serial
+  sht31.begin(SHT31_Address);               // Initialise the Temp Humid sensor at the adress 0x44
   sensors();                                // Collect initial temp and humidity
 
   // ---- Setup I/O and set status ----
@@ -85,7 +86,7 @@ void setup() {
   pinMode(PWMoutput, OUTPUT);               // sets the relay pin to outputs
   digitalWrite(PWMoutput, Off);             // Set Inital pin status low
 
-  // ---- Get saves data from memory --
+  // ---- Get saved data from memory --
   EEPROM.get(0, manualFanSpeed);            // Get inital fanSpeed from EEprom
   EEPROM.get(8, tempMin);                   // Get inital min temp
   EEPROM.get(12, tempMax);                  // Get inital max temp
@@ -97,7 +98,7 @@ void setup() {
 
   // ------ SetUp encoder ------
   encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotery encoder
-  encoder->setAccelerationEnabled(false);   // disable encode acelleration
+  encoder->setAccelerationEnabled(true);    // disable encode acelleration
   ITimer1.init();                           // timer iterupt for the rotery encoder
   ITimer1.attachInterrupt(1000, timerIsr);  // set the iterup fot timerIsr @ 1 millisecond
   last = encoder->getValue();               // Get the current encoder value

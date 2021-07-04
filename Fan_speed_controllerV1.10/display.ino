@@ -268,9 +268,8 @@ void updatedisplay() {
       lcd.setCursor(0, 0);
       lcd.print(F("T/H SensorStatus"));
       lcd.setCursor(0, 1);
-      lcd.print(SHT31_Address + sht31.readStatus());
-      Serial.print(sht31.readStatus());
-      lcd.print(F("        "));
+      lcd.print(sht31.readStatus());
+      lcd.print(F("           "));
       marker = marker + 1;
     }
     if (currentTime - previousTime >= 2000 && marker == 2)
