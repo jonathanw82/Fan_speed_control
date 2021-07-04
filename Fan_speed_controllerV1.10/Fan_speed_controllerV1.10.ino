@@ -1,19 +1,16 @@
+#include <megaAVR_ISR_Timer.h>      // Timer Lib for rotary encoder
+#include <DFRobot_SHT3x.h>          // Temperature Humidity Sensor
+#include <EEPROM.h>                 // EEprom Lib
+#include <Wire.h>                   // I2c enable Lib
+#include <avr/wdt.h>                // Watchdog Lib
+#include <ClickEncoder.h>           // Rotery Encoder Lib
+#include <LiquidCrystal_I2C.h>      // Lcd Display Lib
 
-#include <megaAVR_ISR_Timer.h>
+#define USE_TIMER_1     true        // Setup using Timer1
+#define USING_16MHZ     true        // Set clock frequency for Timer1
+#include <megaAVR_TimerInterrupt.h> //Interupt Lib
 
-#include <DFRobot_SHT3x.h>      // Temperature Humidity Sensor
-//#include <TimerOne.h>           // Timer for encoder
-#include <EEPROM.h>             // EEprom Lib
-#include <Wire.h>               // I2c enable Lib
-#include <avr/wdt.h>            // Watchdog Lib
-#include <ClickEncoder.h>       // Rotery Encoder Lib
-#include <LiquidCrystal_I2C.h>  // Lcd Display Lib
-
-#define USE_TIMER_1     true
-#define USING_16MHZ     true
-#include <megaAVR_TimerInterrupt.h>
-
-String SoftwareVersion = "   Site-V1.00   ";
+String SoftwareVersion = "   Site-V1.10   ";
 int On = HIGH;
 int Off = LOW;
 int eeAddress = 0;              // Address to start saving to EEprom
@@ -51,7 +48,7 @@ boolean middle = false;
 boolean button = false;
 
 ClickEncoder *encoder;
-int16_t last, value;
+int last, value;
 int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
