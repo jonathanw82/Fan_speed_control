@@ -1,0 +1,377 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Fan speed controler"
+Date "2021-06-09"
+Rev ""
+Comp "LettUs Grow"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R R2
+U 1 1 60C1204D
+P 2750 1550
+F 0 "R2" H 2820 1596 50  0000 L CNN
+F 1 "R 10K" H 2450 1550 50  0000 L CNN
+F 2 "" V 2680 1550 50  0001 C CNN
+F 3 "~" H 2750 1550 50  0001 C CNN
+	1    2750 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_SPST SW1
+U 1 1 60C12AE0
+P 2550 1250
+F 0 "SW1" H 2550 1485 50  0000 C CNN
+F 1 "Standby Switch" H 2550 1394 50  0000 C CNN
+F 2 "" H 2550 1250 50  0001 C CNN
+F 3 "~" H 2550 1250 50  0001 C CNN
+	1    2550 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 60C1D0D1
+P 2400 3150
+F 0 "#PWR0103" H 2400 2900 50  0001 C CNN
+F 1 "GND" H 2405 2977 50  0000 C CNN
+F 2 "" H 2400 3150 50  0001 C CNN
+F 3 "" H 2400 3150 50  0001 C CNN
+	1    2400 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCU_Module:Arduino_UNO_R3 A1
+U 1 1 60C0C48D
+P 3750 3050
+F 0 "A1" V 3704 4094 50  0000 L CNN
+F 1 "Arduino_UNO_WiFi_Rev2" V 3750 2750 50  0000 L CNN
+F 2 "Module:Arduino_UNO_R3" H 3750 3050 50  0001 C CIN
+F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 3750 3050 50  0001 C CNN
+	1    3750 3050
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0104
+U 1 1 60C278F6
+P 2750 1850
+F 0 "#PWR0104" H 2750 1600 50  0001 C CNN
+F 1 "GND" H 2755 1677 50  0000 C CNN
+F 2 "" H 2750 1850 50  0001 C CNN
+F 3 "" H 2750 1850 50  0001 C CNN
+	1    2750 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5C #PWR0105
+U 1 1 60C289A7
+P 2100 1250
+F 0 "#PWR0105" H 2100 1100 50  0001 C CNN
+F 1 "+5C" H 2115 1423 50  0000 C CNN
+F 2 "" H 2100 1250 50  0001 C CNN
+F 3 "" H 2100 1250 50  0001 C CNN
+	1    2100 1250
+	1    0    0    -1  
+$EndComp
+Text Label 1650 4150 2    50   ~ 0
+GND
+Text Label 1650 4050 2    50   ~ 0
+VCC
+Text Label 1650 3950 2    50   ~ 0
+SDA
+Text Label 1650 3850 2    50   ~ 0
+SCL
+$Comp
+L power:GND #PWR0107
+U 1 1 60C3592A
+P 1650 4500
+F 0 "#PWR0107" H 1650 4250 50  0001 C CNN
+F 1 "GND" H 1655 4327 50  0000 C CNN
+F 2 "" H 1650 4500 50  0001 C CNN
+F 3 "" H 1650 4500 50  0001 C CNN
+	1    1650 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5C #PWR0108
+U 1 1 60C361C2
+P 1250 4050
+F 0 "#PWR0108" H 1250 3900 50  0001 C CNN
+F 1 "+5C" H 1265 4223 50  0000 C CNN
+F 2 "" H 1250 4050 50  0001 C CNN
+F 3 "" H 1250 4050 50  0001 C CNN
+	1    1250 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J2
+U 1 1 60C5ACE0
+P 3800 4600
+F 0 "J2" V 3862 4844 50  0000 L CNN
+F 1 "rotary encoder" V 3700 4350 50  0000 L CNN
+F 2 "" H 3800 4600 50  0001 C CNN
+F 3 "~" H 3800 4600 50  0001 C CNN
+	1    3800 4600
+	0    -1   -1   0   
+$EndComp
+Text Label 3600 4400 1    50   ~ 0
+GND
+Text Label 3700 4400 1    50   ~ 0
+VCC
+Text Label 3800 4400 1    50   ~ 0
+SW
+Text Label 3900 4400 1    50   ~ 0
+DT
+Text Label 4000 4400 1    50   ~ 0
+CLK
+$Comp
+L power:+5C #PWR0109
+U 1 1 60C5EA66
+P 3700 4200
+F 0 "#PWR0109" H 3700 4050 50  0001 C CNN
+F 1 "+5C" H 3715 4373 50  0000 C CNN
+F 2 "" H 3700 4200 50  0001 C CNN
+F 3 "" H 3700 4200 50  0001 C CNN
+	1    3700 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0110
+U 1 1 60C5F1FF
+P 3300 4400
+F 0 "#PWR0110" H 3300 4150 50  0001 C CNN
+F 1 "GND" H 3305 4227 50  0000 C CNN
+F 2 "" H 3300 4400 50  0001 C CNN
+F 3 "" H 3300 4400 50  0001 C CNN
+	1    3300 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J3
+U 1 1 60C61B6B
+P 5600 1750
+F 0 "J3" V 5662 1994 50  0000 L CNN
+F 1 "Proportional Control Solid State Relay" V 5850 1250 50  0000 L CNN
+F 2 "" H 5600 1750 50  0001 C CNN
+F 3 "~" H 5600 1750 50  0001 C CNN
+	1    5600 1750
+	0    1    1    0   
+$EndComp
+Text Label 5700 1750 1    50   ~ 0
+ACload
+Text Label 5800 1750 1    50   ~ 0
+ACLoad
+Text Label 5600 1750 1    50   ~ 0
+VCC
+Text Label 5400 1750 1    50   ~ 0
+GND
+Text Label 5500 1750 1    50   ~ 0
+PWM
+$Comp
+L power:GND #PWR0111
+U 1 1 60C64240
+P 5000 2000
+F 0 "#PWR0111" H 5000 1750 50  0001 C CNN
+F 1 "GND" H 5005 1827 50  0000 C CNN
+F 2 "" H 5000 2000 50  0001 C CNN
+F 3 "" H 5000 2000 50  0001 C CNN
+	1    5000 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0112
+U 1 1 60C662C2
+P 5600 1200
+F 0 "#PWR0112" H 5600 1050 50  0001 C CNN
+F 1 "+12V" H 5615 1373 50  0000 C CNN
+F 2 "" H 5600 1200 50  0001 C CNN
+F 3 "" H 5600 1200 50  0001 C CNN
+	1    5600 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:AC #PWR0113
+U 1 1 60C6709C
+P 6200 1300
+F 0 "#PWR0113" H 6200 1200 50  0001 C CNN
+F 1 "AC" H 6200 1575 50  0000 C CNN
+F 2 "" H 6200 1300 50  0001 C CNN
+F 3 "" H 6200 1300 50  0001 C CNN
+	1    6200 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0114
+U 1 1 60C6939B
+P 5050 2950
+F 0 "#PWR0114" H 5050 2800 50  0001 C CNN
+F 1 "+12V" H 5065 3123 50  0000 C CNN
+F 2 "" H 5050 2950 50  0001 C CNN
+F 3 "" H 5050 2950 50  0001 C CNN
+	1    5050 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:AC #PWR0115
+U 1 1 60C6B917
+P 6550 1300
+F 0 "#PWR0115" H 6550 1200 50  0001 C CNN
+F 1 "AC" H 6550 1575 50  0000 C CNN
+F 2 "" H 6550 1300 50  0001 C CNN
+F 3 "" H 6550 1300 50  0001 C CNN
+	1    6550 1300
+	1    0    0    -1  
+$EndComp
+Text Notes 5800 1400 0    50   ~ 0
+240v AC Fan Load
+$Comp
+L Connector:Conn_01x04_Male J1
+U 1 1 60C152C2
+P 1850 4050
+F 0 "J1" H 1822 3932 50  0000 R CNN
+F 1 "16x2B LCD i2c" H 2250 4250 50  0000 R CNN
+F 2 "" H 1850 4050 50  0001 C CNN
+F 3 "~" H 1850 4050 50  0001 C CNN
+	1    1850 4050
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 60E43043
+P 1500 2800
+F 0 "#PWR02" H 1500 2550 50  0001 C CNN
+F 1 "GND" H 1505 2627 50  0000 C CNN
+F 2 "" H 1500 2800 50  0001 C CNN
+F 3 "" H 1500 2800 50  0001 C CNN
+	1    1500 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR01
+U 1 1 60E43F1B
+P 950 2400
+F 0 "#PWR01" H 950 2250 50  0001 C CNN
+F 1 "+5V" H 965 2573 50  0000 C CNN
+F 2 "" H 950 2400 50  0001 C CNN
+F 3 "" H 950 2400 50  0001 C CNN
+	1    950  2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x04_Male J4
+U 1 1 60E3B103
+P 1600 2400
+F 0 "J4" H 1550 2750 50  0000 C CNN
+F 1 "SHT31 Temp/Hum Sensor" H 1650 2650 50  0000 C CNN
+F 2 "" H 1600 2400 50  0001 C CNN
+F 3 "~" H 1600 2400 50  0001 C CNN
+	1    1600 2400
+	1    0    0    -1  
+$EndComp
+Text Label 1450 2600 0    50   ~ 0
+GND
+Text Label 1450 2500 0    50   ~ 0
+VCC
+Text Label 1450 2400 0    50   ~ 0
+GRN
+Text Label 1450 2300 0    50   ~ 0
+YEL
+Wire Wire Line
+	4750 2950 5050 2950
+Wire Wire Line
+	2650 3150 2400 3150
+Wire Wire Line
+	2750 1850 2750 1700
+Wire Wire Line
+	2750 1250 2750 1400
+Wire Wire Line
+	2350 1250 2100 1250
+Wire Wire Line
+	1650 4150 1650 4500
+Wire Wire Line
+	3600 4400 3300 4400
+Wire Wire Line
+	3700 4400 3700 4200
+Wire Wire Line
+	3800 4400 3800 3850
+Wire Wire Line
+	3800 3850 3550 3850
+Wire Wire Line
+	3550 3850 3550 3550
+Wire Wire Line
+	5400 1950 5000 1950
+Wire Wire Line
+	5000 1950 5000 2000
+Wire Wire Line
+	5500 1950 5500 2250
+Wire Wire Line
+	5500 2250 4050 2250
+Wire Wire Line
+	5600 1750 5600 1200
+Wire Wire Line
+	5700 1750 5700 1300
+Wire Wire Line
+	5700 1300 6200 1300
+Wire Wire Line
+	5800 1750 5800 1450
+Wire Wire Line
+	5800 1450 6550 1450
+Wire Wire Line
+	6550 1450 6550 1300
+Wire Wire Line
+	1850 3850 2950 3850
+Wire Wire Line
+	2950 3850 2950 3550
+Wire Wire Line
+	1650 4050 1250 4050
+Wire Wire Line
+	3050 3950 3050 3550
+Connection ~ 1650 4050
+Wire Wire Line
+	1850 3950 3050 3950
+Wire Wire Line
+	1800 4050 1650 4050
+Wire Wire Line
+	2750 1250 3650 1250
+Wire Wire Line
+	3650 1250 3650 2550
+Connection ~ 2750 1250
+Wire Wire Line
+	1600 2600 1500 2600
+Wire Wire Line
+	1500 2600 1500 2800
+Wire Wire Line
+	1600 2500 950  2500
+Wire Wire Line
+	950  2500 950  2400
+Wire Wire Line
+	4050 2250 4050 2550
+Wire Wire Line
+	1800 2400 3050 2400
+Wire Wire Line
+	3050 2400 3050 2550
+Wire Wire Line
+	1800 2300 3150 2300
+Wire Wire Line
+	3150 2300 3150 2550
+Wire Wire Line
+	3900 4400 3900 3750
+Wire Wire Line
+	3900 3750 3750 3750
+Wire Wire Line
+	3750 3750 3750 3550
+Wire Wire Line
+	4000 4400 4000 3700
+Wire Wire Line
+	4000 3700 3950 3700
+Wire Wire Line
+	3650 3700 3650 3550
+Wire Wire Line
+	3950 3700 3650 3700
+$EndSCHEMATC
