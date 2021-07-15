@@ -1,11 +1,10 @@
 
 # Fan_Speed_Control
 <h1 align="center">
-   <img src="" alt="Project Image"/>
+   <img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fanspeedcontrol.gif" alt="Project Image"/>
  </h1>
  
- Things to update
- Update wiring diagram take out led and change encoder wiring add new temp sensor
+
 ## Overview:
 Fan speed controller for AvonValley farm preparation space air extraction, with incorporated menu allowing the user to select modes from automatic and manual.
 
@@ -25,15 +24,15 @@ The current controller offers little to no options for control other than 0-100%
 * Standby Switch.
 
 ## General Operation & Setup:
-* If the rocker switch is in the off position, the red LED is on but the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the red LED will go out, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
+* If the rocker switch is in the off position, the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
 
 
 ### Selectable Modes:
-* Manual Mode: This mode offers adjustment via the rotary encoder to increase or decrease the fan speed form 0-100%
+* Manual: This mode offers adjustment via the rotary encoder to increase or decrease the fan speed form 0-100%
 
-* Auto Temp Mode: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
+* Auto Temp: This mode offers automated fan control via the air temperature, governed by the temperature minimum and temperature maximum, these values are preset by the user in the settings menu.
 
-* Auto Hum Mode: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
+* Auto Hum: This mode offers automated fan control via the air humidity, governed by the humidity minimum and humidity maximum, these values are preset by the user in the settings menu. 
 
 #
 
@@ -57,12 +56,12 @@ It is recommended these settings are left as standard PWM Min = 0 and PWM Max = 
 Or the PWM Max can be decreased if 100% is too loud or the fan is far too powerful.
 
 * Diagnostics:
-This option will display debug information, Current Mode, Fan Speed %, PWM Pin Voltage, PWM Current Value, Min Temp, MaxTemp, Min Hum, Max Hum, PWM Min, PWM Max, Software Version.
+This option will display debug information, Current Mode, T/H Sensor Serial Number, Fan Speed %, PWM Pin Voltage, PWM Current Value, Min Temp, MaxTemp, Min Hum, Max Hum, PWM Min, PWM Max, Software Version.
 
 
 
 ## Parts Required:
-* Arduino Uno [Here](https://en.wikipedia.org/wiki/Arduino_Uno)
+* Arduino Uno WiFi Rev2 [Here](https://store.arduino.cc/arduino-uno-wifi-rev2)
 * PMP2425W Crydom 25Amp configurable panel mount proportional control relay. [Here](https://uk.rs-online.com/web/p/solid-state-relays/1450603/?cm_mmc=UK-PPC-DS3A-_-google-_-DSA_UK_EN_Relays_Index-_-Solid+State+Relays%7C+Products-_-DYNAMIC+SEARCH+ADS&matchtype=b&dsa-1193841357972&s_kwcid=AL!7457!3!504930549032!b!!g!!&gclid=Cj0KCQjw--GFBhDeARIsACH_kda--qfwiYqq5zjuV3pZ5H8Jwh-oOMkSBz1KMY0g-ov1plc-TYbbI9QaAs4UEALw_wcB&gclsrc=aw.ds)
 * Solid State Relay Heat Sink Din mount [Here](https://uk.rs-online.com/web/p/solid-state-relay-heatsinks/7034564/?cm_mmc=UK-PPC-DS3A-_-google-_-3_UK_EN_Relays_Solid+State+Relay+Heatsinks_Phrase-_-Sensata+/+Crydom+-+7034564+-+HS301DR-_-hs301dr&matchtype=p&kwd-23861736400&s_kwcid=AL!7457!3!512563304828!p!!g!!hs301dr&gclid=Cj0KCQjw--GFBhDeARIsACH_kdZ8FfeA81j-OvZjZMheyz4FUox76YKj330JyLfjab7-JEgpXslKqpEaAsJ0EALw_wcB&gclsrc=aw.ds)
 * LCD 16x2 I2C Screen blue [Here]() add link
@@ -87,11 +86,13 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 * avr/wdt for use of the built in watchdog 
 
 ### Additional
-* DFRobot_SHT3x-master for temperature humidity sensor [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/DFRobot_SHT3x-master.zip)
-* encoder-arduino for the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/encoder-arduino.zip)
-* Liquidcrystal-IC2 for the LCD Display [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/Liquidcrystal-IC2.zip)
-* MapFloat-master to allow use of floating point integers with Map() functions [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/MapFloat-master.zip)
-* TimerOne a timing library utalised by the Rotary encoder [Here](https://github.com/jonathanw82/Fan_speed_control/blob/main/libraries/TimerOne.zip)
+* BB_Adafruit_SHT31 custom BitBang library for temperature humidity sensor 
+* encoder-arduino for the Rotary encoder 
+* Liquidcrystal-IC2 for the LCD Display
+* megaAVR_TimerInterrupt-1.3.0 a timing library utalised by the Rotary encoder for ATmega4809 architecture
+* BitBang_I2C-2.1.3 for asigning new I2C GPIO pins 
+### All Libraries can be found [Here](https://github.com/jonathanw82/Fan_speed_control/tree/main/libraries)
+
 
 ## Construction:
 * Wiring Schematic
@@ -103,18 +104,20 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img1.jpg" alt="3D print" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img2.jpg" alt="3D print" width="43%"/></div>
 
+#
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelconstuction1.jpg" alt="bezel constuction" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelcon2.jpg" alt="bezel construction" width="45%"/></div>
+
 ## Power Consumption:
 Estimated Power Consumption as rated in docs, actual may vary.
 
-| Component            | Consumption       |
-| :----------------    | :-------          |
-| Arduino Uno          | @ 9v 150 ma        |
-| Lcd i2c              | @ 5v 200 ma        |
-| SHT31 temp/hum sensor | @ 5v < 1.5 ma     |
-| KY-040 Rotary Encoder| @ 5v < 0.05 ma     |
-| PMP2425W Relay       | @ 9v 30 ma         |
-| Red LED              | @ 5v 30 ma         |
-|                      |Total = 411.55 ma   |
+| Component              | Consumption        |
+| :----------------      | :-------           |
+| Arduino Uno Wifi Rev2  | @ 9v 150 ma        |
+| Lcd i2c                | @ 5v 200 ma        |
+| SHT31 temp/hum sensor  | @ 5v < 1.5 ma      |
+| KY-040 Rotary Encoder  | @ 5v < 0.05 ma     |
+| PMP2425W Relay         | @ 9v 30 ma         |
+|                        |Total = 381.55 ma   |
 #
 
 ## Setup program options:
@@ -127,10 +130,14 @@ On pressing the rotary encoder centre button
 | Max Target Temperature.    | +/- 0-30C                   |
 | Min Target Humidity.       | +/- 0-100%                  |
 | Max Target Humidity.       | +/- 0-100%                  |
-| Max PWM                    | +/- 0-255                   |
-| Min PWM                    | +/- 0-255                   |
+| Min PWM                    | +/- 0-255 steps of 5        |
+| Max PWM                    | +/- 0-255 steps of 5        |
 | Diagnostic                 | Scrolling Display of all Saved Data |
 | Menu Exit.                 |                             |
+
+### Note for setup
+When setting the Min and Max values if the the Min value exceeds the Max value it will become the whatever the current Max value is -5, the opsoite if Max is less than the Min value it will become whatever the Min value is +5.
+
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/setupflow.jpg" alt="Setup flow Chart" width="100%"/></div>
 
@@ -139,7 +146,7 @@ On pressing the rotary encoder centre button
 
 
 ## Nice to have:
-* Bluetooth or Wifi connectivity.
+* Bluetooth connectivity.
 * Intergration with Ostara. 
 * Adding MQTT.
 

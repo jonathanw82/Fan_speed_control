@@ -1,10 +1,17 @@
+
+#include <megaAVR_ISR_Timer.h>
+
 #include <DFRobot_SHT3x.h>      // Temperature Humidity Sensor
-#include <TimerOne.h>           // Timer for encoder
+//#include <TimerOne.h>           // Timer for encoder
 #include <EEPROM.h>             // EEprom Lib
 #include <Wire.h>               // I2c enable Lib
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
+
+#define USE_TIMER_1     true
+#define USING_16MHZ     true
+#include <megaAVR_TimerInterrupt.h>
 
 String SoftwareVersion = "   Site-V1.00   ";
 int On = HIGH;
@@ -94,8 +101,8 @@ void setup() {
   // ------ SetUp encoder ------
   encoder = new ClickEncoder(A0, A1, A2);   // set analog channel 0,1,2 for use with the rotery encoder
   encoder->setAccelerationEnabled(false);   // disable encode acelleration
-  Timer1.initialize(1000);                  // timer iterupt for the rotery encoder
-  Timer1.attachInterrupt(timerIsr);
+  ITimer1.init();                  // timer iterupt for the rotery encoder
+  ITimer1.attachInterrupt(1000, timerIsr);
   last = encoder->getValue();
 
   // -- Display startup screens -
