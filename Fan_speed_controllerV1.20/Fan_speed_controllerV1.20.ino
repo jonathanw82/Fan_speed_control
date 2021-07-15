@@ -7,6 +7,19 @@
 #include <LiquidCrystal_I2C.h>      // Lcd Display Lib
 #include <WiFiNINA.h>               // Lib to activate the Wifi
 #include <MQTT.h>                   // Access to MQTT service
+#include <SPI.h>
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Define WiFi & Mqtt Settings  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define WIFI_NAME ""
+#define WIFI_PASSWORD ""
+#define MQTT_HOST ""
+#define PUBLISH_PATH "TempHumTest/publish"
+#define SUBSCRIBE_PATH "TempHumTest/sub"
+#define DEVICE_NAME "Fan Speed Control"
+int status = WL_IDLE_STATUS;
+MQTTClient mqtt_client;
+WiFiClient www_client;
+
 
 //~~~~~~~~~ Define Timers and timer Clock refquency before megaAVR_TimerInterrupt.h  ~~~~~~~~~
 #define USE_TIMER_1     true        // Setup using Timer1
@@ -64,8 +77,10 @@ float hum;                                      //Stores humidity value as a flo
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Millis declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 unsigned long currentTime;
 unsigned long previousTime = 0;
+unsigned long prevTime = 0;
 unsigned long lastDebounceTime = 0;  // the last time the standby pin was toggled
 unsigned long debounceDelay = 50;    // the debounce time for standby pin
+int messageSendingTimeDelay = 1000;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lcd Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -77,14 +92,16 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 void setup() {
   // ----- Initialise devices -------
   Serial.begin(9600);                       // initialise Serial monitor
+  wifi();
+  setUpMqtt();
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
-                           
+
   // -- Display startup screens -
   startUpScreen();                          // Initising screen
   setUpMqtt();                              // Setup The MQTT protacol
-  
+
   // -- Initialise sensors -
   sht31.begin(SHT31_Address);               // Initialise the Temp Humid sensor at the adress 0x44
   sensors();                                // Collect initial temp and humidity
@@ -120,6 +137,7 @@ void setup() {
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
+  runMqtt();
   if (shutDown == 0) {
     sensors();                     // Read Temp and Humidity sensors
     fanControl();                  // Adjust PWM output to fans controller
@@ -155,7 +173,7 @@ void fanControl() {
 
 void controlFanSpeed() {
   fanInVolts = fanSpeed * (5.0 / 255);                    // Estimated voltage output of PWM pin
-   if (fanInVolts <= 0) {
+  if (fanInVolts <= 0) {
     fanInVolts = 0;
   }
   fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
@@ -196,11 +214,7 @@ void standBy() {
       buttonState = standBySwitchValue;
 
       if (buttonState == HIGH) {
-        lcd.noBacklight();
-        digitalWrite(PWMoutput, Off);
-        shutDown = 1;
-        lcd.clear();
-        Wire.flush();
+        standbyControl();
       }
       else {
         delay(1500);
@@ -208,6 +222,14 @@ void standBy() {
     }
   }
   lastButtonState = standBySwitchValue;
+}
+
+void standbyControl() {
+  lcd.noBacklight();
+  digitalWrite(PWMoutput, Off);
+  shutDown = 1;
+  lcd.clear();
+  Wire.flush();
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
