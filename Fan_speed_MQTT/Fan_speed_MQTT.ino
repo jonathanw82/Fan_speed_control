@@ -5,6 +5,20 @@
 #include <avr/wdt.h>            // Watchdog Lib
 #include <ClickEncoder.h>       // Rotery Encoder Lib
 #include <LiquidCrystal_I2C.h>  // Lcd Display Lib
+#include <WiFiNINA.h>
+#include <MQTT.h>
+
+#define WIFI_NAME "LGHQ"
+#define WIFI_PASSWORD "webr00ter"
+#define MQTT_HOST "sensor-platform.localdomain"
+
+#define PUBLISH_PATH "AV-Air-Extraction/pub/"
+#define SUBSCRIBE_PATH "AV-Air-Extraction/sub/path"
+#define DEVICE_NAME "Avon Vally space extractor"
+
+int status = WL_IDLE_STATUS;
+MQTTClient mqtt_client;
+WiFiClient www_client;
 
 String SoftwareVersion = "   Site-V1.00   ";
 int On = HIGH;
@@ -92,7 +106,7 @@ void setup() {
   EEPROM.get(40, fanMin);                   // Get the fan min
 
   // ------ SetUp encoder ------
-  encoder = new ClickEncoder(A0, A1, A2);   // set analog channel 0,1,2 for use with the rotery encoder
+  encoder = new ClickEncoder(A1, A0, A2);   // set analog channel 0,1,2 for use with the rotery encoder
   encoder->setAccelerationEnabled(false);   // disable encode acelleration
   Timer1.initialize(1000);                  // timer iterupt for the rotery encoder
   Timer1.attachInterrupt(timerIsr);
@@ -103,11 +117,55 @@ void setup() {
 
   // ---- Enable the watchdog ---
   wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
+
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
+
+  // check for the WiFi module:
+  if (WiFi.status() == WL_NO_MODULE) {
+    Serial.println("Communication with WiFi module failed!");
+    // don't continue
+    while (true);
+  }
+
+  // attempt to connect to WiFi network:
+  while (status != WL_CONNECTED) {
+    Serial.println("Attempting to connect to wifi network");
+    Serial.print("WiFi name: ");
+    Serial.println(WIFI_NAME);
+    Serial.print("WiFi password: ");
+    Serial.println(WIFI_PASSWORD);
+    // Connect to WPA/WPA2 network:
+    status = WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
+
+    // wait 10 seconds for connection:
+    delay(10000);
+  }
+
+  // you're connected now, so print out the data:
+  Serial.println("connection successfull!");
+
+  mqtt_client.begin("sensor-platform.localdomain", 1883, www_client);
+  mqtt_client.onMessageAdvanced(mqtt_message);
+
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(A0, INPUT);
+}
+
+bool str_startwith(char* string, char* start) {
+  return string == strstr(string, start);
+}
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void loop() {
+  maintain_mqtt_connection();
+//  mqtt_client.publish("TempHum/test", String(val));
+  mqtt_client.loop();
+
+  
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
   if (shutDown == 0) {
@@ -122,6 +180,30 @@ void loop() {
   }
   manualReset();                   // If button is held down reset
   standBy();                       // Set stand by mode
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Mqtt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+long last_connection_attempt = 0;
+void maintain_mqtt_connection() {
+  if (mqtt_client.connected()) {
+    return;
+  }
+  // only attempt to connect once a second
+  if (millis() - last_connection_attempt < 1000) {
+    return;
+  }
+  last_connection_attempt = millis();
+
+  Serial.print(F("Connecting to MQTT host \""));
+  Serial.print(MQTT_HOST);
+  Serial.print(F("\" ... "));
+  if (!mqtt_client.connect(DEVICE_NAME)) {
+    Serial.println(F(" connection failed."));
+    return;
+  }
+  Serial.println(F("success!"));
+
+  mqtt_client.subscribe(SUBSCRIBE_PATH);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fan Control ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
