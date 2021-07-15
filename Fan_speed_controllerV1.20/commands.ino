@@ -1,5 +1,5 @@
-void commands(char payload){
-  
+void commands(char payload) {
+
   if (payload == "sleep") {
     standbyControl();
   }
@@ -19,61 +19,61 @@ void commands(char payload){
     tempMin++;
     writeToEEprom();
   }
-    if (payload == "tempMin-") {
+  if (payload == "tempMin-") {
     tempMin--;
     writeToEEprom();
   }
-   if (payload == "tempMax+") {
+  if (payload == "tempMax+") {
     tempMax++;
     writeToEEprom();
   }
-    if (payload == "tempMax-") {
+  if (payload == "tempMax-") {
     tempMax--;
     writeToEEprom();
   }
-    if (payload == "humMin+") {
-     humMin += 5;
+  if (payload == "humMin+") {
+    humMin += 5;
     writeToEEprom();
   }
-    if (payload == "humMin-") {
-     humMin -= 5;
+  if (payload == "humMin-") {
+    humMin -= 5;
     writeToEEprom();
   }
-   if (payload == "humMax+") {
-     humMax += 5;
+  if (payload == "humMax+") {
+    humMax += 5;
     writeToEEprom();
   }
-    if (payload == "humMax-") {
-     humMax -= 5;
+  if (payload == "humMax-") {
+    humMax -= 5;
     writeToEEprom();
   }
-      if (payload == "fanMin+") {
-     fanMin--;
+  if (payload == "fanMin+") {
+    fanMin++;
     writeToEEprom();
   }
-    if (payload == "fanMin-") {
-     fanMin--;
+  if (payload == "fanMin-") {
+    fanMin--;
     writeToEEprom();
   }
-   if (payload == "fanMax+") {
-     fanMax++;
+  if (payload == "fanMax+") {
+    fanMax++;
     writeToEEprom();
   }
-    if (payload == "fanMax-") {
-     fanMax++;
+  if (payload == "fanMax-") {
+    fanMax--;
     writeToEEprom();
   }
   // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
-     if (payload == "fanModeMan") {
-     currentMode = 0;
+  if (payload == "fanModeMan") {
+    currentMode = 0;
     writeToEEprom();
   }
-   if (payload == "fanModeTemp") {
-     currentMode = 1;
+  if (payload == "fanModeTemp") {
+    currentMode = 1;
     writeToEEprom();
   }
-     if (payload == "fanModeHum") {
-     currentMode = 2;
+  if (payload == "fanModeHum") {
+    currentMode = 2;
     writeToEEprom();
   }
 }

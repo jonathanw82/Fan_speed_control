@@ -13,15 +13,15 @@
 #define WIFI_NAME ""
 #define WIFI_PASSWORD ""
 #define MQTT_HOST ""
-#define PUBLISH_PATH "TempHumTest/publish"
-#define SUBSCRIBE_PATH "TempHumTest/sub"
+#define PUBLISH_PATH "AVfanControl/pub"
+#define SUBSCRIBE_PATH "AVfanControl/sub"
 #define DEVICE_NAME "Fan Speed Control"
 int status = WL_IDLE_STATUS;
 MQTTClient mqtt_client;
 WiFiClient www_client;
+long last_connection_attempt = 0;
 
-
-//~~~~~~~~~ Define Timers and timer Clock refquency before megaAVR_TimerInterrupt.h  ~~~~~~~~~
+//~~~~~~~~~ Define Timers and timer Clock refquency before megaAVR_TimerInterrupt.h  ~~~~~~~~~~
 #define USE_TIMER_1     true        // Setup using Timer1
 #define USING_16MHZ     true        // Set clock frequency for Timer1
 #include <megaAVR_TimerInterrupt.h> //Interupt Lib
@@ -68,11 +68,10 @@ int last, value;
 int marker = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Air Temperature & Humidity sensor ~~~~~~~~~~~~~~~~~~~~~~~~~
-BB_Adafruit_SHT31 sht31 = BB_Adafruit_SHT31();
+BB_Adafruit_SHT31 sht31 = BB_Adafruit_SHT31();  // declare the sensor function
 int SHT31_Address = 0x44;                       // Set to 0x45 for alternate i2c address
 float temp;                                     //Stores temperature value as a floating point integer
 float hum;                                      //Stores humidity value as a floating point integer
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Millis declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 unsigned long currentTime;
@@ -80,7 +79,7 @@ unsigned long previousTime = 0;
 unsigned long prevTime = 0;
 unsigned long lastDebounceTime = 0;  // the last time the standby pin was toggled
 unsigned long debounceDelay = 50;    // the debounce time for standby pin
-int messageSendingTimeDelay = 1000;
+int messageSendingTimeDelay = 1000;  // wait period for publishing data
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lcd Display ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -92,14 +91,12 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 void setup() {
   // ----- Initialise devices -------
   Serial.begin(9600);                       // initialise Serial monitor
-  wifi();
-  setUpMqtt();
   Wire.begin();                             // Begin I2c on arduino nano
   lcd.begin(16, 2);                         // initialize the lcd for 16 chars 2 lines
   lcd.backlight();                          // Turns backlight LCD on
-
   // -- Display startup screens -
   startUpScreen();                          // Initising screen
+  wifi();                                   // Initialise the wifi connection
   setUpMqtt();                              // Setup The MQTT protacol
 
   // -- Initialise sensors -
@@ -130,6 +127,9 @@ void setup() {
 
   // ---- Enable the watchdog ---
   wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
+  mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String("Site-V1.20MQTT"));
+  mqtt_client.publish(PUBLISH_PATH + String("HostName"), String(MQTT_HOST));
+  mqtt_client.publish(PUBLISH_PATH + String("DeviceName"), String(DEVICE_NAME));
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
