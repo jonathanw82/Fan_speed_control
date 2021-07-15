@@ -17,9 +17,7 @@ void startUpScreen() {
   lcd.print(SoftwareVersion);
   delay(1500);
   lcd.setCursor(0, 0);
-  lcd.print(F("Connecting Mqtt "));
+  lcd.print(F("Connecting MQTT "));
   lcd.setCursor(0, 1);
-  lcd.print(F("Please Wait!"));
-  delay(1500);
-  lcd.clear();
+  lcd.print(F("Please Wait!    "));
 }

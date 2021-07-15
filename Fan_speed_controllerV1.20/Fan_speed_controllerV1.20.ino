@@ -10,11 +10,11 @@
 #include <SPI.h>
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Define WiFi & Mqtt Settings  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define WIFI_NAME ""
-#define WIFI_PASSWORD ""
-#define MQTT_HOST ""
-#define PUBLISH_PATH "AVfanControl/pub"
-#define SUBSCRIBE_PATH "AVfanControl/sub"
+#define WIFI_NAME "EE-Hub-St62"
+#define WIFI_PASSWORD "SHIP-sit-ahead"
+#define MQTT_HOST "192.168.1.88"
+#define PUBLISH_PATH "AVfanControl/"
+#define SUBSCRIBE_PATH "AVfanControl"
 #define DEVICE_NAME "Fan Speed Control"
 int status = WL_IDLE_STATUS;
 MQTTClient mqtt_client;
@@ -50,6 +50,7 @@ const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
+int displayOnce = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -98,7 +99,7 @@ void setup() {
   startUpScreen();                          // Initising screen
   wifi();                                   // Initialise the wifi connection
   setUpMqtt();                              // Setup The MQTT protacol
-
+  
   // -- Initialise sensors -
   sht31.begin(SHT31_Address);               // Initialise the Temp Humid sensor at the adress 0x44
   sensors();                                // Collect initial temp and humidity
@@ -124,20 +125,19 @@ void setup() {
   ITimer1.init();                           // timer interupt for the rotary encoder
   ITimer1.attachInterrupt(1000, timerIsr);  // set the interup fot timerIsr @ 1 millisecond
   last = encoder->getValue();               // Get the current encoder value
-
+  lcd.clear();
   // ---- Enable the watchdog ---
-  wdt_enable(WDTO_1S);                      // Enable watchdog and wait 1 seconds before reset
-  mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String("Site-V1.20MQTT"));
-  mqtt_client.publish(PUBLISH_PATH + String("HostName"), String(MQTT_HOST));
-  mqtt_client.publish(PUBLISH_PATH + String("DeviceName"), String(DEVICE_NAME));
+  //wdt_enable(WDTO_2S);                      // Enable watchdog and wait 1 seconds before reset
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
-  currentTime = millis();          // declare the current time is equal to millis
   runMqtt();
+
+  currentTime = millis();          // declare the current time is equal to millis
+ 
   if (shutDown == 0) {
     sensors();                     // Read Temp and Humidity sensors
     fanControl();                  // Adjust PWM output to fans controller
@@ -186,7 +186,7 @@ void controlFanSpeed() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Temp Humid Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void sensors() {
-  temp = sht31.readTemperature();                       // Get current Temperature
+  temp = sht31.readTemperature() -1;                       // Get current Temperature
   hum = sht31.readHumidity();                           // Get current Humidity
 }
 
@@ -214,7 +214,7 @@ void standBy() {
       buttonState = standBySwitchValue;
 
       if (buttonState == HIGH) {
-        standbyControl();
+        //standbyControl();
       }
       else {
         delay(1500);
@@ -233,7 +233,6 @@ void standbyControl() {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 /*
    This function adds the variables to EEprom, using the (put) method only allows data to be written to memory
    if it has changed else it get ignored.

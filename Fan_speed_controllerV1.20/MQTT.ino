@@ -14,16 +14,22 @@ bool str_startwith(char* string, char* start) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Run MQTT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void runMqtt() {
   maintain_mqtt_connection();
-  String settingString =  String(currentMode) + "," + String(manualFanSpeed) + "," + String(tempMin) + "," + String(tempMax) + "," + 
-                          String(humMin) + "," + String(humMax) + "," + String(fanMin) + "," + String(fanMax) "," + String(shutDown);
-                          
+  
+  if (displayOnce == 0) {
+    mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String("Site-V1.20MQTT"));
+    mqtt_client.publish(PUBLISH_PATH + String("HostName"), String(MQTT_HOST));
+    mqtt_client.publish(PUBLISH_PATH + String("DeviceName"), String(DEVICE_NAME));
+    displayOnce = 1;
+  }
+  String settingString = String(currentMode) + ',' + String(manualFanSpeed) + ',' + String(tempMin) + ',' + String(tempMax) + ',' + String(humMin) + ',' + String(humMax) + ',' + String(fanMin) + ',' + String(fanMax) + ',' + String(shutDown);
+
   if (millis() - prevTime > messageSendingTimeDelay) {
     prevTime = millis();
-    if(shutDown == 0){
-    mqtt_client.publish(PUBLISH_PATH + String("Temp"), String(temp));
-    mqtt_client.publish(PUBLISH_PATH + String("Humidity"), String(hum));
-    mqtt_client.publish(PUBLISH_PATH + String("fan%"), String(fanPercentage));
-    mqtt_client.publish(PUBLISH_PATH + String("fanVoltage"), String(fanInVolts));
+    if (shutDown == 0) {
+      mqtt_client.publish(PUBLISH_PATH + String("Temp"), String(temp));
+      mqtt_client.publish(PUBLISH_PATH + String("Humidity"), String(hum));
+      mqtt_client.publish(PUBLISH_PATH + String("fan%"), String(fanPercentage));
+      mqtt_client.publish(PUBLISH_PATH + String("fanVoltage"), String(fanInVolts));
     }
     mqtt_client.publish(PUBLISH_PATH + String("Settings"), String(settingString));
   }
