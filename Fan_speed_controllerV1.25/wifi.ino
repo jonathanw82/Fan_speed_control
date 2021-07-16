@@ -15,17 +15,20 @@ bool wifi() {
     // Connect to WPA/WPA2 network:
     status = WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
     // wait 10 seconds for connection:
-    delay(10000);
+    delay(5000);
     // you're connected now, so print out the data:
-    if (status == WL_CONNECT_FAILED) {
+    if (status != WL_CONNECTED) {
       isWifiConnectedCounter++;
-      Serial.print("Wifi Not connected");
+      Serial.println(F("Wifi Not connected"));
       if (isWifiConnectedCounter == 2) {
-        Serial.print("Wifi Not connected");
+        Serial.println(F("Wifi Not connected check connection"));
+        Serial.println(F("Booting standard controller"));
         return false;
       }
-    }
-    Serial.println("connection successfull!");
+    }else{
+    Serial.println(F("connection successfull!"));
+    setUpMqtt();                              // Setup The MQTT protacol
     return true;
+    }
   }
 }

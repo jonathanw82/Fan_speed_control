@@ -1,5 +1,6 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MQTT Setup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void setUpMqtt() {
+  Serial.print("AT MQTT Setup");
   mqtt_client.begin(MQTT_HOST, 1883, www_client);
   mqtt_client.onMessageAdvanced(mqtt_message);
 }
@@ -63,6 +64,10 @@ void maintain_mqtt_connection() {
   Serial.print(F("\" ... "));
   if (!mqtt_client.connect(DEVICE_NAME)) {
     Serial.println(F(" connection failed."));
+    isMQTTConnectedCounter++;
+    if(isMQTTConnectedCounter == 2){
+      mqttNotConnected = 1;
+    }
     return;
   }
   Serial.println(F("success!"));

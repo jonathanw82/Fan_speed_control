@@ -64,15 +64,15 @@ void commands(char* payload) {
     writeToEEprom();
   }
   // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
-  if (str_startwith(payload, "fanModeMan")) {
+  if (str_startwith(payload, "ModeMan")) {
     currentMode = 0;
     writeToEEprom();
   }
-  if (str_startwith(payload, "fanModeTemp")) {
+  if (str_startwith(payload, "ModeTemp")) {
     currentMode = 1;
     writeToEEprom();
   }
-  if (str_startwith(payload, "fanModeHum")) {
+  if (str_startwith(payload, "ModeHum")) {
     currentMode = 2;
     writeToEEprom();
   }

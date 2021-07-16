@@ -52,6 +52,8 @@ int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
 int displayOnce = 0;
 int isWifiConnectedCounter = 0;
+int isMQTTConnectedCounter = 0;
+int mqttNotConnected = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu items and encoder control  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 int menuitem = 1;
@@ -89,9 +91,6 @@ LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);      // Set the L
 // set the LCD address to 0x3F or 0x27 depending what display using for a 16 chars 2 line display
 // Set the pins on the I2C chip used for LCD connections:
 
-// bool isWiFiConnected = false;
-bool wifi() = false;
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Set Up ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void setup() {
   // ----- Initialise devices -------
@@ -104,9 +103,7 @@ void setup() {
 
   if (wifi()) {
     wifi();
-  };                                        // Initialise the wifi connection
-  
-  setUpMqtt();                              // Setup The MQTT protacol
+  }                                        // Initialise the wifi connection
 
   // -- Initialise sensors -
   sht31.begin(SHT31_Address);               // Initialise the Temp Humid sensor at the adress 0x44
@@ -135,7 +132,7 @@ void setup() {
   last = encoder->getValue();               // Get the current encoder value
   lcd.clear();
   // ---- Enable the watchdog ---
-  //wdt_enable(WDTO_2S);                      // Enable watchdog and wait 1 seconds before reset
+  wdt_enable(WDTO_2S);                      // Enable watchdog and wait 1 seconds before reset
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,8 +140,11 @@ void setup() {
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   // if mqtt connected run mqtt
-  runMqtt();
-
+  if (status == WL_CONNECTED) {
+    if (mqttNotConnected == 0) {
+      runMqtt();
+    }
+  }
 
   currentTime = millis();          // declare the current time is equal to millis
 
