@@ -12,9 +12,13 @@ bool wifi() {
     Serial.println(WIFI_NAME);
     Serial.print(F("WiFi password: "));
     Serial.println(WIFI_PASSWORD);
+    lcd.setCursor(0, 0);
+    lcd.print(F("Connecting WiFi "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Please Wait!    "));
     // Connect to WPA/WPA2 network:
     status = WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
-    // wait 10 seconds for connection:
+    // wait 5 seconds for connection:
     delay(5000);
     // you're connected now, so print out the data:
     if (status != WL_CONNECTED) {
@@ -25,10 +29,10 @@ bool wifi() {
         Serial.println(F("Booting standard controller"));
         return false;
       }
-    }else{
-    Serial.println(F("connection successfull!"));
-    setUpMqtt();                              // Setup The MQTT protacol
-    return true;
+    } else {
+      Serial.println(F("connection successfull!"));
+      setUpMqtt();                              // Setup The MQTT protacol
+      return true;
     }
   }
 }

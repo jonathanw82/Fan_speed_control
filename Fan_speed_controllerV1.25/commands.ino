@@ -1,20 +1,21 @@
-void commands(char* payload) {
-
+void commands(char* topic, char* payload, int payload_length) {
+  Serial.print(topic);
   if (str_startwith(payload, "sleep")) {
     standbyControl();
   }
   if (str_startwith(payload, "wake")) {
-    shutDown = 0;
-    lcd.backlight();
+    //    shutDown = 0;
+    //    lcd.backlight();
+    delay(2010);
   }
-  if (str_startwith(payload, "manFan+")) {
-    manualFanSpeed += 5;
+  if (str_startwith(topic, "avFanManual")) {
+    payload[payload_length] = '\0';
+    String s = String((char*)payload);
+    int stringtoint = s.toInt();
+    manualFanSpeed = stringtoint;
     writeToEEprom();
   }
-  if (str_startwith(payload, "manFan-")) {
-    manualFanSpeed -= 5;
-    writeToEEprom();
-  }
+
   if (str_startwith(payload, "tempMin+")) {
     tempMin++;
     writeToEEprom();

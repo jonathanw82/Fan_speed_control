@@ -15,6 +15,7 @@
 #define MQTT_HOST "192.168.1.88"
 #define PUBLISH_PATH "AVfanControl/"
 #define SUBSCRIBE_PATH "AVfanControl"
+#define SUBSCRIBE_PATH2 "avFanManual"
 #define DEVICE_NAME "Fan Speed Control"
 int status = WL_IDLE_STATUS;
 MQTTClient mqtt_client;
@@ -50,7 +51,6 @@ const byte standBySwitch = 7;
 int standByValue = 0;
 int buttonState;               // the current reading from the standby input pin
 int lastButtonState = LOW;     // the previous reading from the standby input pin
-int displayOnce = 0;
 int isWifiConnectedCounter = 0;
 int isMQTTConnectedCounter = 0;
 int mqttNotConnected = 0;
@@ -81,6 +81,8 @@ float hum;                                      //Stores humidity value as a flo
 unsigned long currentTime;
 unsigned long previousTime = 0;
 unsigned long prevTime = 0;
+unsigned long prevTime2 =0;
+unsigned long prevTime3 =0;
 unsigned long lastDebounceTime = 0;  // the last time the standby pin was toggled
 unsigned long debounceDelay = 50;    // the debounce time for standby pin
 int messageSendingTimeDelay = 1000;  // wait period for publishing data
@@ -131,22 +133,32 @@ void setup() {
   ITimer1.attachInterrupt(1000, timerIsr);  // set the interup fot timerIsr @ 1 millisecond
   last = encoder->getValue();               // Get the current encoder value
   lcd.clear();
-  // ---- Enable the watchdog ---
-  wdt_enable(WDTO_2S);                      // Enable watchdog and wait 1 seconds before reset
 }
+
+// ---- Enable the watchdog ---
+//void watchdogSetup() {
+//  Serial.print(F("Setting up watchdog for 2 second delay"));
+//#ifdef ARDUINO_ARCH_MEGAAVR
+//  if (RSTCTRL.RSTFR & RSTCTRL_WDRF_bm) {
+//    Serial.println(F("It was a watchdog reset."));
+//  }
+//  RSTCTRL.RSTFR |= RSTCTRL_WDRF_bm ;
+//  wdt_enable(WDT_PERIOD_2KCLK_gc); // one second watchdog
+//  wdt_reset(); 
+//#endif
+//}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void loop() {
   wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
+  currentTime = millis();          // declare the current time is equal to millis
   // if mqtt connected run mqtt
   if (status == WL_CONNECTED) {
     if (mqttNotConnected == 0) {
       runMqtt();
     }
   }
-
-  currentTime = millis();          // declare the current time is equal to millis
 
   if (shutDown == 0) {
     sensors();                     // Read Temp and Humidity sensors
@@ -205,7 +217,7 @@ void sensors() {
 void manualReset() {                  // Kick the watchdog if the reset is held down to activated
   if (button) {
     button = false;
-    delay(2000);
+    delay(2010);
   }
 }
 
@@ -227,7 +239,7 @@ void standBy() {
         //standbyControl();
       }
       else {
-        delay(1500);
+        delay(2010);
       }
     }
   }

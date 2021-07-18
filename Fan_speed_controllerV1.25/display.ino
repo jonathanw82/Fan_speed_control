@@ -28,7 +28,7 @@ void updatedisplay() {
         lcd.setCursor(0, 0);
         lcd.print(F("Mode: Auto Temp "));
         lcd.setCursor(0, 1);
-        lcd.print(F(" Fan Speed "));
+        lcd.print(F(" Fan Speed  "));
         lcd.setCursor(12, 1);
         lcd.print(fanPercentage);
         lcd.print(F("%"));
@@ -65,7 +65,7 @@ void updatedisplay() {
         lcd.setCursor(0, 0);
         lcd.print(F("Mode: Auto Humd "));
         lcd.setCursor(0, 1);
-        lcd.print(F(" Fan Speed "));
+        lcd.print(F(" Fan Speed  "));
         lcd.setCursor(12, 1);
         lcd.print(fanPercentage);
         lcd.print(F("%"));
@@ -436,7 +436,27 @@ void updatedisplay() {
 
       marker = marker + 1;
     }
-    if (marker > 9) {
+      if (currentTime - previousTime >= 2000 && marker == 10)
+    {
+      previousTime = currentTime;
+      lcd.setCursor(0, 0);
+      lcd.print(F("WiFi Connected  "));
+      lcd.setCursor(0, 1);
+      (status == WL_CONNECTED)? lcd.print("Connected!      "):lcd.print("Not Connected   ");
+      
+      marker = marker + 1;
+    }
+     if (currentTime - previousTime >= 2000 && marker == 11)
+    {
+      previousTime = currentTime;
+      lcd.setCursor(0, 0);
+      lcd.print(F("Mqtt Connected  "));
+      lcd.setCursor(0, 1);
+      (mqtt_client.connected())? lcd.print("Connected!      "):lcd.print("Not Connected   ");
+     
+      marker = marker + 1;
+    }
+    if (marker > 11) {
       marker = 0;
     }
   }
