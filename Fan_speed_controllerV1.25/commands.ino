@@ -4,9 +4,7 @@ void commands(char* topic, char* payload, int payload_length) {
     standbyControl();
   }
   if (str_startwith(payload, "wake")) {
-    //    shutDown = 0;
-    //    lcd.backlight();
-    delay(2010);
+    wake();
   }
   if (str_startwith(topic, "avFanManual")) {
     payload[payload_length] = '\0';

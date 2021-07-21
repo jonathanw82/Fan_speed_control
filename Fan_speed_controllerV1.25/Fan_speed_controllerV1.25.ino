@@ -17,6 +17,7 @@
 #define SUBSCRIBE_PATH "AVfanControl"
 #define SUBSCRIBE_PATH2 "avFanManual"
 #define DEVICE_NAME "Fan Speed Control"
+#define LOCATION "AvonVally"
 int status = WL_IDLE_STATUS;
 MQTTClient mqtt_client;
 WiFiClient www_client;
@@ -252,6 +253,11 @@ void standbyControl() {
   shutDown = 1;
   lcd.clear();
   Wire.flush();
+}
+
+void wake(){
+   lcd.backlight();
+   shutDown = 0;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

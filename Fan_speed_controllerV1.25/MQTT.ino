@@ -21,6 +21,7 @@ void runMqtt() {
       mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String("Site-V1.20MQTT"));
       mqtt_client.publish(PUBLISH_PATH + String("HostName"), String(MQTT_HOST));
       mqtt_client.publish(PUBLISH_PATH + String("DeviceName"), String(DEVICE_NAME));
+      mqtt_client.publish(PUBLISH_PATH + String("Location"), String(LOCATION));
     }
     String settingString = String(currentMode) + ',' + String(tempMin) + ',' + String(tempMax) + ',' + String(humMin) + ',' + String(humMax) + ',' + String(fanMin) + ',' + String(fanMax) + ',' + String(shutDown);
 
