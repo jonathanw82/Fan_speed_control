@@ -215,8 +215,8 @@ void encoderControl()
   if (tempMax == tempMin) {
     tempMax = tempMin + 5;
   }
-  if (tempMax >= 30) {
-    tempMax = 30;
+  if (tempMax >= 40) {
+    tempMax = 40;
   }
   if (tempMax < 10) {
     tempMax = 10;

@@ -82,8 +82,8 @@ float hum;                                      //Stores humidity value as a flo
 unsigned long currentTime;
 unsigned long previousTime = 0;
 unsigned long prevTime = 0;
-unsigned long prevTime2 =0;
-unsigned long prevTime3 =0;
+unsigned long prevTime2 = 0;
+unsigned long prevTime3 = 0;
 unsigned long lastDebounceTime = 0;  // the last time the standby pin was toggled
 unsigned long debounceDelay = 50;    // the debounce time for standby pin
 int messageSendingTimeDelay = 1000;  // wait period for publishing data
@@ -145,7 +145,7 @@ void setup() {
 //  }
 //  RSTCTRL.RSTFR |= RSTCTRL_WDRF_bm ;
 //  wdt_enable(WDT_PERIOD_2KCLK_gc); // one second watchdog
-//  wdt_reset(); 
+//  wdt_reset();
 //#endif
 //}
 
@@ -162,7 +162,6 @@ void loop() {
   }
 
   if (shutDown == 0) {
-    sensors();                     // Read Temp and Humidity sensors
     fanControl();                  // Adjust PWM output to fans controller
     readRotaryEncoder();           // Check status of rotery encoder
     encoderControl();              // set and check what the encoder button status are
@@ -171,6 +170,7 @@ void loop() {
     updatedisplay();               // Lcd screen transitions
     deBug();                       // enable Debug function
   }
+  sensors();                     // Read Temp and Humidity sensors
   manualReset();                   // If button is held down reset
   standBy();                       // Set stand by mode
 }
@@ -202,6 +202,9 @@ void controlFanSpeed() {
   fanPercentage = map(fanSpeed, fanMin, fanMax, 0, 100);  // fan speed in %
   if (fanPercentage <= 0) {
     fanPercentage = 0;
+  }
+  if (fanPercentage >= 100) {
+    fanPercentage = 100;
   }
   analogWrite(PWMoutput, fanSpeed);                       // Control PWM pin
 }
@@ -255,9 +258,9 @@ void standbyControl() {
   Wire.flush();
 }
 
-void wake(){
-   lcd.backlight();
-   shutDown = 0;
+void wake() {
+  lcd.backlight();
+  shutDown = 0;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write to EEPROM  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
