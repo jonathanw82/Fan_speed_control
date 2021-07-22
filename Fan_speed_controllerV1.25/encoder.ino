@@ -140,7 +140,7 @@ void encoderControl()
   }
   if (up && menuitem == 9 && enter == 1 && page == 2 ) {
     up = false;
-    fanMin ++;
+    fanMin += 5;
     writeToEEprom();
   }
 
@@ -265,7 +265,7 @@ void encoderControl()
   }
   if (down && menuitem == 9 && enter == 1 && page == 2 ) {
     down = false;
-    fanMin --;
+    fanMin -= 5;
     writeToEEprom();
   }
   if (fanMin == fanMax) {

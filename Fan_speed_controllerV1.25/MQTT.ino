@@ -1,12 +1,20 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MQTT Setup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void setUpMqtt() {
-  mqtt_client.begin(MQTT_HOST, 1883, www_client); 
+  mqtt_client.begin(MQTT_HOST, 1883, www_client);
   mqtt_client.onMessageAdvanced(mqtt_message);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ String comparason ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 bool str_startwith(char* string, char* start) {
   return string == strstr(string, start);
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Convert sting to intergers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+int payloadCovertedToInt(char* payload, int payload_length) {    // Convert the incomming string to an integer
+  payload[payload_length] = '\0';
+  String s = String((char*)payload);
+  int stringtoint = s.toInt();
+  return stringtoint;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Run MQTT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,14 +44,14 @@ void runMqtt() {
       mqtt_client.publish(PUBLISH_PATH + String("Settings"), String(settingString));
       mqtt_client.publish(PUBLISH_PATH + String("manFan"), String(manualFanSpeed));
     }
-    wdt_reset(); 
+    wdt_reset();
     mqtt_client.loop();
   }
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MQTT Message recieved ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void mqtt_message(MQTTClient *client, char topic[], char payload[], int payload_length) {
-  wdt_reset(); 
+  wdt_reset();
   Serial.print("message recieved: ");
   Serial.print(topic);
   Serial.print(" = ");
@@ -74,12 +82,20 @@ void maintain_mqtt_connection() {
     isMQTTConnectedCounter++;
     if (isMQTTConnectedCounter == 1) {
       mqttNotConnected = 1;
-     // watchdogSetup();
+      // watchdogSetup();
     }
     return;
   }
   Serial.println(F("success!"));
-  mqtt_client.subscribe(SUBSCRIBE_PATH);
-  mqtt_client.subscribe(SUBSCRIBE_PATH2);
-//  watchdogSetup();
+  mqtt_client.subscribe("AVfanControl");
+  mqtt_client.subscribe("avFanManual");
+  mqtt_client.subscribe("tempMin");
+  mqtt_client.subscribe("tempMax");
+  mqtt_client.subscribe("humMin");
+  mqtt_client.subscribe("humMax");
+  mqtt_client.subscribe("fanMin");
+  mqtt_client.subscribe("fanMax");
+
+  //  watchdogSetup();
+
 }

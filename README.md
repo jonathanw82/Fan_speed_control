@@ -12,6 +12,7 @@ The current controller offers little to no options for control other than 0-100%
 
 ## The user's goals of this controller are:
 * An easy to navigate menu.
+* Controll via webpage/intergration into Ostara.
 * Low power consumption.
 * Manual and Automatic operation.
 * Automated monitoring of temperature and humidity to regulate fan speed accordingly.
@@ -22,6 +23,7 @@ The current controller offers little to no options for control other than 0-100%
 * Auto mode to allow automated control of fan speed relative to rises in room temperature or humidity, with user-programmable target parameters.
 * Manual mode to allow the user to set a fan speed as desired.
 * Standby Switch.
+* Website Control.
 
 ## General Operation & Setup:
 * If the rocker switch is in the off position, the LCD display is not illuminated, the controller is in standby. Switching the rocker switch to the on position, the LCD will illuminate, the controller will display startup screens and fan control will start from the previous mode that was selected.
@@ -143,12 +145,29 @@ When setting the Min and Max values if the the Min value exceeds the Max value i
 
 #
 
+## Mqtt Connection:
+
+### Mqtt Commands:
+
+| Commands as strings:       | Topic:                      |
+| :----------------          | :-------                    |
+| sleep                      | AVfanControl                |
+| wake                       | AVfanControl                |
+| avFanManual                | avFanManual                 |
+| tempMin                    | avFanTempMin                | min 0
+| tempMax                    | avFanTempMax                | max 40
+| humMin                     | avFanHumMin                 | +-5 min 20
+| humMax                     | avFanHumMax                 |  +-5 max 100
+| fanMin                     | AVfanMin                    | +-5
+| fanMax                     | AVfanMax                    |+-5
+| modeMan                    | AVfanControl                |
+| modeTemp                   | AVfanControl                |
+| modeHum                    | AVfanControl                |
 
 
 ## Nice to have:
 * Bluetooth connectivity.
 * Intergration with Ostara. 
-* Adding MQTT.
 
 
 ## Credits:

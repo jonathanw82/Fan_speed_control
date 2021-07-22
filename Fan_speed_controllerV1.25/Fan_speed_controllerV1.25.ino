@@ -14,8 +14,6 @@
 #define WIFI_PASSWORD "SHIP-sit-ahead"
 #define MQTT_HOST "192.168.1.88"
 #define PUBLISH_PATH "AVfanControl/"
-#define SUBSCRIBE_PATH "AVfanControl"
-#define SUBSCRIBE_PATH2 "avFanManual"
 #define DEVICE_NAME "Fan Speed Control"
 #define LOCATION "AvonVally"
 int status = WL_IDLE_STATUS;

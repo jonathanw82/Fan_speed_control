@@ -7,71 +7,49 @@ void commands(char* topic, char* payload, int payload_length) {
     wake();
   }
   if (str_startwith(topic, "avFanManual")) {
-    payload[payload_length] = '\0';
-    String s = String((char*)payload);
-    int stringtoint = s.toInt();
-    manualFanSpeed = stringtoint;
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    manualFanSpeed = tempNum;
     writeToEEprom();
   }
-
-  if (str_startwith(payload, "tempMin+")) {
-    tempMin++;
+  if (str_startwith(topic, "tempMin")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    tempMin = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "tempMin-")) {
-    tempMin--;
+  if (str_startwith(topic, "tempMax")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    tempMax = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "tempMax+")) {
-    tempMax++;
+  if (str_startwith(topic, "humMin")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    humMin = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "tempMax-")) {
-    tempMax--;
+  if (str_startwith(topic, "humMax")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    humMax = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "humMin+")) {
-    humMin += 5;
+  if (str_startwith(topic, "fanMin")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    fanMin = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "humMin-")) {
-    humMin -= 5;
+  if (str_startwith(topic, "fanMax")) {
+    int tempNum = payloadCovertedToInt(payload, payload_length);
+    fanMax = tempNum;
     writeToEEprom();
   }
-  if (str_startwith(payload, "humMax+")) {
-    humMax += 5;
-    writeToEEprom();
-  }
-  if (str_startwith(payload, "humMax-")) {
-    humMax -= 5;
-    writeToEEprom();
-  }
-  if (str_startwith(payload, "fanMin+")) {
-    fanMin++;
-    writeToEEprom();
-  }
-  if (str_startwith(payload, "fanMin-")) {
-    fanMin--;
-    writeToEEprom();
-  }
-  if (str_startwith(payload, "fanMax+")) {
-    fanMax++;
-    writeToEEprom();
-  }
-  if (str_startwith(payload, "fanMax-")) {
-    fanMax--;
-    writeToEEprom();
-  }
-  // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
-  if (str_startwith(payload, "ModeMan")) {
+  if (str_startwith(payload, "modeMan")) {        // Get inital mode (0 = Manual)(1 = Temp control)(2 = Hum control)
     currentMode = 0;
     writeToEEprom();
   }
-  if (str_startwith(payload, "ModeTemp")) {
+  if (str_startwith(payload, "modeTemp")) {
     currentMode = 1;
     writeToEEprom();
   }
-  if (str_startwith(payload, "ModeHum")) {
+  if (str_startwith(payload, "modeHum")) {
     currentMode = 2;
     writeToEEprom();
   }
