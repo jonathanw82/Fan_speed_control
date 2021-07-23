@@ -7,13 +7,13 @@ void readRotaryEncoder()
     last = value / 3;
     down = true;
     if (currentTime - previousTime >= 50) {
-      currentTime = previousTime;
+       previousTime = currentTime;
     }
   } else   if (value / 3 < last) {
     last = value / 3;
     up = true;
     if (currentTime - previousTime >= 50) {
-      currentTime = previousTime;
+       previousTime = currentTime;
     }
   }
 }
