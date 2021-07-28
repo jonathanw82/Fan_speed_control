@@ -100,6 +100,9 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 * Wiring Schematic
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/></div>
+#
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_schematic_power.jpg" alt="Wiring Schematic" width="100%"/></div>
+
 
 
 * 3D printed Bezel
@@ -154,12 +157,12 @@ When setting the Min and Max values if the the Min value exceeds the Max value i
 | sleep                      | AVfanControl                |
 | wake                       | AVfanControl                |
 | avFanManual                | avFanManual                 |
-| tempMin                    | avFanTempMin                | min 0
-| tempMax                    | avFanTempMax                | max 40
-| humMin                     | avFanHumMin                 | +-5 min 20
-| humMax                     | avFanHumMax                 |  +-5 max 100
-| fanMin                     | AVfanMin                    | +-5
-| fanMax                     | AVfanMax                    |+-5
+| tempMin                    | avFanTempMin                |
+| tempMax                    | avFanTempMax                |
+| humMin                     | avFanHumMin                 | 
+| humMax                     | avFanHumMax                 |  
+| fanMin                     | AVfanMin                    | 
+| fanMax                     | AVfanMax                    |
 | modeMan                    | AVfanControl                |
 | modeTemp                   | AVfanControl                |
 | modeHum                    | AVfanControl                |
