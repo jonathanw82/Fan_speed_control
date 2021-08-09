@@ -10,9 +10,9 @@
 #include <SPI.h>
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Define WiFi & Mqtt Settings  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define WIFI_NAME "EE-Hub-St62"
-#define WIFI_PASSWORD "SHIP-sit-ahead"
-#define MQTT_HOST "192.168.1.88"
+#define WIFI_NAME "LGHQ"
+#define WIFI_PASSWORD "webr00ter"
+#define MQTT_HOST ""
 #define PUBLISH_PATH "AVfanControl/"
 #define DEVICE_NAME "Fan Speed Control"
 #define LOCATION "AvonVally"
@@ -30,7 +30,7 @@ String SoftwareVersion = " Site-V1.25MQTT ";
 int On = HIGH;
 int Off = LOW;
 int eeAddress = 0;              // Address to start saving to EEprom
-const byte PWMoutput = 3;       // PWM output pin to fan control realy
+#define PWMoutput 5             // PWM output pin to fan control realy
 
 int fanMin = 0;
 int fanMax = 255;
@@ -42,7 +42,7 @@ byte manMin = 0;
 byte manMax = 100;
 float fanInVolts = 0;
 int fanPercentage = 0;
-float fanSpeed = 0;
+int fanSpeed = 0;
 int currentMode = 0;            // depending on the currentMode the voltage and % menu can use this get correct data
 int manualFanSpeed = 0;         // Initial manual fanspeed
 int shutDown = 0;
@@ -135,22 +135,22 @@ void setup() {
 }
 
 // ---- Enable the watchdog ---
-//void watchdogSetup() {
-//  Serial.print(F("Setting up watchdog for 2 second delay"));
-//#ifdef ARDUINO_ARCH_MEGAAVR
-//  if (RSTCTRL.RSTFR & RSTCTRL_WDRF_bm) {
-//    Serial.println(F("It was a watchdog reset."));
-//  }
-//  RSTCTRL.RSTFR |= RSTCTRL_WDRF_bm ;
-//  wdt_enable(WDT_PERIOD_2KCLK_gc); // one second watchdog
-//  wdt_reset();
-//#endif
-//}
+void watchdogSetup() {
+  Serial.print(F("Setting up watchdog for 1 second delay"));
+#ifdef ARDUINO_ARCH_MEGAAVR
+  if (RSTCTRL.RSTFR & RSTCTRL_WDRF_bm) {
+    Serial.println(F("It was a watchdog reset."));
+  }
+  RSTCTRL.RSTFR |= RSTCTRL_WDRF_bm ;
+  wdt_enable(WDT_PERIOD_1KCLK_gc); // one second watchdog
+  delay(1500);
+#endif
+}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void loop() {
-  wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
+  //wdt_reset();                     // Reset Watchdog and reset processor if crashed or inactive
   currentTime = millis();          // declare the current time is equal to millis
   // if mqtt connected run mqtt
   if (status == WL_CONNECTED) {
@@ -167,8 +167,8 @@ void loop() {
     timerIsr();                    // timerIsr for rotery encoder
     updatedisplay();               // Lcd screen transitions
     deBug();                       // enable Debug function
+    sensors();                     // Read Temp and Humidity sensors
   }
-  sensors();                     // Read Temp and Humidity sensors
   manualReset();                   // If button is held down reset
   standBy();                       // Set stand by mode
 }
@@ -219,7 +219,7 @@ void sensors() {
 void manualReset() {                  // Kick the watchdog if the reset is held down to activated
   if (button) {
     button = false;
-    delay(2010);
+    watchdogSetup();
   }
 }
 
@@ -238,10 +238,10 @@ void standBy() {
       buttonState = standBySwitchValue;
 
       if (buttonState == HIGH) {
-        //standbyControl();
+        standbyControl();
       }
       else {
-        delay(2010);
+        wake();
       }
     }
   }
