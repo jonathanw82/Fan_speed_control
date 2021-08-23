@@ -73,6 +73,9 @@ This option will display debug information, Current Mode, T/H Sensor Serial Numb
 * SHT31 Temperature Humidity sensor [Here](https://wiki.dfrobot.com/SHT31_Temperature_Humidity_Sensor_Weatherproof_SKU_SEN0385)
 * Plastic box for Arduino and LCD display [Here](https://uk.rs-online.com/web/p/general-purpose-enclosures/4984025/)
 * White rocker switch [Here](https://uk.rs-online.com/web/p/rocker-switches/5332970/)
+* Connecting cables
+* 10k resistor
+* 4.7uf capacitor
 
 ## Technology Used:
 * [Arduino Ide](https://www.arduino.cc/en/software)
@@ -104,13 +107,19 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_schematic_power.jpg" alt="Wiring Schematic" width="100%"/></div>
 
 
-
 * 3D printed Bezel
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img1.jpg" alt="3D print" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/img2.jpg" alt="3D print" width="43%"/></div>
 
 #
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelconstuction1.jpg" alt="bezel constuction" width="45%"/><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/bezelcon2.jpg" alt="bezel construction" width="45%"/></div>
+
+## Note on PWM
+A resistor-capacitor filter was added to the PWM channel to flatten the signal, as the crydom really needed a smooth 0-5v (EG, 50% duty cycle the output voltage is 2.5v and 100% duty cycle 5v).
+
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/new%20end%20point.png" alt="bezel constuction" width="45%"/></div>
+
+#
 
 ## Power Consumption:
 Estimated Power Consumption as rated in docs, actual may vary.

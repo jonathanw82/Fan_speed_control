@@ -12,7 +12,7 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Define WiFi & Mqtt Settings  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #define WIFI_NAME "LGHQ"
 #define WIFI_PASSWORD "webr00ter"
-#define MQTT_HOST ""
+#define MQTT_HOST "192.168.2.111"
 #define PUBLISH_PATH "AVfanControl/"
 #define DEVICE_NAME "Fan Speed Control"
 #define LOCATION "AvonVally"
