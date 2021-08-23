@@ -119,7 +119,7 @@ A resistor-capacitor filter was added to the PWM channel to flatten the signal, 
 
 <div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/new%20end%20point.png" alt="bezel constuction" width="45%"/></div>
 
-#
+
 
 ## Power Consumption:
 Estimated Power Consumption as rated in docs, actual may vary.

@@ -26,7 +26,7 @@ void runMqtt() {
     wdt_reset();
     if (millis() - prevTime2 > 5000) {
       prevTime2 = millis();
-      mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String("Site-V1.20MQTT"));
+      mqtt_client.publish(PUBLISH_PATH + String("SoftwareVersion"), String(SoftwareVersion));
       mqtt_client.publish(PUBLISH_PATH + String("HostName"), String(MQTT_HOST));
       mqtt_client.publish(PUBLISH_PATH + String("DeviceName"), String(DEVICE_NAME));
       mqtt_client.publish(PUBLISH_PATH + String("Location"), String(LOCATION));
