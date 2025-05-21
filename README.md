@@ -6,9 +6,13 @@
  
 
 ## Overview:
-Fan speed controller for AvonValley farm preparation space air extraction, with incorporated menu allowing the user to select modes from automatic and manual.
+This fan speed controller is designed for air extraction in farm crop preparation spaces. It includes an integrated menu, allowing users to select between automatic and manual operating modes.
 
 The current controller offers little to no options for control other than 0-100%, the fan is also very noisy, this controller offers a possible solution to reduce the noise and give the user more control. 
+
+## Installation:
+This controller has been in continuous service since 2021 and remains operational today.
+
 
 ## The user's goals of this controller are:
 * An easy to navigate menu.
@@ -178,8 +182,8 @@ When setting the Min and Max values if the the Min value exceeds the Max value i
 
 #
 
-## Dark Ostara
-As an example of control, Dark Ostara was created to illustrate control of the controller remotely, Dark Ostrata utilises Flask Python, Javascript, CSS3, HTML5 with the added component of Flask-socketIO and Javascript-socketIO allowing frontend to backend communication of MQTT messages, Dark Ostara is currently launched locally from a laptop connected to an MQTT server that allows full control of the fan controller.
+## Front End
+As an example of control, I created a front end to illustrate control of the controller remotely, utalising Flask Python, Javascript, CSS3, HTML5 with the added component of Flask-socketIO and Javascript-socketIO allowing frontend to backend communication of MQTT messages, it was launched locally from a laptop connected to an MQTT server that allows full control of the fan controller.
 
 <div align="center"><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/darkOstara.jpg" alt="darkostara"/><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/responsive.jpg" alt="responsive image"/></div>
 
