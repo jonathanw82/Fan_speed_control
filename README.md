@@ -106,9 +106,9 @@ The Software is written in C++, compiled and uploaded to the micro controller by
 ## Construction:
 * Wiring Schematic
 
-<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic.jpg" alt="Wiring Schematic" width="100%"/></div>
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_%20schematic1.jpg" alt="Wiring Schematic" width="100%"/></div>
 
-<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_schematic_power.jpg" alt="Wiring Schematic" width="100%"/></div>
+<div align="center"><img src="https://github.com/jonathanw82/Fan_speed_control/blob/main/media/fan_speed_schematic_power1.jpg" alt="Wiring Schematic" width="100%"/></div>
 
 
 * 3D printed Bezel
@@ -185,7 +185,7 @@ When setting the Min and Max values if the the Min value exceeds the Max value i
 ## Front End
 As an example of control, I created a front end to illustrate control of the controller remotely, utalising Flask Python, Javascript, CSS3, HTML5 with the added component of Flask-socketIO and Javascript-socketIO allowing frontend to backend communication of MQTT messages, it was launched locally from a laptop connected to an MQTT server that allows full control of the fan controller.
 
-<div align="center"><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/darkOstara.jpg" alt="darkostara"/><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/responsive.jpg" alt="responsive image"/></div>
+<div align="center"><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/frontend.jpg" alt="darkostara"/><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/responsive1.jpg" alt="responsive image"/></div>
 
 #
 
