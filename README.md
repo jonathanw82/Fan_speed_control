@@ -183,7 +183,7 @@ When setting the Min and Max values if the the Min value exceeds the Max value i
 #
 
 ## Front End
-As an example of control, I created a front end to illustrate control of the controller remotely, utalising Flask Python, Javascript, CSS3, HTML5 with the added component of Flask-socketIO and Javascript-socketIO allowing frontend to backend communication of MQTT messages, it was launched locally from a laptop connected to an MQTT server that allows full control of the fan controller.
+As an example of control, I created a front end to illustrate control of the controller remotely, utalising Flask Python, Javascript, CSS3, HTML5 with the added component of Flask-socketIO and Javascript-socketIO allowing frontend to backend communication of MQTT messages, it was launched locally from a laptop connected to an MQTT server that allows full control of the fan controller. NOTE: Unfortunatly the code of the front end has been lost in time. 
 
 <div align="center"><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/frontend.jpg" alt="darkostara"/><img src="https://github.com/jonathanw82/fanControlReadMe/blob/main/media/responsive1.jpg" alt="responsive image"/></div>
 
